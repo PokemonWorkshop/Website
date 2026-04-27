@@ -1,0 +1,48 @@
+---
+import { multiColumnSectionStore } from './multiColumnSectionStore';
+multiColumnSectionStore.columnIndex += 1;
+
+const { containerClass, itemTextClass } = multiColumnSectionStore;
+---
+
+{
+  itemTextClass.length === 0 ? (
+    <div class:list={containerClass}>
+      <slot />
+    </div>
+  ) : (
+    <div class:list={containerClass}>
+      <div class:list={itemTextClass}>
+        <slot />
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .centered-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .centered-items {
+    align-items: center;
+  }
+
+  .last-item-to-bottom {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+
+  .last-item-to-bottom > :last-child {
+    margin-top: auto;
+  }
+
+   .vertically-centered-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+</style>

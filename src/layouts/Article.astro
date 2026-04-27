@@ -1,0 +1,68 @@
+---
+import { Picture } from 'astro:assets';
+
+interface Props {
+	title: string;
+	seoDescription: string;
+	cover: ImageMetadata[] | null
+}
+const { title, seoDescription } = Astro.props;
+
+const currentLocale = Astro.currentLocale ?? 'en';
+const cover = Astro.props.cover?.[0]
+
+---
+
+<!doctype html>
+<html lang={currentLocale}>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>{title}</title>
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="description" content={seoDescription} />
+		<!-- TODO: open graph tags -->
+		<meta name="generator" content={Astro.generator} />
+	</head>
+	<body>
+		{cover && <Picture src={cover} alt="" formats={['avif', 'webp']} widths={[640, 320]} layout="constrained" sizes="(min-width: 481px) 640px, (max-width: 480px) 320px" width={640} height={360} class="cover" />}
+    <main>
+      <h1>{title}</h1>
+		  <slot />
+    </main>
+	</body>
+</html>
+<style is:global>
+	html {
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		background-color: #f6f6f6;
+	}
+  body {
+    padding: 2rem; /* TODO: remove */
+  }
+	code {
+		font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	}
+	main {
+		margin: auto;
+		box-sizing: content-box; /* Ensures width is not including padding */
+		max-width: 1120px;
+    background-color: #FFFFFF;
+    border-radius: 0.5rem;
+    padding: 3rem;
+	}
+	.cover {
+		border-radius: 12px;
+	}
+	@media screen and (max-width: 480px) {
+		.cover {
+			max-width: 320px;
+			max-height: 180px;
+		}
+	}
+	picture:has(.cover) {
+		display: flex;
+		margin: 0.5rem 0;
+		justify-content: center;
+	}
+</style>

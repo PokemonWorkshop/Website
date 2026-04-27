@@ -1,0 +1,85 @@
+---
+import { multiColumnSectionStore, type ColumnSetup } from './multiColumnSectionStore';
+
+interface Props {
+  bottom_margin?: 'margin-l' | 'margin-s' | 'margin-m' | 'margin-xl' | 'margin-xxl';
+  centered_content?: boolean; // Content centered vertically?
+  centered_items?: boolean; // Items centered horizontally?
+  centered_text?: boolean; // Text centered horizontally?
+  last_to_bottom?: boolean; // Last item to bottom?
+  columns: ColumnSetup;
+}
+
+const columnSetupClasses = {
+  '1/1': 'one-column',
+  '1/2': 'two-column',
+  '1/3 1/3 1/3': 'three-column',
+  '1/3 2/3': 'three-two-column',
+  '2/3 1/3': 'two-three-column',
+  '1/4 1/4 1/4 1/4': 'four-column',
+  '1/4 3/4': 'four-three-column',
+  '3/4 1/4': 'three-four-column',
+} satisfies Record<ColumnSetup, string>;
+
+const bottom_margin = Astro.props.bottom_margin ?? 'margin-m';
+const contentVerticalAlignmentClass = Astro.props.centered_content ? 'vertically-centered-flex' : undefined;
+const contentItemAlignmentClass = Astro.props.centered_items ? 'centered-items' : undefined;
+const itemTextCenterClass = Astro.props.centered_text ? 'centered-text' : undefined;
+const itemTextToBottomClass = Astro.props.last_to_bottom ? 'last-item-to-bottom' : undefined;
+const columnClass = columnSetupClasses[Astro.props.columns];
+
+const containerClass = [contentVerticalAlignmentClass, contentItemAlignmentClass].filter((v) => v !== undefined);
+const itemTextClass = [itemTextCenterClass, itemTextToBottomClass].filter((v) => v !== undefined);
+multiColumnSectionStore.containerClass = containerClass;
+multiColumnSectionStore.itemTextClass = itemTextClass;
+multiColumnSectionStore.columns = Astro.props.columns;
+multiColumnSectionStore.columnIndex = -1;
+---
+
+<section class:list={['grid', columnClass, bottom_margin]}>
+  <slot />
+</section>
+
+<style is:global>
+  section.grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  section.grid img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  section.one-column {
+    grid-template-columns: 1fr;
+  }
+
+  section.two-column {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  section.three-column, section.three-two-column, section.two-three-column {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  section.three-two-column > :nth-child(2n), section.two-three-column > :nth-child(2n+1) {
+    grid-column: span 2;
+  }
+
+  section.four-column, section.four-three-column, section.three-four-column {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  section.four-three-column > :nth-child(2n), section.three-four-column > :nth-child(2n+1) {
+    grid-column: span 3;
+  }
+
+
+	@media screen and (max-width: 480px) {
+    section.grid {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+</style>
