@@ -4,7 +4,8 @@ import { Picture } from 'astro:assets';
 interface Props {
 	title: string;
 	seoDescription: string;
-	cover: ImageMetadata[] | null
+	cover: ImageMetadata[] | null;
+	tags: string[] | undefined | null;
 }
 const { title, seoDescription } = Astro.props;
 

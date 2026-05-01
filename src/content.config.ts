@@ -1,10 +1,15 @@
-import { defineCollection } from "astro:content";
-import { glob } from "astro/loaders";
-import { z } from "astro/zod";
+import { defineCollection } from 'astro:content';
+import { glob, file } from 'astro/loaders';
+import { z } from 'astro/zod';
 
-const sdk = defineCollection({
-  loader: glob({ pattern: "**/*.mdoc", base: "./src/content/sdk" }),
-  schema: ({ image }) => z.object({ seoDescription: z.string(), cover: image().array().nullable(), title: z.string() }),
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.mdoc', base: './src/content/pages' }),
+  schema: ({ image }) => z.object({ seoDescription: z.string(), cover: image().array().nullable(), title: z.string(), tags: z.string().array().nullish() }),
 });
 
-export const collections = { sdk };
+const tags = defineCollection({
+  loader: file('./src/content/tags.json'),
+  schema: z.object({ en: z.string(), fr: z.string() }),
+});
+
+export const collections = { pages, tags };

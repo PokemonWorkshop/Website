@@ -53,10 +53,6 @@ export default defineMarkdocConfig({
     },
     pageRef: {
       attributes: {
-        entry: {
-          type: String,
-          required: true,
-        },
         id: {
           type: String,
           required: true,
@@ -67,6 +63,9 @@ export default defineMarkdocConfig({
         },
       },
       render: component('./src/components/PageRef.astro')
+    },
+    index: {
+      render: component('./src/components/Index.astro')
     },
   }
 })

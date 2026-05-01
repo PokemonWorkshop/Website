@@ -1,21 +1,21 @@
 ---
 import { Picture } from 'astro:assets';
-import type { DataEntryMap } from 'astro:content';
 import { getEntry } from 'astro:content';
 
 interface Props {
-  entry: keyof DataEntryMap;
   id: string;
   description?: string;
 }
 
-const pageEntry = await getEntry(Astro.props.entry, Astro.props.id);
+const pageEntry = await getEntry('pages', Astro.props.id);
 const cover = pageEntry?.data.cover?.[0];
 const title = pageEntry?.data.title ?? 'Page not found';
-const description = Astro.props.description;
-const idFragment = Astro.props.id.startsWith('index_') ? '' : `/${Astro.props.id}`
-const localeFragment = Astro.props.id.split('_')[1] ?? Astro.currentLocale;
-const pageUrl = `/${localeFragment}/${Astro.props.entry}${idFragment}`; // TODO: figure out a fix for entry (to support level of /)
+const description = Astro.props.description === 'source' ? pageEntry?.data.seoDescription : Astro.props.description;
+const fullPath = Astro.props.id.split('/');
+const [pageSlug, locale] = (fullPath.pop() ?? '')?.split('_');
+const fullSlug = pageSlug === 'index' ? fullPath.join('/') : [...fullPath, pageSlug].join('/')
+const localeFragment = locale ?? Astro.currentLocale;
+const pageUrl = `/${localeFragment}/${fullSlug}`; // TODO: figure out a fix for entry (to support level of /)
 ---
 
 <aside class="note-excerpt">

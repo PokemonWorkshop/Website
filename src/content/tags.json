@@ -1,0 +1,14 @@
+{
+  "wip": { "en": "Work In Progress", "fr": "En cours" },
+  "PSDK": { "en": "Pokémon SDK", "fr": "Pokémon SDK" },
+  "PSP": { "en": "Pokémon Script Project", "fr": "Pokémon Script Project" },
+  "PE": { "en": "Pokémon Essentials", "fr": "Pokémon Essentials" },
+  "completed": { "en": "Completed", "fr": "Complet" },
+  "PokemonStudio": { "en": "Pokémon Studio", "fr": "Pokémon Studio" },
+  "demo": { "en": "Demo", "fr": "Démo" },
+  "communitymanagement": { "en": "Community Management", "fr": "Animation de communauté" },
+  "socialnetwork": { "en": "Social Network", "fr": "Réseaux Sociaux" },
+  "ruby": { "en": "Ruby", "fr": "Ruby" },
+  "fangame": { "en": "Fangame", "fr": "Projet amateur" },
+  "right": { "en": "Right", "fr": "Droit" }
+}

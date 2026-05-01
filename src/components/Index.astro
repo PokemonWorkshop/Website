@@ -1,0 +1,27 @@
+---
+import { getCollection } from "astro:content";
+import { indexStore } from "./indexStore";
+import PageRef from "./PageRef.astro";
+
+const [tag] = await getCollection('tags', (t) => t.id === indexStore.tag);
+---
+
+{tag && <p>Tag: <strong>{tag.data[indexStore.locale]}</strong> <a class="remove-tag" href={Astro.url.pathname.split('_')[0]}>×</a></p>}
+<div class="index">
+  {indexStore.subPages.map(id => <PageRef id={id} description="source" />)}
+</div>
+
+<style>
+  div.index {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  a.remove-tag {
+    color: black;
+    text-decoration: none;
+    padding-left: 0.5rem;
+    font-size: 1.8em;
+  }
+</style>
