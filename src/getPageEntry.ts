@@ -1,4 +1,5 @@
 import { getEntry, getCollection } from 'astro:content';
+import { sortPages } from './sortPages';
 
 export const getPageEntry = async (slugParam: string, locale: 'en' | 'fr') => {
   const [slug, tag] = slugParam.split('_');
@@ -9,10 +10,10 @@ export const getPageEntry = async (slugParam: string, locale: 'en' | 'fr') => {
   if (entry.id.endsWith(`/index_${locale}`)) {
     const subPageSlugPrefix = `${slug}/`;
     const subPages = await getCollection('pages', (e) => e.id.startsWith(subPageSlugPrefix) && e.id.endsWith(locale) && e.id !== entry.id);
-    if (!tag) return { entry, subPages: subPages.map((e) => e.id), tag };
+    if (!tag) return { entry, subPages: sortPages(subPages).map((e) => e.id), tag };
 
     const subPagesByTag = subPages.filter((e) => e.data.tags?.includes(tag));
-    return { entry, subPages: subPagesByTag.map((e) => e.id), tag };
+    return { entry, subPages: sortPages(subPagesByTag).map((e) => e.id), tag };
   }
 
   return { entry, subPages: [], tag: undefined };

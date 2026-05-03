@@ -4,7 +4,15 @@ import { z } from 'astro/zod';
 
 const pages = defineCollection({
   loader: glob({ pattern: '**/*.mdoc', base: './src/content/pages' }),
-  schema: ({ image }) => z.object({ seoDescription: z.string(), cover: image().array().nullable(), title: z.string(), tags: z.string().array().nullish() }),
+  schema: ({ image }) =>
+    z.object({
+      seoDescription: z.string(),
+      cover: image().array().nullable(),
+      title: z.string(),
+      tags: z.string().array().nullish(),
+      publishDate: z.string().nullish(),
+      order: z.number().nullish()
+    }),
 });
 
 const tags = defineCollection({
