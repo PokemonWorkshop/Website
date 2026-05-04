@@ -1,0 +1,166 @@
+---
+title: Comment créer un SystemTag personnalisé ?
+seoDescription: Une page décrivant comment créer un SystemTag personnalisé dans PSDK
+order: 0
+---
+
+## Qu'est-ce qu'un "SystemTag" personnalisé ? {% id="what-is-it" %}
+
+Un «&nbsp;SystemTag&nbsp;» personnalisé est un tag personnalisé que vous pouvez attribuer à vos tuiles.
+
+Par exemple, vour pourrez ajouter&nbsp;:
+
+- Des fonctionnalités personnalisées _(les tags système seuls peuvent faire beaucoup, car ils sont utilisés pour créer des rencontres sauvages, glisser sur des tuiles de glace, vous empêcher de glisser, surfer, etc.)_ 
+- Des arrière-plans de combat personnalisés 
+- Des effets de particules personnalisés
+- Des rencontres sauvages personnalisées
+
+## Pour commencer {% id="getting-started" %}
+
+Pour créer votre SystemTag personnalisé, nous allons créer 5 nouveaux scripts courts&nbsp;:
+
+- 00001 GameData\_SystemTags.rb
+- 00002 Environment.rb
+- 00003 Background\_Names.rb
+- 00004 Terrain\_Tags_\__Table.rb
+- 00005 Game\_Character_\__particles.rb _(Facultatif)_
+
+### Création du db_symbol de notre SystemTag {% id="creating+systemtag+db_symbol" %}
+
+#### 00001 GameData_SystemTags.rb:
+
+```ruby
+module GameData
+  module SystemTags
+    module_function
+    # Column 0, row 12 on the SystemTags tileset
+    CustomPuddle = gen 0, 12
+
+    # Gives the db_symbol of the system tag
+    # @param system_tag [Integer]
+    # @return [Symbol]
+    alias og_system_tag_db_symbol system_tag_db_symbol
+    module_function :og_system_tag_db_symbol
+    def system_tag_db_symbol(system_tag)
+      case system_tag
+      when CustomPuddle
+        return :custom_puddle
+      else
+        og_system_tag_db_symbol(system_tag)
+      end
+    end
+  end
+end
+```
+
+- `CustomPuddle = gen 0, 12` - Nous créons une nouvelle constante qui est mappée sur la tuile dans la position spécifiée dans notre ensemble de tuiles SystemTags.
+- `alias og_system_tag_db_symbol system_tag_db_symbol` - Aliasing de la méthode d'origine. (Par prévoyance)
+- Nous renvoyons un nouveau db\_symbol qui sera utilisé lorsque le joueur se trouve sur la tuile. Il doit commencer par`custom_`, et dans ce cas nous avons utilisé `custom_puddle`. (Ceci est utilisé dans Studio lors de la définition de votre zone personnalisée, ainsi que lorsque vous attribuez un effet de particules à ce SystemTag.)
+
+### Création du type de zone (zone_type) pour votre SystemTag {% id="creating+zone+types" %}
+
+#### 00002 Environment.rb
+
+```ruby
+module PFM
+  class Environment
+    def custom_puddle?
+      tag = @game_state.game_player.system_tag
+      return (tag == CustomPuddle)
+    end
+
+    alias og_get_zone_type get_zone_type
+    def get_zone_type(ice_prio = false)
+      if custom_puddle?
+        return 11
+      end
+      og_get_zone_type(ice_prio = false)
+    end
+
+    alias og_convert_zone_type convert_zone_type
+    def convert_zone_type(system_tag)
+      case system_tag
+      when CustomPuddle
+        return 11
+      end
+      og_convert_zone_type(system_tag)
+    end
+  end
+end
+```
+
+- Nous créons une méthode qui vérifie si l'utilisateur est sur le nouveau SystemTag que nous avons créé.
+- Nous créons un alias qui assurera la pérennité de notre méthode `get_zone_type`
+- Nous redéfinissons `get_zone_type` et ajoutons notre méthode qui vérifie si l'utilisateur est sur le nouveau SystemTag et renvoie une valeur. Lorsque les futurs SystemTags sortiront, vous devrez mettre à jour ce numéro.
+- Si l'utilisateur n'est pas sur la nouvelle tuile, il appelle la méthode `get_zone_type` d'origine.
+- Nous créons un alias qui assurera la pérennité de notre méthode `convert_zone_type`
+- Nous redéfinissons `convert_zone_type`, vérifions si l'utilisateur est sur le nouveau SystemTag, renvoyons la même valeur que celle que nous utilisons dans `get_zone_type`. Si l'utilisateur n'est pas sur la nouvelle tuile, il appelle la méthode `convert_zone_type` d'origine.
+
+### Définir un arrière-plan pour votre SystemTag {% id="custom+background" %}
+
+#### 00003 Background_Names.rb
+
+```ruby
+module Battle
+  class Logic
+    class BattleInfo
+      # Name of the background according to their processed zone_type
+      BACKGROUND_NAMES.push('sunflower') # 11
+    end
+  end
+end
+```
+
+- Par défaut, `BACKGROUND_NAMES` choisira une image pour votre zone. Si vous ignorez cette étape, elle aura un arrière-plan noir lorsque vous vous battrez sur cette tuile.
+- Nous envoyons une nouvelle chaîne de caractères (String) vers un tableau déjà existant appelé `BACKGROUND_NAMES`
+- La chaîne de caractère doit être le nom d'une image trouvée dans votre dossier `graphics/battlebacks`
+- L'image de l'arrière-plan est déterminée automatiquement à partir du tableau. C'est pourquoi votre numéro doit être +1 par rapport au précédent.
+
+### Configuration de votre SystemTag pour LocationBased {% id="locationbased+functionality" %}
+
+#### 00004 Terrain_Tags_Table.rb
+
+```ruby
+class Game_Map
+  TERRAIN_TAGS_TABLE[GameData::SystemTags::CustomPuddle] = :shallow_water
+end
+```
+
+- Configuration de notre nouveau SystemTag pour utiliser le même terrain tag que `:shallow_water` 
+- Ceci est pour les capacités ayant la fonction `LocationBased`
+
+### Créer des effets de particules pour votre SystemTag (Facultatif) {% id="custom+particles" %}
+
+#### 00005 Game_Character_particles.rb
+
+```ruby
+class Game_Character
+  PARTICLES_METHODS[CustomPuddle] = :particle_push_custom_puddle
+
+  # Define the particle_push_custom_puddle method
+  def particle_push_custom_puddle
+    Yuki::Particles.add_particle(self, :custom_puddle)
+  end
+end
+```
+
+- Ceci est spécifiquement destiné à ajouter une nouvelle particule pour votre nouveau SystemTag. **Si vous n'avez pas envie d'ajouter un effet de particule, vous pouvez ignorer cette étape.**
+- `PARTICLES_METHODS[CustomPuddle] = :particle_push_custom_puddle` - Nous ajoutons notre nouvelle constante au hash `PARTICLES_METHODS`, en lui indiquant la méthode à appeler lorsque le joueur marche sur cette tuile.
+- Nous créons la méthode que nous mappons au hash. Utilisez le `db_symbol` que nous avons défini dans le script précédent.
+
+#### Édition de votre fichier Particles.rb
+
+Vous définissez l'animation de la particule ici, dans votre fichier `Data\Animations\Particles.rb`. Faites défiler jusqu'en bas, au-dessus de `save,` et vous pourrez y définir votre animation. Il y a de nombreux exemples dans ce fichier, mais une bonne chose à savoir est que vous pouvez avoir un effet de particule unique pour chaque TerrainTag sur n'importe quel SystemTag&nbsp;!
+
+Après avoir modifié le fichier, ouvrez cmd, changez le répertoire vers votre dossier `Data\Animations` et exécutez&nbsp;: `ruby ​​Particles.rb`
+
+## Conclusion {% id="conclusion" %}
+
+Avec tout cela, vous devriez maintenant pouvoir utiliser facilement les éléments que nous avons créés pour ajouter de nouvelles fonctionnalités lorsque le joueur marche sur la tuile, tout en ayant les éléments existants correctement configurés.
+
+Vous pouvez aller dans vos fichiers `graphics/tilesets/prio_w.png` et `Data/Tiled/Assets/prio_w.png` pour ajouter le nouveau tag sur la première tuile «&nbsp;libre&nbsp;»&nbsp;!
+
+#### Note
+
+Vous pouvez combiner ces scripts en un seul, à condition de le faire dans le bon ordre.
+

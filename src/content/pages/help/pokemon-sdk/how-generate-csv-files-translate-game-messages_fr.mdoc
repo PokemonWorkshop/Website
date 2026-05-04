@@ -1,0 +1,22 @@
+---
+title: Comment puis-je générer des fichiers CSV afin de traduire les messages de mon
+  jeu ?
+seoDescription: Comment générer des fichiers CSV qui contiennent les textes de votre
+  jeu
+order: 0
+---
+
+Voici la procédure à suivre **générer les fichiers CSV contenant les textes de votre jeu** :
+
+- Ouvrez le fichier `cmd.bat`,
+- écrivez `psdk --util=eventtext2csv`,
+- appuyez sur `Entrée` pour valider.
+
+Un CSV par carte sera créé, contenant tous les textes des messages de cette dernière.
+
+**Note :** Vous remarquerez qu'une encoche a été ajoutée à chacun des messages sur RPG Maker XP, du type `1, 54 Mon message`. Si cette encoche est présente dans un message sur RPG Maker XP lorsque vous réutilisez la commande `psdk --util=eventtext2csv`, le message ne sera pas supprimé ou écrasé. De même, un fichier CSV déjà existant ne sera pas modifié si la carte sur laquelle se trouve les événements contenant les messages n'ont pas été modifiés.
+
+En effet, une fois cette encoche présente vous devez modifier les messages concernés via la page dédiée sur Pokémon Studio.
+
+Vous pouvez également utiliser un éditeur externe comme [Google Sheets](https://docs.google.com/spreadsheets/u/0/ "Google Sheets") ou [Visual Studio Code](https://code.visualstudio.com/ "Visual Studio Code") car les modifications ne seront pas prises en compte côté RPG Maker XP. L'extension [Sky CSV](https://marketplace.visualstudio.com/items?itemName=Hanul.sky-csv) est adaptée à cet usage.
+

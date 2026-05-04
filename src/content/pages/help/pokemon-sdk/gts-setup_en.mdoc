@@ -1,0 +1,58 @@
+---
+title: How do you set setup a GTS system?
+seoDescription: A quick tutorial going over how to set up a GTS system!
+publishDate: '2023-02-19 21:11:00'
+order: 0
+---
+
+![](./images/image_2023-02-19_151257856.png)
+
+Using the GTS is a great way to make your community even more connected. While not extremely advanced by default, it's a completely free resource that let's you trade with other real players. If you know Ruby you can incorporate new features and really expand on it!
+
+## Getting Started {% id="getting_started" %}
+
+To start you'll need to make an account on the [GTS by Hills Tech](http://gts.kawasemi.de) site. Once you've created an account or logged in you'll notice a few tabs on the top. You can explore them later, for now go to the "My Games" tab. Click the "NEW GAME" button and put your game as the title. Now you should see something like this!
+
+![](./images/image_2023-02-19_152102930.png)
+
+Now we'll need to make a small monkey-patch to the base GTS code so that it loads our game's ID. This is fairly easy!
+
+```text
+module GTS
+  module Settings  
+    remove_const :GAMEID
+    remove_const :URL
+    remove_const :SPECIES_SHOWN
+    remove_const :SORT_MODE
+    remove_const :BLACK_LIST
+    remove_const :GAME_CODE
+    remove_const :BGM
+
+    # ID of the game, replace 0 by what you got on the pannel
+    GAMEID = 0
+    # URL of the GTS server (Don't touch)
+    URL = 'http://gts.kawasemi.de/api.php?i='
+    # Condition to see the Pokemon in the search result (All/Seen/Owned)
+    SPECIES_SHOWN = 'All'
+    # How the Pokemon are searched (Alphabetical/Regional)
+    SORT_MODE = 'Alphabetical'
+    # List of black listed Pokemon (filtered out of the search) put ID or db_symbol here
+    BLACK_LIST = []
+    # Internal Game Code to know if the Pokemon comes from this game or another (like DPP <-> HGSS), you can change this
+    GAME_CODE = '255'
+    # Scene BGM (Complete path in lower case without extname)
+    BGM = 'audio/bgm/xy_gts'
+  end
+end
+```
+
+**NOTE:** If you don't know how to monkey-patch, go in your project's scripts folder make a Ruby file called something like "00100 GTS\_ID.rb"
+
+## How to Call the GTS {% id="calling_gts" %}
+
+In an event make a script and call GTS.open like shown below.
+
+![](./images/image_2023-02-19_153004080.png)
+
+And just like that we're done!
+

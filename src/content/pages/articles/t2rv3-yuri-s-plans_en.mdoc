@@ -1,0 +1,85 @@
+---
+title: 'Tiled2Rxdata v3: Yuri''s plans'
+seoDescription: How Tiled2Rxdata v3 could look like
+cover:
+- "./images/worst_possible_banner_dot_jpeg.png"
+publishDate: '2023-12-09 11:55:00'
+order: 20231209
+---
+
+As you may know, Tiled2Rxdata v2 (T2Rv2) is coming with Pokémon Studio v2. This version of T2R must comply with the RPG Maker XP (RMXP) map format, mainly because events are still edited in RMXP with Pokémon Studio v2.
+
+For that reason I'm planning a new improvement of T2R, T2Rv3. This version is planned to be released with Pokémon Studio v3 and might shift Pokémon SDK to PSDK v27. The reason for that is because the map engine will be rewritten to match with the new map format.
+
+## The new Map format {% id="format" %}
+
+The new map format will take avantage of the Table class in RGSS. As you may know, the RMXP map is limited to a Table of 3 layers. My plan is going above the 3 layers. Probably upto 10 layers to store as much information as possible.
+
+Here's an example of layer layout I could use for the new Map format:
+
+- Layer 0: Ground Tiles
+- Layer 1: Ground Tiles
+- Layer 2: Ground Tiles or Priority Tiles
+- Layer 3: Priority Tiles
+- Layer 4: Priority Tiles
+- Layer 5: Passages, Counter, Bush, Bridge & System Tag elevation meta-data
+- Layer 6: System Tag
+- Layer 7: Terrain Tag (0~127) + Elevation meta-data
+
+As you might see, I'm planning to add most of the meta-data in the map directly. There are a few reasons for that:
+
+- Reading meta-data like passage, counter, bush, system tag and terrain tag involve a lot of loops and several Table objects. By putting that on map tile basis we remove all the loops and additional Tables leading to a much simpler code.
+- This helps also reduce the pressure on the tile compressor because now the passage, systemTag etc... layers will be directly translated into a map layer instead. (Before we had to assign them to a new tile each time there was a variation)
+
+{% row columns="1/3 2/3" bottom_margin="margin-m" %}
+{% column %}
+**Fun Fact:** Did you know that when PSDK wasn't released yet, the System Tags and passages were actually bound to a map Layer instead of tiles in the tileset?
+
+{% /column %}
+{% column %}
+![System Tag editor in PSDK when it was not released](./images/image_2023-12-09_120802376.png)
+
+{% /column %}
+{% /row %}
+
+## Memory implication {% id="memory" %}
+
+You may wonder if the new format will have a huge impact on memory. Don't be scared, the impact is not as big as having ton of tiles in the tileset.
+
+Let's assume the map is 32x32 and we use 10 layers. In memory the map Table will use ~20KB, that's the memory usage of 5 tiles in the tileset.
+
+Now if those 32x32 maps are linked together (9 maps for 8 borders + center), you get a memory usage of ~180KB, that's the memory usage of 45 tiles or ~6 rows in your tileset.
+
+For a more realistic use, 50x50 maps, you get ~49KB for a single map and ~440KB for 9 map linked together.
+
+To me it seems pretty reasonable, the only issue might be the CPU cache that could miss a lot while rendering the map. We'll need to benchmark because with Ruby itself the CPU cache might probably already miss a lot.
+
+## What's with those elevation meta-data? {% id="elevation" %}
+
+If you have played a bit with the slope & stair system tags, you might have noticed it's a hell to use and the results are not always reliable animation wise.
+
+For that reason I thought we could store elevation meta-data on the tiles so the player and events would be at a certain height offset when standing on a tile and if they move the animation would adapt to reflect the slopes/elevation change.
+
+The overall idea is that elevation meta-data holds few information:
+
+- The elevation of the entity being on that tile (0-\>31 on 5bits)
+- The necessity to warp +1 or -1 on the y axis while moving in a direction (4 bits)
+
+Since each entry of a Table holds 16bits, this means terrain tag would have only 7 bits to express themself with the suggested layer layout. (I believe 128 terrain tag is more than enough when combined with 16,000 system tags).
+
+To demonstrate the use of those elevation meta-data I've prepared use cases:
+
+![Various slopes forcing the player to warp on y](./images/slope_no_stop.png)
+
+With those elevation meta-data we would be able to emulate the player's offset y because we'll be able to know without computation what's the elevation of the player in the middle of the tile he's standing.
+
+The brown arrow states if the player must warp +1 or -1 on the y axis while moving to the right or left on the tile he's on.
+
+![Slope with stop at the middle](./images/slope_with_stop.png)
+
+On this example you can see that we'd be able to make stairs that ends on a tile that isn't +0 and make it continue. It's even more powerful because the stairs will no longer need to be 45° in PSDK. (You could even do non-straight slopes if you want to).
+
+## Conclusion
+
+I have very good hopes for the future and I believe this idea seems realistic. If you have comments or any suggestions, don't hesitate to write them on Pokémon Workshop's discord or on the thread linked to that article!
+

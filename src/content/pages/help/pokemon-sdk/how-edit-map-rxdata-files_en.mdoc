@@ -1,0 +1,17 @@
+---
+title: How can I edit or version my map rxdata files?
+seoDescription: The way to edit your map rxdata files and version them
+publishDate: '2022-09-15 17:20:00'
+order: 0
+---
+
+Here is the procedure to follow to **convert your rxdata files** :
+
+- Open `cmd.bat`,
+- Write `psdk --util=convert` to convert all your .rxdata files into .yml files, which are easily editable and versionable with Git.
+
+Once your changes are done:
+
+- Open `cmd.bat` once again,
+- Write `psdk --util=restore` to convert all your .yml files into .rxdata which will be readable by the game engine.
+

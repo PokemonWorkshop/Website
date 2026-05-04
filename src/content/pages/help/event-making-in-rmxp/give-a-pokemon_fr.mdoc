@@ -1,0 +1,156 @@
+---
+title: Donner un Pokémon
+seoDescription: Comment donner un Pokémon au joueur via RMXP pour Pokémon SDK
+order: 0
+---
+
+RPG Maker XP n'est pas fait pour réaliser des jeux Pokémon, de ce fait le seul moyen de donner un Pokémon est d'utiliser les commandes de script.
+
+## Donner un Pokémon au joueur (enregistrement dans l'équipe)
+
+### Commande
+
+Pour donner un Pokémon au joueur entrez la commande de script suivante :
+
+```text
+pokemon = ajouter_pokemon(id, level, shiny)
+```
+
+Les paramètres sont :
+
+- `id`: db\_symbol du Pokémon (champ # ou db\_symbol) de la page [Liste des Pokémon](https://psdk.pokemonworkshop.com/db/db_pokemon.html)
+- `level`: Niveau du Pokémon
+- `shiny`: true si vous voulez qu'il soit shiny, false si vous voulez laisser la chance faire. (Paramètre optionnel).
+
+### Exemple
+
+Voici un exemple où je donne un Pikachu niveau 5 de deux façons différente :
+
+```text
+ajouter_pokemon(:pikachu, 5)
+ajouter_pokemon(25, 5)
+```
+
+## Donner un Pokémon qui peut être renommé
+
+### Commande
+
+La commande pour donner un Pokémon qui sera renommé dans la foulée est la suivante :
+
+```text
+pokemon = ajouter_renommer_pokemon(id, level, shiny, num_char)
+```
+
+Les paramètres sont :
+
+- `id`: ID du Pokémon (champ # ou db\_symbol) de la page [Liste des Pokémon](https://psdk.pokemonworkshop.com/db/db_pokemon.html)
+- `level`: Niveau du Pokémon
+- `shiny`: true si vous voulez qu'il soit shiny, false si vous voulez laisser la chance faire. (Paramètre optionnel).
+- `num_char`: Le nombre de caractères autorisés pour renommer le Pokémon. (Paramètre à 10 par défaut).
+
+### Exemple
+
+Voici un exemple où je donne un Pikachu niveau 5 qui sera renommé avec maximum 8 caractères :
+
+```text
+ajouter_renommer_pokemon(:pikachu, 5, false, 8)
+```
+
+## Donner un Pokémon paramétré
+
+### Commande
+
+Pour donner un Pokémon paramétré utilisez la commande suivante :
+
+```text
+pokemon = ajouter_pokemon_param(hash)
+```
+
+Cette méthode se base sur la commande [PFM::Pokemon.generate\_from\_hash](https://psdk.pokemonworkshop.fr/yard/PFM/Pokemon.html#generate_from_hash-class_method) donc les paramètres indiqués dans le Hash doivent correspondre à ce qui est écrit sur la doc.
+
+### Exemple
+
+Ajouter un Miaouss d'Alola :
+
+```text
+ajouter_pokemon_param(id: :meowth, level: 5, form: 1)
+```
+
+## Renommer un Pokémon
+
+### Commande
+
+Il existe une commande qui vous permet de renommer un Pokémon après coup. Comme vous l'avez vu dans la définition des commandes plus haut, j'ai mis "pokemon = " devant les commandes, c'est parce qu'en cas de succès elle retourne le Pokémon ajouté. Vous pouvez ensuite passer ce Pokémon en premier paramètre de la fonction suivante (ou simplement utiliser l'index dans l'équipe) :
+
+```text
+renommer_pokemon(poke_or_index, num_char)
+```
+
+Les paramètres sont :
+
+- `poke_or_index`: Index du Pokémon dans l'équipe (0, 1, 2, 3, 4, 5) ou le Pokémon à renommer.
+- `num_char`: Nombre de caractères pour renommer ce Pokémon (défaut : 10).
+
+### Exemples
+
+Renommer le miaouss d'Alola :
+
+```text
+miaouss = ajouter_pokemon_param(id: :meowth, level: 5, form: 1)
+renommer_pokemon(miaouss, 10) if miaouss
+```
+
+Renommer le 2ème Pokémon de l'équipe :
+
+```text
+renommer_pokemon(1)
+```
+
+## Ajouter un œuf à l'équipe
+
+### Commande
+
+La commande pour ajouter un œuf à l'équipe est la suivante :
+
+```text
+ajouter_oeuf(info)
+```
+
+Le paramètre peut être :
+
+- l'ID du Pokémon
+- le db\_symbol du Pokémon
+- le même paramètre que ajouter\_pokemon\_param
+
+### Exemples
+
+Ajout d'un œuf de Pichu :
+
+```text
+ajouter_oeuf(:pichu)
+```
+
+ou
+
+```text
+ajouter_oeuf(:pichu)
+```
+
+ou
+
+```text
+ajouter_oeuf(id: :pichu, level: 1, form: 1)
+```
+
+## Stocker un Pokémon directement dans le PC
+
+### Commande
+
+Pour envoyer un Pokémon directement dans le PC la commande suivante peut servir :
+
+```text
+pokemon = stocker_pokemon(id, level, shiny)
+```
+
+Les paramètres sont les même que pour ajouter\_pokemon.
+

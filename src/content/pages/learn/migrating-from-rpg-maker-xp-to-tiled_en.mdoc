@@ -1,0 +1,127 @@
+---
+title: Migrating from RPG Maker XP to Tiled to create your maps before Pokémon Studio
+  version 3
+seoDescription: The procedure to follow to successfully migrate your project and start
+  using Tiled as your map creation tool before the release of Pokémon Studio version
+  3.0
+cover:
+- "./images/studio-v3-com-en.png"
+tags:
+- PSDK
+- PokemonStudio
+publishDate: '2025-12-08 18:10:00'
+order: 20251208
+---
+
+To use Pokémon Studio version 3.0 with your project, you **must migrate your project and maps to Tiled BEFOREHAND**.  
+**This means you will be required to use Tiled to create your maps going forward.**
+
+This is the first step to ensure your project will be ready to migrate to Pokémon Studio 3.0, scheduled for release in 2026.
+
+Taking the time to migrate now will reduce the amount of work needed when updating to Pokémon Studio 3.0, and will increase the chances of a smooth migration with minimal bugs.
+
+**Make sure to back up your project BEFORE doing anything. 💾**
+
+If you use Git, we recommend creating a dedicated branch for this migration so you can easily roll back if needed.
+
+We’re announcing this early so projects can plan ahead for what we know will be an impactful and potentially stressful transition.
+
+This change aims to let everyone use a tool that we know is more efficient for map creation. Tiled is actively maintained, open-source, and free. This is a necessary first step toward fully enabling free project creation, which has always been one of the core goals of Pokémon Studio.
+
+When version 3.0 of Pokémon Studio is released, we will no longer provide support for RPG Maker XP. Support for it will gradually be removed from our platforms.
+
+## <p>Converting Your Maps to Migrate Your Project to Tiled</p>
+
+**Make sure to back up your project BEFORE doing anything. 💾**
+
+Before starting, follow these steps:
+
+1. Make sure your project is updated to the latest versions of Pokémon Studio and Pokémon SDK.
+2. Your project must still be in “RPG Maker XP” mode (you can check this in the `project.studio` file at the root of your project), via the `isTiledMode` variable. **Do NOT modify it in this file.**
+3. Download and install the [Tiled software](https://www.mapeditor.org/) beforehand.
+4. Ensure all your Tiled maps are linked to an existing Tileset.
+
+### Enabling Tiled Mode in Pokémon Studio
+
+Since Pokémon Studio 2.8.0, a yellow banner appears each time you load your project if you haven’t enabled Tiled mode yet.
+
+This banner will display the following message: "Support for RPG Maker XP as a map creation tool will end in an upcoming update, and the use of Tiled will become mandatory."
+
+![A screen of the PSDK update view on Pokémon Studio with a preview of the banner to migrate to Tiled software](./images/capture-d-ecran-2025-12-08-210954.png)
+
+For reference, Tiled mode will be mandatory when upgrading to Pokémon Studio 3.0 and cannot be disabled.
+
+To enable this mode, you have two options:
+
+- Click the `Use Tiled` button on the yellow banner displayed when loading your project and follow the interface instructions.
+- Go to Pokémon Studio settings, under `Map Management`, and toggle `Use Tiled as the map creation tool`.
+
+Once enabled, you will need to set the installation path of Tiled on your computer so Pokémon Studio can open maps directly in Tiled and generate map previews.
+
+**Don’t forget to save your project in Pokémon Studio.** 💾
+
+If you already have a Tiled-based project, skip the “Convert your maps to Tiled format using Rxdata2Tiled” step and go directly to “Importing your Tiled maps into Pokémon Studio.”
+
+### Converting Your Maps to Tiled Format Using Rxdata2Tiled
+
+To convert `.rxdata` maps from RPG Maker XP into `.tmx` maps for Tiled, you need to use the `Rxdata2Tiled` converter developed by the community.  
+You must run it from your game’s debug console.
+
+You do **not** need to install it manually, it is included in Pokémon SDK source code since version .26.21.
+
+- Launch the game in debug mode to access the console.
+- Run the following command and ensure the console returns `true`:
+
+```ruby
+ScriptLoader.load_tool('Rxdata2Tiled/Rxdata2Tiled')
+#> True
+```
+
+- Run the following command and verify that the console lists all maps to convert, one line per map as `Converting MAP_NAME`:
+
+```ruby
+Rxdata2Tiled.run
+```
+
+- Close the game and console, then verify the following:
+  - The folder `data/tiled/maps` contains the converted `.tmx` maps.
+  - The folder `data/tiled/tilesets` contains the related `.tsx` tilesets.
+  - The folder `data/tiled/assets` contains all assets used by the maps, in `.png` format.
+
+### Importing Your Tiled Maps into Pokémon Studio
+
+1. Start Pokémon Studio.
+2. Open and load your project.
+3. Go to the `World Management` section.
+4. Click `+ New Map`.
+5. At the bottom of the editor panel, click the `Import` button under `Import Tiled Maps`.
+6. Select the `data/tiled/maps` folder, then click `Select Folder`.
+7. From the list that appears, select the maps to import, assign each one to its existing RPG Maker XP map ID, then click `Import X maps`.
+  1. You may rename the maps if necessary.
+  2. This step is crucial to ensure the new Tiled maps remain correctly linked to existing map IDs. Without this, your project may have problems and your maps will be converted in the wrong order.
+
+8. The imported maps should now appear in your project’s map list.
+9. Verify the maps by opening them in Tiled. This can be done directly from Pokémon Studio.
+10. Close RPG Maker XP if it is still open.
+11. Save your project in Pokémon Studio. 💾
+12. Launch the game via the `Play` button in Pokémon Studio to generate RPG Maker XP compatible maps. For each map, the console should display a green line like:  
+`[Tiled2Rxdata] Processing Map MAP_NAME`
+13. Open the project in RPG Maker XP to ensure maps display correctly.
+
+### Verifying Map Consistency
+
+For each map, verify the following after conversion.
+
+- Collision / passage positions, now handled through the `Passages` layer in Tiled.
+- SystemTags positions, now handled through the `SystemTags` layer in Tiled.
+- Create missing autotiles. If needed, refer to the technical demo.
+- Reassign fogs and panoramas on your new tilesets in RPG Maker XP.
+
+## <p>Updating Your Maps Once Tiled Mode Is Enabled</p>
+
+Whenever a map is modified and saved in Tiled, you can update the modified maps in Pokémon Studio by clicking yellow button `Update modified maps` **.** This button appears whenever Pokémon Studio detects changes in your `.tmx` map files.
+
+Then save your project so the updates are applied, and relaunch the game to reconvert the maps so the changes appear in both Pokémon Studio and RPG Maker XP.
+
+You are now fully prepared for **the arrival of**  **Pokémon Studio 3.0**! 🎯
+

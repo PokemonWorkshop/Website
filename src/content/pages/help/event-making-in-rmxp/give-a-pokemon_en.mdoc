@@ -1,0 +1,155 @@
+---
+title: Give a Pokemon
+seoDescription: How to give a Pokemon to the player from RMXP in Pokémon SDK
+publishDate: '2022-09-02 18:20:00'
+order: 0
+---
+
+## Give a Pokemon to the player (stored in Party)
+
+### Command
+
+To give a Pokemon to the player, enter the following script command :
+
+```text
+pokemon = add_pokemon(id, level, shiny)
+```
+
+The parameters are :
+
+- `id`: db\_symbol of the Pokemon (db\_symbol or # field of the [List of Pokémon](https://psdk.pokemonworkshop.com/db/db_pokemon.html)
+- `level`: Level of the Pokemon
+- `shiny`: true if you want the Pokemon to be shiny, false if you want to let the game decide. (optionnal)
+
+### Example
+
+Here are two examples where I give a level 5 Pikachu :
+
+```text
+add_pokemon(:pikachu, 5)
+add_pokemon(25, 5)
+```
+
+## Give a Pokémon and rename it
+
+### Command
+
+The command to give a Pokemon and rename it is the following :
+
+```text
+pokemon = add_rename_pokemon(id, level, shiny, num_char)
+```
+
+The parameters are :
+
+- `id`: db\_symbol of the Pokemon (db\_symbol or # field of the [List of Pokémon](https://psdk.pokemonworkshop.com/db/db_pokemon.html)
+- `level`: Level of the Pokemon
+- `shiny`: true if you want the Pokemon to be shiny, false if you want to let the game decide. (optionnal)
+- `num_char`: Number of character for the Pokémon's name (10 by default).
+
+### Example
+
+Here's an example where I give a level 5 Pikachu that can be renamed with 8 characters:
+
+```text
+add_rename_pokemon(:pikachu, 5, false, 8)
+```
+
+## Give a specific Pokemon
+
+### Command
+
+To give a specific Pokemon, you can use the following command :
+
+```text
+pokemon = add_specific_pokemon(hash)
+```
+
+This method is based on the [PFM::Pokemon.generate\_from\_hash](https://psdk.pokemonworkshop.fr/yard/PFM/Pokemon.html#generate_from_hash-class_method) method. The parameters are the same.
+
+### Example
+
+Adding an Alolan Meowth :
+
+```text
+ajouter_pokemon_param(id: :meowth, level: 5, form: 1)
+```
+
+## Rename a Pokemon
+
+### Command
+
+You can rename a Pokemon using a command. As you may have seen, I wrote "pokemon = " before the add commands. It's because those commands return the added Pokemon if they were successfully executed. You can then parse it as first paramter of the following function (or use its index in the party) :
+
+```text
+rename_pokemon(poke_or_index, num_char)
+```
+
+The parameters are :
+
+- `poke_or_index`: Index du Pokémon dans l'équipe (0, 1, 2, 3, 4, 5) ou le Pokémon à renommer.
+- `num_char`: Nombre de caractères pour renommer ce Pokémon (défaut : 10).
+
+### Examples
+
+Rename the Alolan Meowth :
+
+```text
+meowth = add_specific_pokemon(id: :meowth, level: 5, form: 1)
+rename_pokemon(meowth, 10) if meowth
+```
+
+Rename the second Pokemon in the Party :
+
+```text
+renommer_pokemon(1)
+```
+
+## Add an egg to the Party
+
+### Command
+
+The command to add an egg to the party is :
+
+```text
+add_egg(info)
+```
+
+The info parameter can be :
+
+- The ID of the Pokemon
+- The db symbol of the Pokemon
+- The same parameter(s) used in add\_specific\_pokemon
+
+### Examples
+
+Add a Pichu egg :
+
+```text
+add_egg(172)
+```
+
+or
+
+```text
+add_egg(:pichu)
+```
+
+or
+
+```text
+add_egg(id: :pichu, level: 1, form: 1)
+```
+
+## Store a Pokemon in the Storage system
+
+### Command
+
+To store a Pokemon directly in the PC, the following command can be used :
+
+```text
+pokemon = store_pokemon(id, level, shiny)
+```
+
+The parameters are the same as for add\_pokemon.
+

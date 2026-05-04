@@ -1,0 +1,191 @@
+---
+title: Overworld Encounters
+seoDescription: The Overworld Encounters PSDK plugin page to know how to install and
+  to use it
+publishDate: '2024-10-27 17:45:00'
+order: 20241027
+---
+
+## Brief description
+
+Set up an overworld encounter event that will dynamically pick a creature to generate a wild battle for, according to your Zone Group's settings, based on where it is in your map. This event will also take the appearance of the creature's overworld.
+
+### Changelog
+
+- Added a scheduler to reset the creatures when you exit the map.
+- Fixed some oversights and added some extra security.
+
+### Known issues
+
+- Maplink may cause the event not to respawn properly when the event is set too close to another map. Shouldn’t cause any crashes. Workaround: Set the event a little further away and it should respawn normally when you leave and come back.
+
+{% cta href="https://crypticsky.itch.io/overworldencounterspsdk" align="left" %}Download this plugin{% /cta %}
+
+Password: `psdk`
+
+---
+
+## How to install
+
+- Create a new file in your `./scripts` folder. For example, `006 PokemonNPC.rb`.
+- Copy paste the following code.
+
+```ruby
+# Script by CrypticSky
+# v0.2.4
+# Documentation:
+# EN
+# https://pokemonworkshop.com/en/sdk/plugins/overworld-encounters
+# FR
+# https://pokemonworkshop.com/fr/sdk/plugins/overworld-encounters
+
+module PFM
+  class Wild_Battle
+    public
+
+    # Return an array containining a single creature based on wild encounter groups based on event's location
+    # @param event [Game_Character]
+    # @return Array<PFM::Pokemon>
+    def generate_wild_creature(event)
+      # Store zone group data for parsing
+      groups = $env.current_zone_data.wild_groups.map { |group_name| data_group(group_name) }
+      # Find a group corresponding to the event's location
+      system_tag = event.system_tag_db_symbol
+      terrain_tag = event.terrain_tag
+      group = groups.find { |group| group.tool.nil? && group.system_tag == system_tag && group.terrain_tag == terrain_tag }
+      # If no group has been set for this location, return nothing
+      return [] if group.nil?
+
+      # Select one pokemon in the group according to the normal procedure
+      maxed = MAX_POKEMON_LEVEL_ABILITY.include?(creature_ability) && rand(100) < 50
+      all_creatures = (group.encounters).map do |encounter|
+        encounter.to_creature(maxed ? encounter.level_setup.range.end : nil)
+      end
+      creature_to_select = configure_creature(all_creatures)
+      selected_creature = select_creature(group, creature_to_select)
+      return selected_creature
+    end
+  end
+end
+
+class Interpreter < Interpreter_RMXP
+  public
+
+  # Set sprite of an event to a creature
+  # @param id [db_symbol] db_symbol of the creature
+  # @param form [Integer] form index of the creature
+  # @param female [Boolean] if the creature is a female
+  # @param shiny [Boolean] shiny state
+  # @param event_id [Integer] event ID
+  def set_sprite_to_creature(id, form = 0, female = false, shiny = false, event_id = @event_id)
+    if id.is_a?(String)
+      log_error('Argument Error : Creature ID cannot be string')
+      return
+    end
+    creature = data_creature_form(id,form)
+    if creature.db_symbol != id || creature.form != form
+      log_error("Database Error: The Form \##{form} of the Creature \##{id} doesn't exist.")
+      return
+    end
+    resources = creature.resources
+    return missing_resources_error(id) unless resources
+
+    filename = resources.character.empty? ? '000' : resources.character
+    if resources.has_female && female
+      if shiny && !resources.character_shiny_f.empty?
+        filename = resources.character_shiny_f
+      else
+        filename = resources.character_f unless resources.character_f.empty?
+      end
+    else
+      filename = resources.character_shiny if shiny && !resources.character_shiny.empty?
+    end
+    $game_map.events[event_id].set_appearance(filename)
+  end
+
+  # Return a wild creature according to the current zone of the event
+  # @param event_id [Integer]
+  # @return PFM::Pokemon
+  def pick_creature_encounter(event_id = @event_id)
+    pokemons = $wild_battle.generate_wild_creature($game_map.events[event_id])
+    if pokemons.empty? || data_creature(pokemons[0].id) == :__undef__
+      log_info("No encounterable pokemon for event #{event_id}")
+      return nil
+    end
+    ::Scheduler.add_message(:on_warp_process, Scene_Map, 'Cleanup Self Switch A', 99, self, :cleanup_a_switch)
+    $user_data[:scheduled_for_cleanup] = [] if $user_data[:scheduled_for_cleanup] == nil
+    $user_data[:scheduled_for_cleanup] += [[event_id,@map_id]]
+    return pokemons[0]
+  end
+
+  # Reset our events' A self-switches on map change
+  # This assumes your are using an Autorun that switches to the event touch page on self-switch A
+  # See the documentation for template eventing
+  def cleanup_a_switch
+    return if $user_data[:scheduled_for_cleanup].nil?
+
+    $user_data[:scheduled_for_cleanup].each do |i|
+      set_self_switch(false, 'A', i[0], i[1])
+    end
+    $user_data[:scheduled_for_cleanup] = []
+    ::Scheduler.__remove_task(:on_warp_process,Scene_Map,'Cleanup Self Switch A', 99)
+  end
+end
+```
+
+- Create an event in a map where you have set up a Zone and Groups. This event will have two pages:
+  - The first must be an Autorun page,
+  - The second can be Action Button, Player Touch, or Event touch.
+
+![The first page of the overworld encounter event that must be an Autorun page](./images/page1.png)
+
+![The second page of the event that can be Action button, Player touch or Event touch](./images/page2.png)
+
+### Autorun page
+
+```text
+# Set a local variable to the wild encounter pokemon
+pokemon = pick_creature_encounter
+set_LV(pokemon, :pokemon_data)
+
+# If LV(:pokemon_data).nil?
+# Erase Event
+# Else
+
+# Extract information for appearance setting
+pokemon = LV(:pokemon_data)
+set_LV(pokemon.db_symbol, :species)
+set_LV(pokemon.form, :form)
+set_LV(pokemon.shiny, :shiny)
+set_LV(pokemon.gender == 2, :female)
+
+# Wait to ensure the appearance setting won't be erased by the page change
+
+# Control Self Switch A = On
+# Wait 1 frame(s)
+
+# Set appearance
+# Need extendtext.exe for this one
+set_sprite_to_creature(LV(:species), LV(:form), LV(:female), LV(:shiny))
+
+# End
+```
+
+### Event interaction page
+
+```text
+# Enabled if Switch A is on
+
+# Optional, but a nice touch: Have the event cry out
+cry_pokemon(LV(:species))
+# Start the wild battle with the data we stored on page 1
+call_battle_wild(LV(:pokemon_data), LV(:pokemon_data).level)
+
+# Erase Event
+# We erase the event normally rather than forever so the encounter can respawn
+```
+
+## Credits
+
+CrypticSky
+

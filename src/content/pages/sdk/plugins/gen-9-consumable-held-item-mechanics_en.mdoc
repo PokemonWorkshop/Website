@@ -1,0 +1,96 @@
+---
+title: Gen 9 Consumable Held Item Mechanics
+seoDescription: Add consumable item from Scarlet & Violet to your fangame
+publishDate: '2023-07-23 16:19:00'
+order: 20230723
+---
+
+Here we go again with another psdk plugin!  
+  
+Gen 9 introduced some genuinely good QOL mechanics, and this was one of them.  
+Consumable items are now able to be "used up" like in Scarlet and Violet  
+by the flip of a switch! (as well as three new items)​
+
+## What does this plugin do?​
+
+At it's core it adds in a new switch (default is 126) that allows you to turn consumable items into items that just get used up. I believe this was introduced in Scarlet and Violet. It also adds in the effects for three newer items that were introduced past gen 6. Those items are the "Eject Pack", "Throat Spray" and "Room Service." Icons are provided with the download in case you want to add them to your game, but they are technically **optional**.
+
+This plugin will also effect these items/moves:
+
+- Air Balloon
+- Attract/Mental Herb (Mental herb is handled through the attract move's code.)
+- Eject Button
+- **Eject Pack**
+- Focus Sash
+- Red Card
+- **Room Service**
+- **Throat Spray**
+- White Herb
+
+_\* Bold indicates they are items with entirely new code_
+
+## Installation
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+1.) Download the zip   
+2.) Open the zip, extract both the plugin file and the `00001 Gen9HeldItemPatches` to your scripts folder   
+**OPTIONAL:** Extract the three icons to your `Graphics/Icons` folder if you want to add "Eject Pack" "Throat Spray" and "Room Service" to your game!   
+3.) Now is when we have to add in all the new text to our game. It should just be a copy and paste for you at the bottom of your `Data/Text/Dialogs/100019.csv` file
+
+{% /column %}
+{% column %}
+{% cta href="https://www.mediafire.com/file/6heans08mw58jfe/Gen9_HeldItem_Mechanics.zip/file" align="center" %}Download the zip{% /cta %}
+
+{% /column %}
+{% /row %}
+
+```text
+[VAR PKNICK(0000)]'s Focus Sash was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Focus Sash was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Focus Sash was used upp...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Air Balloon was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Air Balloon was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Air Balloon was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Throat Spray was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Throat Spray was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Throat Spray was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Eject Button was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Eject Button was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Eject Button was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Eject Pack was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Eject Pack was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Eject Pack was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s White Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s White Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s White Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Mental Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Mental Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Mental Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Red Card was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Red Card was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Red Card was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Room Service was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Room Service was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Room Service was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+```
+
+4.) Now open up that `00001 Gen9HeldItemPatches` folder and properly assign the text for each item. You can even change the switch's number here if you wanted! Now you're done. :)  
+  
+Check out the next section if you want to add in those three new items.
+
+## Adding in those new items​
+
+1.) In case you somehow missed it earlier, open the zip and extract the icons to your `Graphics/Icons` folder for whichever item you want to add to your game!  
+2.) Open Pokémon Studio, click your project, and go to your item data  
+3.) Add your new item, give whatever name & description (you can use bulbapedia) but make sure the identifiers are as followed:
+
+- Eject Pack -\> `:eject_pack`
+- Throat Spray -\> `:throat_spray`
+- Room Service -\> `:room_service`
+
+4.) Assign the icon you want  
+5.) Make sure the parameters are " **limited use**" and " **can be held**"
+
+And you're done :)
+

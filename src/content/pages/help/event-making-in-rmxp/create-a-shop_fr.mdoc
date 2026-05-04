@@ -1,0 +1,96 @@
+---
+title: Créer un Magasin (shop)
+seoDescription: Comment créer un magasin d'objet dans RPG Maker XP
+order: 0
+---
+
+![Shop UI](https://image.communityscriptproject.com/psdkwiki/img/shop_ui.png)
+
+Avant toute chose, il est important de noter que le Shop n'acceptera pas de vendre des objets dont le prix est inférieur ou égal à 0. Retenez bien cette information, elle est importante pour la suite.
+
+ 
+
+Il existe deux types de magasins : les magasins illimités et les magasins limités. Ce tutoriel vous apprendra à ouvrir des magasins des deux types.
+
+## Ouvrir un magasin illimité
+
+Pour ouvrir un magasin illimité, voici comment faire :
+
+Pour ouvrir un magasin illimité, il vous faudra utiliser la commande `open_shop`. Cette commande permet d'ouvrir un magasin en laissant la possibilité de changer temporairement le prix des objets, si vous le désirez. Cette commande prend 1 paramètre obligatoire, et deux paramètres facultatifs. Voyons ça ensemble.
+
+La commande open\_shop nécessite donc un premier paramètre pour initialiser la liste d'objets du magasin, qui peut soit prendre la forme d'un tableau de db\_symbol, soit d'un Symbol (nous y reviendrons plus tard, avec les magasins limités). Le deuxième paramètre doit être un Hash, pour permettre de réécrire temporairement le prix de certains objets. Enfin, le troisième paramètre doit être appelé dans la commande et doit être un Booléen (true ou false), afin d'activer ou désactiver le fond animé de l'interface du magasin.
+
+Voici un exemple que nous allons décortiquer ensemble :
+
+```text
+open_shop([:poke_ball, :potion, :antidote, :paralyze_heal], {poke_ball: 150, potion: 300, paralyze_heal: 400}, show_background: true)
+```
+
+Le premier paramètre correspond à [:poke\_ball_,_ :potion, :antidote, :paralyze\_heal] et est obligatoire. Il indique au magasin que les objets à vendre sont : Poké Ball, Potion, Antidote et Anti-Para. Jusqu'ici, aucun problème.
+
+Le deuxième paramètre correspond à {poke\_ball: 150, potion: 300, paralyze\_heal: 400} et est facultatif. Il indique au magasin qu'il faut temporairement changer le prix de certains objets. Ici, il s'agit de descendre le prix des Poké Balls à 150, monter le prix des Potions à 300 et celui des Anti-Paras à 400. Celui des Antidote reste inchangé.
+
+Le troisième paramètre correspond à show\_background: true et est aussi facultatif. Sa valeur de base est réglée sur true quoi qu'il arrive. Si vous n'en avez pas besoin, vous pouvez même ne pas le mettre dans votre commande. Il indique au magasin s'il faut afficher le fond animé ou non. True pour l'afficher, false pour ne pas l'afficher.
+
+Il est nécessaire de respecter la façon d'écrire cette méthode. Le premier paramètre s'écrit donc avec des [], le deuxième avec des {}, et le troisième avec show\_background: suivi de la valeur à assigner.
+
+## Ouvrir un magasin limité
+
+### Création du stock du magasin
+
+Pour ouvrir un magasin limité, il faut d'abord créer un magasin qui contiendra les objets et le nombre disponible pour chacun d'eux. Pour cela, il faudra utiliser la commande `add_items_to_limited_shop`. Cette commande prend 2 paramètres obligatoires, et deux paramètres facultatifs. Détaillons ensemble ces paramètres avec un exemple.
+
+```text
+add_limited_shop(:shop_argenta, [:poke_ball, :potion, :antidote, :paralyze_heal], [5, 3, 2, 1], shop_rewrite: false)
+```
+
+Le premier paramètre correspond à :shop\_argenta et est obligatoire. Il permet de donner un "nom" à votre magasin, ce sera ce nom qu'il faudra renseigner plus tard à une autre commande.
+
+Le deuxième paramètre correspond à [:poke\_ball, :potion, :antidote, :paralyze\_heal] et est obligatoire. Il indique au magasin que les objets à vendre sont : Poké Ball, Potion, Antidote et Anti-Para.
+
+Le troisième paramètre, correspondant à [5, 3, 2, 1], est facultatif. Il indique au magasin le stock de chaque objet, dans l'ordre d'apparition des objets dans le tableau. Nous aurons donc ici : 5 Poké Balls, 3 Potions, 2 Antidotes et 1 Anti-Para. Si le tableau ne contient pas suffisamment d'entrées ou s'il n'y a pas de tableau, le magasin possédera par défaut qu'un exemplaire de chaque objet envoyé en paramètre.
+
+Le quatrième paramètre correspond à shop\_rewrite: false et est facultatif. Il indique s'il faut écraser le magasin existant ou non lors de la création du magasin. Ainsi, si :shop\_argenta existe déjà, une valeur true effacera l'ancien avec le nouveau, une valeur false ne fera qu'ajouter les objets dans le magasin existant.
+
+### Remise en stock d'objets dans un magasin
+
+Comme dit précédemment, vous pourriez utiliser la commande `add_limited_shop` pour ajouter des objets à votre magasin. Ou bien vous pouvez utiliser une commande faite pour, `add_items_to_limited_shop`. Cette commande prend exactement les 3 mêmes premiers paramètres que `add_limited_shop`.
+
+### Enlever du stock à un objet / enlever totalement un objet d'un magasin
+
+Pour enlever du stock à un objet ou pour enlever cet objet complètement, une seule commande : `remove_items_from_limited_shop`.
+
+ 
+
+Cette commande prend les mêmes paramètres que celle pour ajouter du stock, à une exception près : le paramètre concernant le stock à enlever est facultatif. S'il n'est pas renseigné, le magasin supprimera tous les objets fournis en paramètre. S'il est fourni, il supprimera le nombre d'articles correspondant à sa place dans le tableau.
+
+ 
+
+Exemple :
+
+```text
+remove_items_from_limited_shop(:shop_argenta, [:poke_ball, :potion, :antidote, :paralyze_heal], [10, 15, 20])
+```
+
+Cette commande enlèvera 10 Poké Balls, 15 Potions, 20 Antidotes, et tout le stock d'Anti-Para car aucun nombre n'a été renseigné.
+
+### Ouverture du magasin limité
+
+Maintenant que nous avons créé le stock du magasin, il faut l'ouvrir. Pour cela, il suffit de reprendre la commande pour ouvrir un magasin illimité `open_shop` mais de changer les paramètres.
+
+ 
+
+Souvenez-vous, il a été dit plus haut qu'il était possible de mettre un Symbol en premier paramètre : il vous suffit simplement de renseigner le Symbol de votre magasin dans le premier paramètre, et le reste c'est exactement pareil qu'expliqué plus haut.
+
+### Messages personnalisés lors de la fermeture du magasin
+
+Le nouveau Shop inclut 5 scénarios distincts vous permettant de créer des messages personnalisés en fonction de comment votre joueur quitte le Shop. Pour utiliser cette fonctionnalité, il vous suffit de créer une condition utilisant la valeur de la variable 26 TMP1. Voici la liste des valeurs que cette variable peut adopter et leurs significations :
+
+- -1 : Le magasin n'a pas pu s'ouvrir (n'a plus de stock)
+- 0 : Le joueur a quitté le magasin sans rien acheter
+- 1 : Le joueur a quitté le magasin en achetant un ou plusieurs mêmes objets (1 Hyper Ball ou 50 Hyper Ball causeront ce scénario)
+- 2 : Le joueur a quitté le magasin en achetant plusieurs articles différents
+- 3 : Le joueur a dévalisé le magasin (causera la fermeture automatique de ce dernier)
+
+![Shop Scenario](https://image.communityscriptproject.com/psdkwiki/img/shop_scenario_fr.png)
+

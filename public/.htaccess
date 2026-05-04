@@ -1,0 +1,36 @@
+# 1. Disable PHP
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+<FilesMatch "\.php$">
+    # Apache 2.4+
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    # Apache 2.2
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 2. Redirect people coming from the root to their respective language
+  RewriteCond %{HTTP:Accept-Language} ^fr [NC]
+  RewriteRule ^$ fr/ [R=307,L]
+
+  # For all other languages, redirect to en/
+  RewriteRule ^$ en/ [R=307,L]
+
+  # 3. Rewrite URL containing a : with _ instead of :
+  RewriteRule ^([^:]+):([^:]+)$ $1_$2 [L]
+</IfModule>

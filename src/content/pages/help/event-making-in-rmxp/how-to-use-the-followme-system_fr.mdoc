@@ -1,0 +1,89 @@
+---
+title: Utiliser le FollowMe
+seoDescription: Toute les possibilités du système de FollowMe dans PokémonSDK
+order: 0
+---
+
+PSDK intègre un système de FollowMe relativement pratique depuis 2014! Ce système vous permet de faire suivre le héros par :
+
+- Ses Pokémon
+- Ses amis (Héros de 2 à l'infini dans l'onglet Héros de RMXP)
+- Les Pokémon de l'un de ses amis (`$storage.other_party`)
+
+Il est également possible que des évènements suivent le héros dans une certaine mesure. Et il est également possible que des évènements se suivent entre eux.
+
+## Gestion du système
+
+### Activation / Désactivation
+
+Pour activer le FollowMe activez l'interrupteur `19` " **FollowMe Actif**". Pour le désactiver, désactivez ce même interrupteur.
+
+### Désactivation temporaire
+
+Si pour des raisons d'animation vous avez besoin de désactiver temporairement le FollowMe et de le remettre dans son état d'activation précédent (qu'il reste désactivé s'il était désactivé) vous devez utiliser les commandes suivantes :
+
+- désactivation :`Yuki::FollowMe.smart_disable`
+- re-activation supposée :`Yuki::FollowMe.smart_enable`
+
+Ceci est utilisé pour Surf par exemple.
+
+ 
+
+Note : Si vous voulez éviter la réactivation lorsque le joueur est à vélo, utilisez plutôt la commande suivante :
+
+```text
+Yuki::FollowMe.smart_enable unless $game_switches[::Yuki::Sw::EV_Bicycle] || $game_switches[::Yuki::Sw::EV_AccroBike]
+```
+
+### Définir le nombre de Pokémon qui vous suivent.
+
+Pour définir le nombre de Pokémon qui vous suivent, modifiez la variable `19` " **Nb Pokémon Suiveurs**". Si elle vaut 0 aucun ne vous suit, si elle vaut 1, le premier Pokémon de l'équipe vous suivent, si elle vaut 2 les deux premiers Pokémon de l'équipe vous suit, etc...
+
+### Définir le nombre d'amis qui vous suivent.
+
+Dans le même ordre d'idée que la section précédente, il faut modifier la variable `18` " **Nb Humain Suiveurs**". Si elle vaut 0 aucun amis vous suit, si elle vaut 1, le héros 2 vous suit, si elle vaut 2, le héros 2 et 3 vous suit etc...
+
+### Définir le nombre de Pokémon amis qui vous suit.
+
+Dans le même ordre d'idée que pour vos Pokémon, vous devez modifier la variable `20` " **Nb Pkm Ami Suiveurs**". Le fonctionnement est similaire.
+
+## Déplacer un follower
+
+Pour des raisons de scénarisation, il est possible de déplacer les Follower. Pour ça modifiez la valeur de la variable `21` " **Follower Selectionné**" et déplacez le héros (ça déplacera le follower n° variable 21).
+
+## Modifier la propriété Z du joueur avec ses follower
+
+Pour que les glitches graphiques avec les ponts soient minimaux, il est conseillé d'affecter la propriété z du héros et de ses follower au travers d'un évènement caché dans un escalier. Pour faire ceci utilisez la commande :
+
+```text
+$game_player.change_z_with_follower(z)
+```
+
+Il est conseillé de remplacer `z` par 4 quand vous voullez que le héros puisse être au dessus du pont. Et remplacez `z` par 0 si vous voulez le faire revenir sur la couche normale.
+
+## Utiliser le FollowMe sur des évènements
+
+Tous les objets de type [`Game_Character`](https://psdk.pokemonworkshop.fr/yard/Game_Character.html) peuvent suivre d'autres objet de type [`Game_Character`](https://psdk.pokemonworkshop.fr/yard/Game_Character.html). Pour que l'un suive l'autre, il suffit d'appeler la méthode `set_follower` de l'autre avec pour paramètre l'un.
+
+ 
+
+Par exemple, pour que l'évènement d'id 001 suive l'évènement d'id 002 :
+
+```text
+get_character(2).set_follower(get_character(1))
+```
+
+Pour que l'évènement d'id 005 suive le héros (il se placera avant le Pokémon) :
+
+```text
+$game_player.set_follower(get_character(5))
+```
+
+## Délier le héros des évènements qui le suit
+
+Pour que les évènements arrêtent de suivre le héros, exécutez la commande suivante :
+
+```text
+$game_player.reset_follower
+```
+

@@ -1,0 +1,33 @@
+---
+title: Create a starter choice
+seoDescription: How to give the starter Pokémon to the player in RPG Maker XP
+publishDate: '2022-09-02 18:45:00'
+order: 0
+---
+
+As in all official Pokemon games, your Fangame can have a Starter Pokemon choice (also known as `Starters`) .
+
+## Getting it thanks to a NPC
+
+To make a starter choice, you have to understand how to [give a Pokemon](/en/help/event-making-in-rmxp/give-a-pokemon). if you know that, you can begin to follow this tutorial. The first step is to create a variable called `Starter`. Then, add a condition to your event, like this :
+
+![Single condition](https://image.communityscriptproject.com/psdkwiki/img/event_making/001en.png)
+
+When it’s done, add a choice with the name of the Pokemon that you wish to give. E.g. :
+
+![Choice](https://image.communityscriptproject.com/psdkwiki/img/event_making/002en.png)
+
+Then you’ll have to [give a Pokemon](/en/help/event-making-in-rmxp/give-a-pokemon) according to the player choice.
+
+![FullChoice](https://image.communityscriptproject.com/psdkwiki/img/event_making/003en.png)
+
+Repeat this script for each Pokemon, but don’t forget to modify the `Starter` value (1 for the first Pokémon, 2 for the second one, etc...). It’s useful for you if you wish to fight a different Pokemon depending on the starter (against the Rival character for example). The last step is easy, create a second page which will be enabled if the local switch [A] is enabled, to avoid the player to choose several Pokemon.
+
+## Getting a Pokemon with a ball (1G / 2G)
+
+This method is the easiest one, you have to create an event (Ball) and to configure it like this :
+
+![BallChoice](https://image.communityscriptproject.com/psdkwiki/img/event_making/004en.png)
+
+The event is exactly the same as the one in the previous method, with the difference that there isn’t any choice in this event. This choice will be done manually by the Player who will click on each Ball. Once more, don’t forget to modify `Starter` value depending on the chosen Pokémon.
+

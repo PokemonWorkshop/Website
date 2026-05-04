@@ -1,0 +1,93 @@
+---
+title: Bonnes pratiques de Level Design
+seoDescription: Des bonnes pratiques si vous souhaitez créer vos cartes en tant que
+  Level Designer
+cover:
+- "./images/screen_bp_ld.png"
+publishDate: '2024-03-10 16:46:00'
+order: 20240310
+---
+
+Cet article a pour but de vous proposer quelques bonnes pratiques à suivre pour faire de vos cartes des éléments pertinents pour **guider** vos joueurs, leur **raconter une histoire** et rendre votre **jeu plus attractif**.
+
+## Introduction
+
+Lorsqu'on débute dans la **création des cartes de son jeu** , on a tendance à vite se disperser.
+
+On veut obtenir du résultat rapidement, sans effort, dès la première itération.
+
+Dans le meilleur des cas, on essaye d'observer ce qui fonctionne chez les autres. On copie, et on tombe rapidement dans un mimétisme, sans comprendre la finalité ni la mise en oeuvre.
+
+C'est ce qu'on appelle en informatique le [Culte du cargo](https://fr.wikipedia.org/wiki/Culte_du_cargo "Culte du cargo"). En résumé prendre un bout de code (copier-coller) sans le comprendre et espérer qu'il fera la chose attendue dans un tout autre contexte.
+
+Il est important de comprendre que vous allez devoir **apprendre les bases** pour acquiérir les différentes compétences nécessaires pour développer un jeu vidéo.
+
+D'autant plus si vous souhaitez déléguer une partie du développement à des coéquipiers. Difficile d'envisager recruter une personne, d'organiser et valider son travail si on ne comprend pas de quoi on parle.
+
+## Quelques bonnes pratiques générales
+
+### Définir un objectif clair pour la carte
+
+Avant de commencer à travailler sur votre carte, il est important de **définir clairement son objectif et sa finalité**. Cela aidera à orienter sa conception et à garantir que la carte remplit bien son rôle dans le jeu.
+
+### Créer une carte qui répond aux attentes du joueur
+
+Vos cartes doivent être conçues pour offrir une expérience de jeu **agréable** pour le joueur. Cela signifie qu'il faut tenir compte des compétences et des capacités du joueur, des mécaniques de jeu et du niveau de difficulté attendu.
+
+### Concevoir une carte qui raconte une histoire
+
+Vos cartes doivent raconter une histoire et transmettre des informations au joueur, que ce soit à travers des éléments visuels ou des dialogues. La carte doit être cohérente avec le reste du jeu et **apporter une contribution significative à la narration globale**.
+
+### Équilibrer le rythme de la carte
+
+Vos cartes doivent être conçues de manière à maintenir un bon rythme de jeu, avec **des moments d'intensité et des moments de calme**. Les moments de calme peuvent être utilisés pour permettre au joueur de se reposer, de récupérer des objets ou de résoudre des énigmes, tandis que les moments d'intensité peuvent impliquer des combats ou des événements dramatiques.
+
+### Éviter la répétition
+
+Il est important d'éviter la répétition des éléments de la carte. Cela signifie que les textures et les objets doivent être placés avec soin pour **éviter de créer des motifs répétitifs** (aussi appelés patterns) qui pourraient ennuyer le joueur.
+
+### Utiliser les tilesets avec parcimonie
+
+Les tilesets peuvent être utiles pour faciliter la création de cartes, mais ils doivent être utilisés avec parcimonie. Il est important d'ajouter de la variété et de la complexité à la carte en utilisant des éléments uniques, plutôt qu'en se reposant sur les tilesets.
+
+### Utiliser les couleurs avec soin
+
+Les couleurs peuvent être utilisées pour créer des contrastes et des effets visuels intéressants, mais il est important d'utiliser les couleurs avec soin pour **éviter de surcharger la carte et de rendre les éléments difficiles à discerner.** La couleur doit servir à la compréhension, pas la desservir. Attention également aux effets additionnels (shaders, fogs, fondus) qui ont tendance, mal dosés, à rendre les cartes très brouillonnes.
+
+### Tester votre carte
+
+Il est important de tester **régulièrement** votre carte pendant la conception pour garantir qu'elle est jouable et équilibrée. Les tests peuvent aider à identifier les problèmes de gameplay, de difficulté ou de conception.
+
+### Prendre en compte les différentes configurations d'écran
+
+Vos cartes doivent être conçues de manière à être jouables sur différentes configurations d'écran. Cela signifie qu'il faut tenir compte des différents formats d'écran et des résolutions d'écran. En particulier de la résolution d'écran de base de votre jeu.
+
+### Prendre en compte les performances du jeu
+
+Les cartes doivent être conçues de manière à fonctionner correctement sur les différentes configurations de matériel. Il est important de prendre en compte les limites de performance du jeu et de s'assurer que les éléments graphiques de la carte **ne surchargent pas le jeu**.
+
+### Créer des cartes avec une valeur de rejouabilité
+
+Les cartes doivent être conçues pour offrir une expérience de jeu intéressante et différente à chaque fois que le joueur y joue. Cela peut être réalisé en introduisant des éléments aléatoires, en proposant différentes routes à travers la carte ou en offrant différentes options de jeu. Dans Pokémon, l’exemple typique est la carte qui possède des talus qui peuvent être empruntés seulement dans un sens, ou encore le fait qu’on revienne sur la carte récupérer des objets qu’on ne pouvait pas obtenir sans certaines capacités spéciales (Coupe, Surf, etc.).
+
+### Créer une carte qui encourage l'exploration
+
+Proche du point précédent, les cartes doivent être conçues pour encourager l'exploration et la **découverte de nouvelles zones**. Cela peut être réalisé en introduisant des secrets cachés, des objets spéciaux ou des zones inaccessibles au premier abord.
+
+### S'assurer que la carte est cohérente avec le reste du jeu
+
+Votre carte doit être conçue pour s'inscrire dans l'univers et le style graphique de votre jeu. Cela signifie qu'il faut tenir compte des éléments visuels, des sons et de l'ambiance du jeu pour garantir que la carte soit cohérente avec le reste du jeu. Un bon conseil est de démarrer avec peu d'éléments différents de la carte précédente, et de travailler progressivement autour de ce socle commun. Les rappels permettent d'ailleurs d'améliorer la transition entre les cartes, et rendre votre monde plus cohérent.
+
+### Éviter les points de blocage
+
+Il est important d' **éviter les points de blocage** dans la carte qui **empêcheraient** le joueur de progresser. Cela peut être réalisé en offrant plusieurs options de progression ou en garantissant que les objets nécessaires pour progresser sont facilement **accessibles**.
+
+### Travailler en collaboration avec les autres membres de l'équipe
+
+Le Level Designer doit travailler en collaboration avec les autres membres de l'équipe, notamment les artistes, les programmeurs et les concepteurs de jeu, pour garantir que la carte fonctionne correctement dans le cadre du jeu. Si vous avez la chance de travailler avec d'autres développeurs, demandez des schémas, des informations sur ce qui doit se trouver sur la carte. Une bonne préparation permet de réduire le nombre d'itérations, et de ne pas passer à côté de ce qui était attendu.
+
+En espérant que ces quelques principes vous permettront de vous concentrer sur l'essentiel et réduire les défauts de conception de vos cartes.
+
+Gardez à l'esprit que vous êtes le guide de vos joueurs.  
+Amusez-vous bien ! 🌲
+

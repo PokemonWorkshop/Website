@@ -1,0 +1,169 @@
+---
+title: How to create a custom SystemTag?
+seoDescription: A page describing how to create custom SystemTag in PSDK
+tags:
+- PSDK
+publishDate: '2024-09-17 18:44:00'
+order: 0
+---
+
+## What is a custom "SystemTag?": {% id="what-is-it" %}
+
+A custom "SystemTag" is a custom tag you can assign to your tiles.
+
+This can do things like:
+
+- Custom functionality _(SystemTags alone_ _can do a lot, as they are used to create wild encounters, slide on ice tiles, stop you from sliding, surf, etc.)_
+- Custom battle backgrounds
+- Custom particle effects
+- Custom wild encounters
+
+## Getting started: {% id="getting-started" %}
+
+To create your custom SystemTag we will be creating 5 new short scripts:
+
+- 00001 GameData\_SystemTags.rb
+- 00002 Environment.rb 
+- 00003 Background\_Names.rb
+- 00004 Terrain\_Tags_\__Table.rb
+- 00005 Game\_Character_\__particles.rb - Optional
+
+### Creating our SystemTag's db_symbol {% id="creating+systemtag+db_symbol" %}
+
+#### 00001 GameData_SystemTags.rb:
+
+```ruby
+module GameData
+  module SystemTags
+    module_function
+    # Column 0, row 12 on the SystemTags tileset
+    CustomPuddle = gen 0, 12
+
+    # Gives the db_symbol of the system tag
+    # @param system_tag [Integer]
+    # @return [Symbol]
+    alias og_system_tag_db_symbol system_tag_db_symbol
+    module_function :og_system_tag_db_symbol
+    def system_tag_db_symbol(system_tag)
+      case system_tag
+      when CustomPuddle
+        return :custom_puddle
+      else
+        og_system_tag_db_symbol(system_tag)
+      end
+    end
+  end
+end
+```
+
+- `CustomPuddle = gen 0, 12` - We are creating a new constant that is mapped to the tile in the specified position in our SystemTags tileset.
+- `alias og_system_tag_db_symbol system_tag_db_symbol` - Aliasing the original method. (Futureproofing.)
+- We are returning a new db\_symbol that will be used when the player is standing on the tile. It **must** start with `custom_`, and in this case I used `custom_puddle`. (This is used in Studio when defining your custom zone to groups, as well as when you assign a particle effect to this SystemTag.)
+
+### Creating the zone_type for your SystemTag {% id="creating+zone+types" %}
+
+#### 00002 Environment.rb
+
+```ruby
+module PFM
+  class Environment
+    def custom_puddle?
+      tag = @game_state.game_player.system_tag
+      return (tag == CustomPuddle)
+    end
+
+    alias og_get_zone_type get_zone_type
+    def get_zone_type(ice_prio = false)
+      if custom_puddle?
+        return 11
+      end
+      og_get_zone_type(ice_prio = false)
+    end
+
+    alias og_convert_zone_type convert_zone_type
+    def convert_zone_type(system_tag)
+      case system_tag
+      when CustomPuddle
+        return 11
+      end
+      og_convert_zone_type(system_tag)
+    end
+  end
+end
+```
+
+- We are creating a method that checks if the user is on the new SystemTag we created.
+- We create an alias that will futureproof our method `get_zone_type`
+- We redefine `get_zone_type` and add our method that checks if the user is on the new SystemTag and returns a value. When future SystemTags come out, you will need to update this number.
+- If the user isn't on the new tile, it calls the original `get_zone_type` method.
+- We create an alias that will futureproof our method `convert_zone_type`
+- We redefine `convert_zone_type`, check if the user is on the new SystemTag, return the **same value** that we use in `get_zone_type`. If the user isn't on the new tile, it calls the original `convert_zone_type` method.
+
+### Setting a background for your SystemTag {% id="custom+background" %}
+
+#### 00003 Background_Names.rb
+
+```ruby
+module Battle
+  class Logic
+    class BattleInfo
+      # Name of the background according to their processed zone_type
+      BACKGROUND_NAMES.push('sunflower') # 11
+    end
+  end
+end
+```
+
+- By default, `BACKGROUND_NAMES` will pick an image for your zone. If you ignore this step, it will have a black background when you battle on this tile.
+- We are pushing a new string to an already existing array called `BACKGROUND_NAMES`
+- The string should be an image found in your `graphics/battlebacks` folder
+- The image for the background is decided automatically from the array. This is why your number should be +1 from the previous one.
+
+### Setting your SystemTag to have functionality with LocationBased {% id="locationbased+functionality" %}
+
+#### 00004 Terrain_Tags_Table.rb
+
+```ruby
+class Game_Map
+  TERRAIN_TAGS_TABLE[GameData::SystemTags::CustomPuddle] = :shallow_water
+end
+```
+
+- Setting our new SystemTag to use the same terrain tag as `:shallow_water`
+- This is for moves with the `LocationBased` function
+
+### Creating particle effects for your SystemTag (Optional) {% id="custom+particles" %}
+
+#### 00005 Game_Character_particles.rb
+
+```ruby
+class Game_Character
+  PARTICLES_METHODS[CustomPuddle] = :particle_push_custom_puddle
+
+  # Define the particle_push_custom_puddle method
+  def particle_push_custom_puddle
+    Yuki::Particles.add_particle(self, :custom_puddle)
+  end
+end
+```
+
+- This is specifically for adding a new particle for your new SystemTag we're creating. If you have no interest in adding a particle effect, you can skip this step.
+- `PARTICLES_METHODS[CustomPuddle] = :particle_push_custom_puddle` - We are adding our new constant to the `PARTICLES_METHODS` hash, telling it the method to call when you step on this tile.
+- We are creating the method that we are mapping to the hash. Use the db\_symbol we set in the previous script.
+
+#### Editing your Particles.rb
+
+You define the particle's animation here, in your `Data\Animations\Particles.rb` file. Scroll to the bottom, above `save` and you can define your animation there. There's plenty of examples in this file, but a good thing to know is: you can have a unique particle effect for each TerrainTag on any SystemTag!
+
+After you've edited it, open cmd, change the directory to your `Data\Animations` folder and run: `ruby Particles.rb`
+
+## Conclusion {% id="conclusion" %}
+
+With all of that, you should now you easily be able to use the things we've created to add new functionality to when the player steps on the tile, while having existing things properly set up.
+
+Don't forget to go into your `graphics/tilesets/prio_w.png` and `Data/Tiled/Assets/prio_w.png` and add the new tag on the first "free" tile!
+
+#### Note:
+
+You can combine these scripts into one, as long as you do so in the correct order.
+

@@ -1,0 +1,57 @@
+---
+title: Comment configurer la GTS ?
+seoDescription: Un tutoriel rapide expliquant comment configurer la GTS !
+order: 0
+---
+
+![](./images/image_2023-02-19_151257856.png)
+
+L'utilisation de la GTS est un excellent moyen de rendre votre communauté encore plus connectée. Bien que les fonctionnalités de base de la GTS ne soient pas extrêmement avancées par défaut, il s'agit d'un système entièrement gratuit qui vous permet d'échanger avec d'autres joueurs. Si vous connaissez le langage Ruby, vous pouvez incorporer de nouvelles fonctionnalités et ainsi l'améliorer !
+
+## Pour commencer
+
+Vous devez créer un compte sur le site [GTS by Hills Tech](http://gts.kawasemi.de "GTS (by Hills Tech)"). Une fois que vous avez créé un compte ou que vous vous êtes connecté, vous remarquerez quelques onglets en haut. Vous pourrez les explorer plus tard, mais pour l'instant, allez dans l'onglet "MY GAMES". Cliquez sur le bouton "NEW GAME" et mettez votre fangame comme titre. Vous devriez maintenant voir quelque chose comme ceci :
+
+![](./images/image_2023-02-19_152102930.png)
+
+Nous devons maintenant apporter un petit monkey-patch au code de base de la GTS pour qu'il charge l'ID de notre fangame. C'est assez facile !
+
+```text
+module GTS
+  module Settings  
+    remove_const :GAMEID
+    remove_const :URL
+    remove_const :SPECIES_SHOWN
+    remove_const :SORT_MODE
+    remove_const :BLACK_LIST
+    remove_const :GAME_CODE
+    remove_const :BGM
+
+    # ID of the game, replace 0 by what you got on the pannel
+    GAMEID = 0
+    # URL of the GTS server (Don't touch)
+    URL = 'http://gts.kawasemi.de/api.php?i='
+    # Condition to see the Pokemon in the search result (All/Seen/Owned)
+    SPECIES_SHOWN = 'All'
+    # How the Pokemon are searched (Alphabetical/Regional)
+    SORT_MODE = 'Alphabetical'
+    # List of black listed Pokemon (filtered out of the search) put ID or db_symbol here
+    BLACK_LIST = []
+    # Internal Game Code to know if the Pokemon comes from this game or another (like DPP <-> HGSS), you can change this
+    GAME_CODE = '255'
+    # Scene BGM (Complete path in lower case without extname)
+    BGM = 'audio/bgm/xy_gts'
+  end
+end
+```
+
+**NOTE :** Si vous ne savez pas comment faire un "monkey-patch", allez dans le dossier "scripts" de votre projet et créez un fichier Ruby nommé par exemple "00100 GTS\_ID.rb".
+
+## Comment lancer la GTS
+
+Dans un événement, ajouter un script et mettez GTS.open comme indiqué ci-dessous.
+
+![](./images/image_2023-02-19_153004080.png)
+
+Voilà, c'est déjà terminé !
+

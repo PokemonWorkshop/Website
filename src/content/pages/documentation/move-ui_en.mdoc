@@ -1,0 +1,193 @@
+---
+title: Move Editor
+seoDescription: Learn how to use the move editor
+cover:
+- "./images/move.png"
+publishDate: '2022-11-06 16:23:00'
+order: 0
+---
+
+The Pokémon Studio **move** editor allow you to create and edit moves!
+
+## Introduction
+
+{% row columns="1/1" bottom_margin="margin-l" %}
+{% column %}
+This tutorial will be divided into 9 sections in the order of the following picture:
+
+{% /column %}
+{% /row %}
+
+![Tutorial order](./images/capture.png)
+
+• 1 - Move creation button,
+
+• 2 - Move drop-down menu,
+
+• 3 - Move editing tab,
+
+• 4 - Move data editing tab,
+
+• 5 - Parameter tab,
+
+• 6 - Characteristics tab,
+
+• 7 - Status tab,
+
+• 8 - Statistics modification tab,
+
+• 9 - Show Pokémon list.
+
+## Create a move
+
+Click on the **+ New Move** button and this dialog will show up:
+
+![Move creation UI](./images/attaque2.png)
+
+• The **Name** box lets you define the name of the move.
+
+• The **Description** box lets you add a description of the move.
+
+• The **Type** box lets you define the type of the move.
+
+• The Category box lets you configure whether the move is "Physical" (which directly hits the opponent), "Special" (which hits the opponent from a distance) or "Status" (which does no damage).
+
+•&nbsp;The **Identifier** box defines the `db_symbol`_._ You will refer to the move with the `db_symbol` when making scripts or using script commands.
+
+**Warning** : the `db_symbol` cannot be changed.
+
+## The move drop-down menu
+
+![Move selector](./images/attaque3.png)
+
+The drop-down menu lets you search by the name of the move, which you can enter in English or French in the search bar.
+
+## Editing move
+
+Clicking on **move name** shows this dialog:
+
+![Move information editor](./images/attaque4.png)
+
+It's essentially the same as creating a move but without the **identifier** box.
+
+## Move data
+
+When you click on the **data** box, this dialog shows up:
+
+![Move data editor](./images/attaque5.png)
+
+• The **Power** box lets you modify the move's power, i.e. the basis for calculating the damage inflicted.
+
+• The **Accuracy** box is used to modify the precision of the move. An accuracy of 100 means that the attack will never miss.
+
+• The **Power Point** box lets you manage the basic PP of your move.
+
+• The **Critical rate** box lets you manage the percentage chance that your move will score a critical hit. The rate can range from 0% (will never inflict a critical hit) to 100% (will always inflict a critical hit). For information, basic move have a critical hit rate of 6.25%.
+
+• The **Secondary effect** box lets you manage the percentage chance that the move will trigger a secondary effect, such as burning the target (e.g. Flamethrower has a 10% chance of burning the opponent) or modifying a caster's statistic (e.g. Steel Wing has a 10% chance of increasing the caster's Defense by one level). The secondary effects produced by the attack are managed in the Characteristics and Status interfaces.
+
+• The **Priority** box allows you to increase the priority of your move, on a scale from -7 to 5. If you set it to 0, your move will have standard priority. If you set it to 5, it will take precedence over all other moves (e.g. Extreme Speed). Conversely, an attack at -7 will be launched after all the others (e.g.: Distortion).
+
+• The **Common event** box lets you set the ID of an RPG Maker event that will be triggered when the move is used outside of battle (e.g. Cut or Sweet scent). This also requires the move to be configured in the RPG Maker DB.
+
+{% row columns="1/1" bottom_margin="margin-l" %}
+{% column %}
+## Settings
+
+{% /column %}
+{% /row %}
+
+Clicking on **Settings** shows this dialog:
+
+![Move parameter editor](./images/attaque-6.png)
+
+• The **Target** box is used to define the Pokémon to be aimed. This could, for example, be the user of the move, a random Pokémon in the field, or everyone else.
+
+• The **Procedure** box is used to tell the move what to do (e.g. number of hits, inflict a status, change a statistic, etc.).
+
+• The **Function** box connects to the Procedure box. In this box, you'll find complex moves that require a script from the Studio DB to work, and which can't simply be set up via Studio.
+
+## Characteristics
+
+Clicking on **Characteristics** box will show this dialog
+
+![Move flag editor](./images/attaque-7.png)
+
+In this dialog you are able to enable various flags about the move:
+
+•&nbsp; **Makes contact -** this move causes physical contact with the target,
+
+•&nbsp; **Long-range move -** if this move makes contact, the effects caused by contact are cancelled,
+
+• **Blocked by Protect -** this move will fail if the target has used a "`protect`"-like move (one using `s_protect` class)
+
+• **Ignores Substitute -** this move will go through a substitute, and go directly to the target,
+
+• **King's Rock utility -** if the user is holding a "`King's Rock`" a move with this characteristic will have an 10% increased chance to cause the target to flinch.
+
+• **Reflected by Magic Coat -** if the target previously used a "`magic coat`"-like move (one using `s_magic_coat` class) this move will get reflected back at the user,
+
+• **Copied by Mirror Move -** this move can be copied by a "`mirror move`"-like move (one using `s_mirror_move` class)
+
+• **Snatchable -** this move will get used by someone on the field if they use a "`snatch`"-like move (one using `s_snatch` class) instead of the user,
+
+• **Mental effects -** this move applies mental effects (`attract`, `encore`, `taunt`, `torment`, `heal_block`, or `disable`) and should have `Mental Herb`, and `MentalImmunityBase` ability functionalities,
+
+• **Has a charging turn -** this move requires a turn to charge before it will be used (ex: `Solar Beam`),
+
+• **Must recharge -** this move requires a turn to recharge after it has been used (ex: `Hyper Beam`)
+
+• **Sound-based -** this move doesn't effect creatures with the `Soundproof` ability, is effected by the `throat_chop` effect, has it's type changed to `Water-type` when used by a creature with the `Liquid Voice` ability, has a 30% damage boost when used by a creature with the `Punk Rock` ability, and should consume a `Throat Spray` if held and boost the creature's `Special Attack` by one stage (ex: `Boomburst`).
+
+• **Slice attack -** this move has a 50% damage boost when used by creatures with the `Sharpness` ability (ex: `Air Slash`),
+
+• **Jaw-based -** this move has a 50% damage boost when used by creatures with the `Strong Jaw` ability (ex: `Thunder Fang`),
+
+• **Ballistic-based -** this move doesn't effect creatures with the `Bulletproof` ability (ex: `Bullet Seed`),
+
+• **Pulse-based** - this move has a 50% damage boost when used by creatures with the `Mega Launcher` ability, healing moves have a 75% boost when used by creatures with the `Mega Launcher` ability (ex: `Dark Pulse`),
+
+• **Punch-based** - this move has a 20% damage boost when used by a creature with the `Iron Fist` ability, when holding a `Punching Glove` these moves do not make direct contact and get a 10% damage boost (ex: `Thunder Punch`),
+
+• **Powder-based -** this move will fail if the target is holding `Safety Goggles`, is `Grass-type`, or has the `Overcoat` ability (ex: `Poison Powder`),
+
+• **Wind-based -** this move will `charge` a creature that has the `Wind Power` ability, and does not effect creatures with the `Wind Rider` ability,
+
+• **Dance -** this move will trigger creatures on the field that have the `Dancer` ability (ex: `Sword Dance`),
+
+• **Defrosts when used -** this move will cause the user to thaw out if they were frozen (ex: `Flame Wheel`),
+
+• **Heals -** this move has a healing effect and should be blocked by things like `Heal Block`, this move will have its priority boosted by creatures with `Triage` ability,
+
+• **Unusable during Gravity -** this move cannot be used during Gravity (ex: `Fly`),
+
+• **Unusable during Sky Battle -** this move cannot be used during a Sky Battle (ex: `Dig`)
+
+## Status
+
+Clicking on **Status** box shows this dialog:
+
+![Move inflicted status editor](./images/attaque-8.png)
+
+• The **Status 1** box lets you set a status inflicted by the move, such as burn, sleep, fear, etc.
+
+• The **Chance** box lets you set the percentage chance that the move will inflict the status compared to the other additional status the move can inflict.
+
+You can assign up to 3 statuses to each move (e.g. Tri-Attack can burn, paralyze or freeze the target).
+
+## Statistics
+
+When clicking on the **Statistics** tab, this dialog shows up:
+
+![Move statistic editor](./images/attaque-9.png)
+
+In this dialog, you can define the stats modifications applied to the user and/or the target of the move. A positive value will increase the statistic by the same number of levels; a negative value will decrease it by the same number.
+
+## Show Pokémon list
+
+When you click on **Show Pokémon list** this page shows up:
+
+![Move relation viewer](./images/attaque-10.png)
+
+This let you know which Pokémon knows this move based on the learning reason.
+

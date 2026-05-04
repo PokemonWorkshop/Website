@@ -1,0 +1,64 @@
+---
+title: Berries
+seoDescription: How to setup berry trees in PSDK
+publishDate: '2023-07-23 20:33:00'
+order: 0
+---
+
+## System of berries
+
+![](./images/output_crop-video_com__adobeexpress.gif)
+
+#### Introduction
+
+The berry system is an excellent feature to add to your game. In this guide, we will show you how to add berries to your maps.
+
+#### Step 1: Placing berry events on the maps
+
+1. Create a new event at the location where you want a berry to be available.
+
+2. In the event, insert a call to common event 18 "Berry Tree."
+
+![](./images/berrytreecommonevent.png)
+
+#### Step 2: Initializing the berries
+
+1. In your game's introduction event, add a script call using the provided code below:
+
+```ruby
+# Route A
+Yuki::Berries.init_berry(MAP_ID, EVENT_ID, :db_symbol_berry)
+Yuki::Berries.init_berry(MAP_ID, EVENT_ID, :db_symbol_berry)
+# Route B
+Yuki::Berries.init_berry(MAP_ID, EVENT_ID, :db_symbol_berry)
+Yuki::Berries.init_berry(MAP_ID, EVENT_ID, :db_symbol_berry)
+```
+
+Place the appropriate ID and :db\_symbol. Also, rename the names of the locations for clarity.
+
+![](./images/idmapevent.png)
+
+![](./images/dbsymb.png)
+
+#### Step 3: Initializing a berry at a specific growth stage (optional).
+
+If you want certain berries to have a specific growth stage right from the beginning, you can use the following script:
+
+```text
+Yuki::Berries.init_berry(MAP_ID, EVENT_ID, :db_symbol_berry, GROWTH_STAGE)
+```
+
+Replace "GROWTH\_STAGE" with a number (0, 1, 2, 3, 4) indicating the desired growth stage. Its default value is 0.
+
+![](./images/stade.png)
+
+#### Options et triggers :
+
+![](./images/optionsandtrigger.png)
+
+I advise you to set the options and triggers in this way to achieve the same result as shown in the introduction!
+
+#### Conclusion :
+
+Congratulations! You have now integrated an automated berry system into your game. Once you have followed the steps above, the system is fully operational. You wouldn't have anything else to do. When players interact with the berry events, the system will automatically handle the berry planting. The berries will grow over time, and players will be able to harvest them when they are ripe.
+

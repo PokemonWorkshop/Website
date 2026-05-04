@@ -1,0 +1,357 @@
+---
+title: Arrays in Ruby
+seoDescription: How to use array to their full potential in Ruby
+cover:
+- "./images/stacks_of_agar_plates.jpg"
+publishDate: '2022-10-01 16:00:00'
+order: 20221001
+---
+
+Hi, while reading discord messages about doing stuff involving arrays, I often see stuff like `array[rand(array.length)]` or for loops. This is kind of sad because Ruby implemented a lot of methods allowing to transform an input collection to anything you need, it's almost as powerful as SQL but with ruby methods & blocks chaining.
+
+In this page I'll show some ways to use arrays so you can do almost anything you want. If you want to see more, you can have a look into the official [Ruby Documentation](https://ruby-doc.org/core/Array.html).
+
+## Creating an array {% id="create" %}
+
+In Ruby there's several ways to create an array, depending on what you need you can write it a different way. Each chapters of this section will show a preferred way to create an array.
+
+### Create an empty Array
+
+The best way to create an empty array is using the array litteral:
+
+```ruby
+new_array = []
+```
+
+### Create an array of any values
+
+Most of the time, you might create an array of any kind of value. If that doesn't come from data processing (ie. this array is used as static data), you can just use the array litteral, here's an example:
+
+```ruby
+new_array = [
+  1,
+  'string',
+  :symbol
+]
+```
+
+### Create an array of string
+
+If you need to create an array of string, ruby has a special litteral that allows you to create it and make it easier. You won't have to write the comma and the quotes!
+
+Here's few examples:
+
+```ruby
+array_of_string1 = %w[word1 word2 string\ with\ spaces last_word]
+# Result: ["word1", "word2", "string with spaces", "last_word"]
+
+array_of_string2 = %w[
+  word1 word2
+  string\ with\ spaces
+  last_word
+]
+# Result: ["word1", "word2", "string with spaces", "last_word"]
+```
+
+### Create an array of symbol
+
+In a similar way, you can create an array of symbol without having to write the `:` character and the commas. Array of symbol are really useful because symbols is used everywhere in Ruby. For example Items are identified with a symbol in Pokémon SDK, the potion can be found with the symbol `:potion`
+
+Here's an example of array of symbol:
+
+```ruby
+array_of_symbol1 = %i[potion elixir candy]
+# Result: [:potion, :elixir, :candy]
+
+array_of_symbol2 = %i[
+  potion
+  elixir
+  candy
+]
+# Result: [:potion, :elixir, :candy]
+```
+
+### Creating an array from another sequence
+
+Usually sequence or enumerators do have a `to_a` method that allow you to create an array from it. Here's some examples:
+
+```text
+array_of_1_upto_5_included = (1..5).to_a
+# Result: [1, 2, 3, 4, 5]
+
+alphabet = ('a'..'z').to_a
+# Result: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+array_of_chars = "My string".each_char.to_a
+# Result: ["M", "y", " ", "s", "t", "r", "i", "n", "g"]
+
+array_of_lines = "My string\nWith lines".each_line.to_a
+# Result: ["My string\n", "With lines"]
+
+array_of_bytes = "\x01\x25\xFF".each_byte.to_a
+# Result: [1, 37, 255]
+```
+
+## Retrieve values from array {% id="get" %}
+
+Array store a collection of data, you almost certainly want to get one specific data value from an array. Fortunately, Ruby is not C, you have a lot of methods in array to get the data you need depending on what you need.
+
+### Get first or last value of an array
+
+As you may be aware, arrays do have the operator `[]` to get a value from the array. This operator is pretty usefull when you know the index of the element in advance but sometimes you want to be explicit about what you want. For example, getting the last element of an array is often hard because each language does it differently. Getting the first element of an array can also be confusing, if you come from Mathematical studies/programming, the first index is 1, in many language it's 0.
+
+In order to make that less confusing Ruby comes with two methods: `first` and `last`. They respectively give you the first or the last element of the array. Here's an example:
+
+```ruby
+my_array = [1, 2, 3, 4, 5]
+first_element = my_array.first
+# Result: 1
+last_element = my_array.last
+# Result: 5
+```
+
+### Finding an element in an array
+
+Array store many kind of data, sometimes you want to find an element that match specific criteria. Hopefully Ruby comes with a method to do that. This method uses a block of code that must forward a boolean value to tell if the element is the one you need. This method is simply called `find`.
+
+Here's few examples:
+
+```ruby
+array_of_words = %w[Madrid Paris London Berlin]
+# Find the first word that starts with L
+word_starting_with_l = array_of_words.find { |word| word.start_with?('L') }
+# Result: "London"
+
+array_of_numbers = [1, 5, 6, 2, 3]
+# Find the first element that is even
+first_even_number = array_of_numbers.find(&:even?)
+# Result: 6
+# Note: find(&:even?) is strictly equivalent to find { |number| number.even? }
+```
+
+### Finding the index of an element in array
+
+In a similar way of finding an element, you might want the index of that element. If you know the element in advance, you can simply call `index` and this method will give you the index of that specific element. If you don't know the element but you are able to describe it, you can instead use the method `find_index`. Here's some examples:
+
+```ruby
+array_of_numbers = [1, 5, 3, 2]
+# Find the index of 5 in the array
+index_of5 = array_of_numbers.index(5)
+# Result: 1
+
+array_of_string = %w[coffee tea water soda]
+# Find the index of the first word starting with w
+index_of_word_starting_with_w = array_of_string.find_index { |word| word.start_with?('w') }
+# Result: 2
+```
+
+### Get a random element of the array
+
+In ruby, it's really easy to get a random element of the array, you don't need complex algorithm, just call the method `sample` and it will pick any sample of the array at random.
+
+Examples:
+
+```ruby
+array_of_numbers = [1, 2, 3, 4, 5, 6]
+# Getting any element at random
+random_element = array_of_numbers.sample
+# Result: Any of the value from the array (cannot predict without knowing the seed ;))
+
+# Getting any element at random using a Random object
+predictable_element = array_of_numbers.sample(random: Random.new(5))
+# Result: 4
+```
+
+### Getting the lowest or highest element of the array
+
+If you need to get the lowest or highest element of an array, array do implement `min` and `max` methods. If your elements are object and you need to use a property of those objects, you can use `min_by` or `max_by` to do so. Examples:
+
+```text
+array_of_number = [5, -3, 2, 66, 4]
+highest_number = array_of_number.max
+# Result: 66
+lowest_number = array_of_number.min
+# Result: -3
+
+array_of_string = %w[hello worlds !]
+longer_string = array_of_string.max_by(&:size)
+# Result: "worlds"
+smaller_string = array_of_string.min_by(&:size)
+```
+
+## Get special values from an array {% id="special" %}
+
+Arrays also have methods that allow you to get values that are not in the array but result from the content of the array.
+
+### Getting the size of the array
+
+Normally you don't often need this value but just in case one of your script needs to know the size of an array you can use the `size` method (like strings).
+
+Example:
+
+```ruby
+array_of_numbers = [1, 2, 3, 4, 5, 2]
+# Getting the size of this array
+size_of_array = array_of_numbers.size
+# Result: 6
+```
+
+### Getting the sum of all elements in the array
+
+You might think it's too much but you can indeed compute a sum from an array using the method `sum`.
+
+Here's some examples:
+
+```text
+array_of_numbers = [1, 2, 3]
+sum_of_numbers = array_of_numbers.sum
+# Result: 6
+
+array_of_string = ['a', 'ab', 'abc']
+sum_of_sizes = array_of_string.sum(&:size)
+# Result: 6
+```
+
+### Counting values that match criteria
+
+You might want to count values that match a criteria in an array, fortunately array comes with the `count` method, here's an example:
+
+```text
+array_of_numbers = [1, 2, 3, 4, 5]
+count_of_odd_numbers = array_of_numbers.count(&:odd?)
+# Result: 3
+```
+
+### Transforming the whole array into a value
+
+Sometimes you want to turn a whole array into something else, fortunately you have a method for that, it's called `reduce`. This method is often used in JavaScript to do all the thing ruby can't do when the developper doesn't want to load `lodash` ;)
+
+Here's an example of reducing array:
+
+```text
+array_of_sentence_badly_combined = ['My first', 'sentence', 'My second ', 'sentence.']
+paragraph = array_of_sentence_badly_combined.reduce('') do |prev, curr|
+  sentence = prev.rstrip
+  continuation = curr.lstrip
+  next sentence << continuation if continuation[0] == continuation[0].downcase
+  next sentence << '. ' << continuation unless sentence.end_with?('.') || sentence.empty?
+  next sentence << continuation
+end
+
+# Result: "My firstsentence. My secondsentence."
+```
+
+### Telling if the array contain any value that match a criteria
+
+Sometimes you want to test if your array contains a value that match a criteria, to do so you can use the method `any?` this method use a block to check each values and return a boolean. If you already know the exact value, you can just use `include?` which checks if the array contains your value. Examples:
+
+```text
+array_of_number = [1, 2, 3, 4]
+array_contains_even_number = array_of_number.any?(&:even?)
+# Result: true
+array_contains_zero = array_of_number.any?(&:zero?)
+# Result: false
+array_contains2 = array_of_number.include?(2)
+```
+
+Bonus point, if you don't give any argument/parameter to the `any?` method, you can check if the array contains a value. Pretty useful when you don't want to write `unless array.empty?` :)
+
+Be careful though, `nil` and `false` does not count as values.
+
+```text
+empty_array = []
+array_is_not_containing_value = empty_array.any?
+# Result: false
+
+array_containing_something = [0]
+array_is_containing_value = array_containing_something.any?
+# Result: true
+
+array_containing_something_but_any_says_false = [false, nil]
+bad_state_but_okeyish = array_containing_something_but_any_says_false.any?
+# Result: false
+```
+
+## Testing if all or none of the values in array match criteria
+
+As for `any?` array have the method `none?` and `all?` to check if none or all of the value in array match the criteria you want.
+
+Example:
+
+```text
+array_of_odd_numbers = [1, 3, 5]
+all_odd = array_of_odd_numbers.all?(&:odd?)
+# Result: true
+none_even = array_of_odd_numbers.none?(&:even?)
+# Result: true
+```
+
+## Transforming arrays {% id="transformations" %}
+
+One thing that you might often have to do with arrays is transforming them. Putting aside `push`, `pop` and `delete` ruby comes with a lot of methods that help you transforming your array. Note that those method doesn't mutate the array (unlike push, pop & delete), if you want to overwrite the array, use the method name that ends with a bang (`!`).
+
+### Removing all the nil values from an array
+
+Sometimes your array end up with nil values, fortunately there's a method to remove them all! This method is `compact` example:
+
+```text
+array_with_nils = [1, nil, 2, 3, nil]
+array_without_nils = array_with_nils.compact
+# Result: [1, 2, 3]
+```
+
+### Filtering values from array
+
+In Ruby there's two method to perform filtering:
+
+- `select` to select all the values that match the criteria
+- `reject` to reject all the values that match the criteria
+
+```text
+array_of_number = [0, 1, 2, 3, 4]
+array_of_odd_numbers = array_of_number.select(&:odd?)
+# Result: [1, 3]
+array_of_number_that_arent_odd = array_of_number.reject(&:odd?)
+# Result: [0, 2, 4]
+```
+
+### Transforming the values of an array
+
+Sometimes the values you currently have in the array are not the one you need, you can transform them using the `map` method. Example:
+
+```text
+array_of_number = [1, 2, 3]
+array_of_twice_the_number = array_of_number.map { |n| n * 2 }
+# Result: [2, 4, 6]
+```
+
+### Rotating an array
+
+Very occasionally you might want to rotate an array, if you need to do so, just call the `rotate` method. Here's some examples:
+
+```text
+my_array = [1, 2, 3, 4]
+my_array_rotated_to_left = my_array.rotate(1)
+# Result: [2, 3, 4, 1]
+my_array_rotated_to_right = my_array.rotate(-1)
+# Result: [4, 1, 2, 3]
+```
+
+### Shuffling the array
+
+If you want give a random order to each value of the array, you can use `shuffle`. Example:
+
+```text
+my_array = [1, 2, 3, 4]
+my_array_in_random_order = my_array.shuffle
+# Example result: [2, 3, 4, 1]
+my_array_in_seeded_order = my_array.shuffle(random: Random.new(6))
+# Result: [1, 4, 2, 3]
+```
+
+## Credits
+
+Hero image from: [Wiki Media Commons](https://commons.wikimedia.org/wiki/File:Stacks_of_agar_plates.jpg)
+
+Article written by Nuri Yuri
+

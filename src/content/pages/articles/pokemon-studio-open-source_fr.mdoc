@@ -1,0 +1,156 @@
+---
+title: Pokémon Studio est désormais Open source
+seoDescription: Pokémon Studio est désormais Open Source. Un logiciel pour créer et
+  éditer votre jeu de capture de monstres et donner vie à vos idées en quelques clics
+  seulement.
+cover:
+- "./images/open-source-fr.png"
+publishDate: '2023-11-19 20:00:00'
+order: 20231119
+---
+
+## Définition de l'Open Source
+
+Le mot "source" fait référence au "code source". C'est la production de l'équipe de développement, plus précisément des développeurs. Il s'agit des lignes qui vont structurer un logiciel et lui permettre de fonctionner.
+
+ 
+
+Le mot "open" signifie "ouvert" ou "disponible".
+
+ 
+
+Un logiciel "Open source" est donc un logiciel dont le code source est disponible, et peut-être utilisé et modifié par n'importe qui, selon des règles établies par une licence d'utilisation fournie avec le dit logiciel.
+
+## Pourquoi passer Pokémon Studio en Open Source ? {% id="why" %}
+
+### Les objectifs de Pokémon Studio
+
+Pour expliquer ce choix, il est intéressant de rappeler les objectifs principaux de Pokémon Studio :
+
+- Permettre à chacun de créer son propre jeu Pokémon **gratuitement**
+- **Réduire le nombre d'interfaces ou de logiciels** à utiliser
+- **Améliorer l'accessibilité** du moteur de jeu Pokémon SDK et faciliter sa mise à jour
+
+Nous avons une roadmap établie depuis les premiers instants de vie du produit.
+
+Bien entendu, nous ne sommes pas fermés aux suggestions. Vous pouvez d'ailleurs contribuer à améliorer le produit en faisant part de vos suggestions directement sur notre Discord, dans le salon [studio-suggestions](https://discord.com/channels/143824995867557888/1019954233900007464 "studio-suggestions") prévu à cet effet.
+
+### Ouvrir Studio aux contributions spontanées
+
+#### Une base solide
+
+Après plus de 2 ans de développement sur le logiciel, nous estimons que Pokémon Studio est suffisamment stable et mature pour ouvrir le code et permettre davantage de contributions spontanées.
+
+ 
+
+Pour cela, nous avions besoin de poser une base solide. C'est pourquoi nous avons fait le choix de distribuer Pokémon Studio sous format propriétaire dans un premier temps.
+
+ 
+
+L'idée était de prendre le temps de **construire un code robuste** , et **un ensemble d'interfaces cohérentes et accessibles**.
+
+#### Le management visuel comme principe d'organisation
+
+Dès les prémices du développement, nous avons toujours choisi de nous organiser en utilisant les principes du **management visuel**.
+
+ 
+
+Pour faire simple, c'est un moyen de **rendre l'information concrète, lisible, compréhensible et mémorisable par tous les membres de l'équipe**. Chacun a accès au même niveau d'information, et on facilite la prise de décision en équipe.
+
+ 
+
+Dans un contexte de projet bénévole, où chaque contributeur est libre de son organisation et de son implication, c'est un excellent moyen de faciliter l'accès à l'information et de réduire le nombre de réunions inutiles.
+
+ 
+
+Voici une liste des éléments qui nous permettent de faciliter ce management visuel :
+
+- Une **liste des tâches à réaliser appelée "Backlog"** , qui regroupe tous les éléments utiles au développement du logiciel. Besoins, priorités, détails techniques. Le but est de comprendre en un coup d'œil ce qu'il y a à faire et pourquoi. Le comment ne dépend que de l'équipe de réalisation.
+- Des **processus clairs** , détaillés et simples.
+
+#### Bénéficier de l'expérience de plus de contributeurs
+
+Nous suivons une méthodologie de projet appelée "Scrumban", adaptée au contexte du projet. Elle mélange les principes des cadres [Scrum](https://www.scrum.org/learning-series/what-is-scrum) et [Kanban](https://www.ionos.fr/digitalguide/sites-internet/developpement-web/kanban/) :
+
+- Le développement est rythmé par des périodes d'un mois, appelées "Sprint" ou "Itération".
+- Chaque itération est introduite par un objectif principal, pour amener l'équipe à le remplir et à se concentrer au mieux.
+- On réduit le travail superflux et on fluidifie au maximum avec un nombre de tâches choisies par chaque contributeur en fonction de ses disponibilités.
+
+Mais ce cadre peut être contraignant pour certains, et nous réduisons donc les possibilités de contributions externes.
+
+ 
+
+C'est pourquoi nous pensons qu'ouvrir le code permettra à davantage de développeurs de participer, notamment sur les systèmes d'exploitation que sont Linux et MacOS, moins représentés dans l'équipe, mais souvent demandées par la communauté.
+
+#### Alimenter un CV tout en montant en compétence
+
+Pokémon Studio est un projet d'envergure, ambitieux et motivant. Les compétences de chacun des contributeurs de l'équipe ont permis de développer le produit que vous connaissez aujourd'hui, et c'est une expérience valorisable sur un CV lors d'une recherche d'emploi.
+
+ 
+
+Certains membres de l'équipe ont d'ailleurs pu s'appuyer sur cette expérience pour trouver leur travail actuel.
+
+### Bénéficier des outils accessibles aux communautés Open source {% id="benefits" %}
+
+Nous passons de GitLab à GitHub. Cela peut paraître anecdotique mais c'est un changement important pour l'équipe car nous allons vers plus de transparence et d'ouverture aux développeurs du monde entier.
+
+ 
+
+En faisant cela, Pokémon Studio profitera :
+
+- Des outils d'intégration et de déploiement continue de GitHub.
+- D'une publication des versions simplifiée, sur les trois OS que sont Windows, Linux et MacOS.
+- De toute la palette des outils utilisables gratuitement dans le cadre de projets Open source. Nous avons notamment comme projet à court terme d'utiliser un utilitaire de traduction nommé [Weblate](https://weblate.org/fr/), qui permettra à chacun de proposer une traduction des textes du logiciel dans sa propre langue.
+
+## Qu'est-ce qui change concrètement ? {% id="changes" %}
+
+En ouvrant le code, nous actons notre volonté de contribuer à l'effort Open Source. Cela sous entend que l'on passe d'un projet fermé à un projet communautaire, qui peut servir à chacun, au-delà même de la création de son fangame.
+
+ 
+
+Bien entendu, le public qui pourra utiliser le code source de Studio ne sera pas le même que celui qui l'utilise en tant qu'outil de création de fangame.
+
+ 
+
+Concrètement :
+
+- Le code source de l'application est accessible à toute la communauté.
+- La communauté peut contribuer au développement, sans forcément faire partie de l'équipe et sans s'engager (voir la partie contributing tout de même pour contribuer efficacement et voir comment son travail peut être intégré au code).
+- Pour les utilisateurs, des mises à jour potentiellement plus fréquentes, et amenant davantage de changements.
+- Pour les éventuels développeurs, une contribution depuis le projet et les issues via GitHub.
+- L'organisation de l'équipe de développement principale est plus visible. Nous avons d'ailleurs des choses à vous proposer, on vous en dit plus prochainement.
+- Les utilisateurs peuvent devenir testeurs de Studio, et profiter de certaines fonctionnalités en avance.
+
+## Comment puis-je contribuer ? {% id="contributing" %}
+
+### En tant que développeur
+
+Vous pouvez :
+
+- Lire le README pour prendre connaissances des informations utiles et connaitre la procédure d'installation.
+- Lire le fichier [Contributing.md](http://Contributing.md) qui permet de mieux comprendre comment l'équipe s'organise et comment éviter de travailler deux fois sur le même sujet.
+- Prendre connaissance des bonnes pratiques de code suivies par l'équipe.
+- Nous faire des retours afin d'améliorer en continue les process.
+
+### En tant que testeur
+
+Vous pouvez :
+
+- Lire le fichier [Contributing.md](http://Contributing.md) qui permet de mieux comprendre comment l'équipe s'organise et comment savoir ce que vous pouvez tester pour aider l'équipe à avancer.
+- Prendre connaissance des bonnes pratiques de l'équipe afin de savoir comment communiquer efficacement sur vos interventions.
+- Nous faire des retours afin d'améliorer en continue les process.
+
+## Existe-t-il des contraintes ? {% id="constraints" %}
+
+Forcément, vous ne pouvez pas faire ce que vous voulez non plus, et certaines règles sont à respecter. Le fichier de [license d'utilisation de Pokémon Studio](https://github.com/PokemonWorkshop/PokemonStudio/blob/develop/LICENSE-FR-SIMPLIFIEE.md) résume ces contraintes d'utilisation.
+
+Elles sont des conditions **non négociables** :
+
+- **Attribution** - Vous devez créditer Pokémon Studio et les membres de son équipe de développement, intégrer un lien vers sa licence d'utilisation et indiquer explicitement si des modifications ont été effectués à Pokémon Studio, et quelles sont ces modifications. Vous devez indiquer ces informations par tous les moyens raisonnables, sans suggérer que Pokémon Studio vous soutient ou soutient la façon dont vous avez utilisé son matériel.
+- **Pas d'Utilisation Commerciale** - Vous n'êtes pas autorisé à faire un usage commercial de ce produit, tout ou partie du matériel le composant. Vous êtes en revanche autorisé à faire un usage commercial de tout produit résultant de son utilisation. _Comprendre par là tout jeu vidéo créé par l'intermédiaire de Pokémon Studio_.
+- **Partage dans les Mêmes Conditions** - Dans le cas où vous effectuez une modification, que vous transformez, ou créez à partir du matériel composant Pokémon Studio, vous devez diffuser le produit modifié dans les mêmes conditions, c'est-à-dire avec la même licence avec laquelle Pokémon Studio a été diffusée.
+  - **Pas de restrictions complémentaires** - Vous n'êtes pas autorisé à appliquer des conditions légales ou des mesures techniques qui restreindraient légalement autrui à utiliser Pokémon Studio dans les conditions décrites par la licence.
+
+- Les contributeurs externes doivent prendre connaissance du workflow de développement et des bonnes pratiques de code de l'équipe. Ces pratiques vous seront rappelées lors des revues de vos Pull Requests. Les intégrer en amont fluidifie l'intégration de votre travail au code de l'application.
+- Les contributeurs externes doivent prendre connaissance de la Roadmap afin d'éviter de travailler sur un même sujet, surtout sans concertation avec l'équipe. Dans le cas contraire, le code risquerait de ne pas être utilisable, et serait refusé.
+

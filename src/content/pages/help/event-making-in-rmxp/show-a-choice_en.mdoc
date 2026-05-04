@@ -1,0 +1,35 @@
+---
+title: Show a choice
+seoDescription: How to use the RMXP choice command in Pokémon SDK
+publishDate: '2022-09-02 18:15:00'
+order: 0
+---
+
+Under PSDK there are two methods to display a choice. The classic method by event that should always be used when you have 2 to 4 options, and the script method when you need more than 4 choices.
+
+ 
+
+Choices can use some specific codes.
+
+## Choice configuration
+
+The game switch `26` " **Choix en haut**" displays the choice in the top left corner of the screen.
+
+## Display a simple choice
+
+To display a simple choice, use the message command to explain the choice and add the choice command right after to actually give a choice to the player.
+
+This choice command allows cancelation. The cancelation is triggered when the player press the virtual key B. If you don't allow cancelation, the player won't be able to use the virtual key B and will be forced to choose an option.
+
+## Use a color for a choice option
+
+Each choice option can have its own color. Use for this the `\c[$]` code of the message command. (It affects the whole choice option!)
+
+## Use a Dynamic Text from Pokémon Studio or CSV
+
+Dynamic texts in choices work the same as in [Messages](/en/help/event-making-in-rmxp/show-a-message "Display a message from RH or CSV")
+
+## Display more than 4 choices
+
+To display more than 4 choices, use the script command : `choice` and after that command, use the show message command. The result will be stored in the game variable you chose.
+

@@ -1,0 +1,58 @@
+---
+title: Spawn Event PSDK
+seoDescription: Faire apparaitre des évènements dynamiquement à partir d'autres évènements
+  existant
+publishDate: '2024-09-01 18:05:00'
+order: 20240901
+---
+
+## Brief Description
+
+Faire apparaitre des évènements dynamiquement à partir d'autres évènements existant.
+
+**Lien vers le plugin:** [https://crypticsky.itch.io/spawn-event-psdk](https://crypticsky.itch.io/spawn-event-psdk "https://crypticsky.itch.io/spawn-event-psdk")
+
+Mot de passe : `psdk`
+
+## Procedure d'installation
+
+1. Télécharger le fichier psdkplugin dans le dossier scripts de votre projet
+2. Lancer le jeu
+
+## Crédits
+
+Basé sur Yanfly Engine Ace - Spawn Event v 1 .00  
+Edité pour RPG Maker XP en 2012 par Wrinkle  
+Source du script original: [https://rmrk.net/index.php?topic=49541.0](https://rmrk.net/index.php?topic=49541.0)
+
+Crédit à Modern Algebra pour avoir corrigé le bug de rafraichissement graphique en 2012.  
+Crédit à un auteur inconnu (probablement Drakhaine) pour le code de changement des interrupteur locaux à distance: [https://www.rpg-maker.fr/scripts-490-interrupteurs-locaux-a-distance.html](https://www.rpg-maker.fr/scripts-490-interrupteurs-locaux-a-distance.html)
+
+2023-2024 PSDK overhaul par CrypticSky
+
+## Maintenant en v2.0!
+
+### Evènements
+
+`[copymap=map_id,copyeventid=event_id]` Donner ce nom à votre évènement pour le remplacer par une copie parfaite de l'évènement copyeventid. Utiliser 0 pour l'id correspond à utiliser l'id de la map ou l'évènement actuel.
+
+Exemple: `[copymap=3,copyeventid=5]` va copier l'évènement 005 de la map 003 à la place de cet évènement.
+
+### Commandes de script
+
+`spawn_event_location(x, y, event_id, map_id=@map_id)`
+
+Fait apparaitre une copie de l'évènement `event_id` de la map `map_id` à position (x, y) de la map actuelle. L'évènement disparait si vous quitter la map actuelle.
+
+`spawn_event_random_location(lower_x, higher_x, lower_y, higher_y, event_id, map_id=@map_id)`
+
+Pareil que la commande précédente mais à une position aléatoire dans (`[lower_x ,higher_x[` , `[lower_y ,higher_y[`).
+
+`spawn_event_follower(event_id, map_id=@map_id, follow_this_event_id=0, movetocharacter=true)`
+
+Copie un évènement et le transforme en follower d'un autre évènement. Si vous gardez `follow_this_event_id` à 0 ça transformera la copie en follower du joueur.
+
+`spawn_event_follower_at_location(event_id, dx, dy, map_id=@map_id, follow_this_event_id=0, movetocharacter=true)`
+
+Pareil que `spawn_event_follower` mais avec un décallage (dx, dy).
+

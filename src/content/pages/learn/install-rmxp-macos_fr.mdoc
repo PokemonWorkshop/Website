@@ -1,0 +1,109 @@
+---
+title: Installer et lancer RPG Maker XP sur MacOS
+seoDescription: Apprenez à installer les dépendances nécessaires pour faire tourner
+  RPG Maker XP sur MacOS
+publishDate: '2025-08-21 20:49:00'
+order: 20250821
+---
+
+Avant toute chose, l'écriture de ce tutoriel n'aurait jamais pu être possible sans [le tutoriel de boonzeet sur EeveeExpo](https://eeveeexpo.com/threads/8659/), donc merci à lui pour les travaux préliminaires ! Ce tutoriel a pour but de fournir les dépendances nécessaires au lancement de RPG Maker XP sur MacOS, mais aussi de couvrir le cas de l'installateur double.
+
+DISCLAIMER: ce tutoriel a été pensé pour fonctionner avec des copies légales et valides de l'installateur standalone de RPG Maker XP, celui que vous pouvez trouver sur le site officiel de RPG Maker. Vous devez vous munir d'une copie valide pour que cela fonctionne. L'utilisation de ce tutoriel avec une copie illégale est à vos risques et périls. De plus, l'utilisation de tutoriel et les résultats obtenus sont de votre responsabilité, pas la nôtre.
+
+Même si Studio 3.0 est en cours de développement et devrait remplacer RPG Maker XP (que j’appellerai RMXP à partir de maintenant), il y a sûrement des gens qui voudront continuer à utiliser RMXP pour créer des évènements dans leurs projets jusqu’à la sortie de Studio 3.0. Pour ceux qui sont sous Windows, ça se fait vraiment sans effort. Mais pour les utilisateurs de Mac, c’est une autre paire de manches : les solutions proposées passent souvent par Parallel (pour créer une machine virtuelle) ou par WINE (qui n’est pas toujours simple à installer)… C’est là qu’arrive Sikarugir, un wrapper WINE qui permet de lancer des programmes Windows.
+
+## Prérequis
+
+- Savoir comment fonctionne un terminal et comment taper des lignes de commande
+- Homebrew (que vous pouvez télécharger et installer [ici](https://brew.sh/) si ce n’est pas déjà fait)
+- Mettre à jour Homebrew avec `brew update && brew upgrade`
+- Wine-stable (à installer APRÈS Homebrew avec `brew install --cask wine-stable`)
+- Sikarugir (à installer APRÈS Wine-stable avec `brew install --cask --no-quarantine Sikarugir-App/sikarugir/sikarugir`)
+- Une copie légale de RMXP, avec le fichier .exe d’installation déjà téléchargé et prêt sur votre Mac
+
+## Configurer Sikarugir
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+Pour commencer, lancez Sikarugir (soit depuis le dossier Applications, soit en ouvrant la fenêtre Spotlight avec Cmd+Espace puis en tapant “Sikarugir”). Une fois ouvert, vous verrez cette fenêtre (cf. capture d’écran).
+
+{% /column %}
+{% column %}
+![Screenshot of the Sikarugir software](./images/capture-decran-2025-08-21-a-23.10.00.png)
+
+{% /column %}
+{% /row %}
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+Cliquez sur le bouton « + », une nouvelle fenêtre appelée « Add Engine » va s’ouvrir.
+
+Dans le menu déroulant, choisissez la première option si ce n’est pas déjà le cas. Au moment où j’écris ce tutoriel, la dernière mise à jour est WS12WineCX24.0.7\_5.
+
+Une fois le bon moteur sélectionné, cliquez sur Download and Install et laissez Sikarugir l’installer pour vous. Si Sikarugir vous demande de confirmer l’installation, validez le nom puis cliquez sur OK.
+
+Quand le téléchargement est terminé, vous revenez dans l’onglet « Creator ». Si le bouton « Update Template » n’est pas grisé, cliquez dessus pour récupérer la dernière version du modèle de Wrapper.
+
+{% /column %}
+{% column %}
+![Screenshot of the "Add Engine" window of Sikarugir](./images/capture-decran-2025-08-21-a-23.15.11.png)
+
+{% /column %}
+{% /row %}
+
+## Créer le wrapper pour RMXP
+
+Maintenant que Sikarugir est configuré, il est temps de créer notre wrapper pour RMXP ! Pour ça, cliquez sur le moteur que vous venez de créer, puis cliquez sur « Create New Blank Wrapper ». Une fenêtre va s’ouvrir et vous demander de donner un nom à votre application. Vous pouvez l’appeler RPG Maker XP, RMXP, ou comme vous voulez — gardez juste en tête que ce nom sera celui à taper si vous voulez l’ouvrir via la fenêtre Spotlight (Cmd+Espace). :)
+
+⚠️ Attention : quand vous cliquez sur OK après avoir entré le nom, il se peut que Sikarugir ait l’air de planter (roue colorée qui tourne). En réalité ce n’est pas le cas, il est simplement en train de créer tout le wrapper. Laissez-le travailler et gardez l’onglet au premier plan. Selon votre machine, ça peut être très rapide (moins d’une minute) ou prendre 5 à 10 minutes.
+
+Une fois terminé, Sikarugir vous avertira que l’application a bien été créée. Vous pourrez alors l’ouvrir en utilisant la fenêtre Spotlight (Cmd+Espace) et en tapant le nom choisi un peu plus tôt.
+
+## Configurer notre application
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+Maintenant que notre application est créée, il faut indiquer au moteur (WINE) de quoi il s’agit et comment elle doit fonctionner. Heureusement, on tombe directement sur la fenêtre suivante.
+
+Cliquez sur le bouton « Install Software ». Une nouvelle fenêtre s’ouvre. Cliquez sur « Choose Setup Executable », puis allez chercher l’installateur de RMXP sur votre Mac.
+
+💡 Remarque : si vous avez à la fois un installateur pour RMXP et un pour le RGSS RTP, installez d’abord RMXP. Refaites ensuite exactement les mêmes étapes pour installer le RGSS RTP une fois l’installation de RMXP terminée.
+
+Sélectionnez l’installateur et laissez le wrapper faire son travail. Après quelques secondes, l’installateur de RMXP devrait apparaître. Il suffit alors de cliquer sur Yes/Continue/ou toute autre option positive, et surtout de ne PAS modifier le chemin d’installation. Et voilà, l’installation est terminée, on peut passer à l’étape suivante.
+
+💡 Remarque : si vous avez aussi l’installateur du RGSS RTP, c’est maintenant qu’il faut répéter exactement les mêmes étapes pour l’installer. Là encore, ne touchez pas au chemin d’installation.
+
+{% /column %}
+{% column %}
+![](./images/capture-decran-2025-08-21-a-23.32.33.png)
+
+{% /column %}
+{% /row %}
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+Pour cette étape, je vais partir du principe que la section « Windows app » n’a pas le bon chemin vers l’exécutable. (ça peut ne pas arriver si vous n’aviez qu’un seul installateur, mais ça arrivera sûrement si vous en aviez deux)
+
+Cliquez sur Browse puis cherchez l’exécutable de RMXP. Si vous n’avez pas changé le chemin d’installation plus tôt, il devrait se trouver au même endroit que sur la capture d’écran ci-dessous. Une fois trouvé, cliquez sur Choose. Vous revenez alors dans l’onglet « Configure ».
+
+Vous pouvez maintenant cliquer sur Test Run pour vérifier si RMXP se lance correctement. Si ça s’ouvre comme prévu, GG 🎉 vous avez bien suivi ce tutoriel. Attention toutefois : n’utilisez pas le logiciel dans ce mode Test Run, fermez-le dès que possible.
+
+Il est aussi possible de changer l’icône. Soit vous utilisez une de vos propres créations (en .ico uniquement), soit vous pouvez utiliser [celle-ci](https://cdn2.steamgriddb.com/icon/ddf7e6b415ec7066b21a01f77f709335.ico) (encore merci à boonzeet !). Dans tous les cas, on se retrouve dans la dernière section de ce tutoriel.
+
+{% /column %}
+{% column %}
+![](./images/capture-decran-2025-08-21-a-23.51.57.png)
+
+{% /column %}
+{% /row %}
+
+## Accéder à votre projet sur votre session MacOS
+
+Une fois RMXP ouvert sur votre Mac, vous risquez de vous demander où trouver votre projet, puisque RMXP semble vouloir chercher dans le « faux répertoire C: de Windows ». Pour accéder à votre projet, commencez par sélectionner « My Computer ». Vous devriez voir `C:` et `Z:`. Choisissez `Z:`, et vous verrez alors exactement les mêmes dossiers que si vous ouvriez le dossier racine dans le Finder. À partir de là, il ne reste plus qu’à naviguer jusqu’au dossier de votre projet (le plus souvent dans Users/nom\_utilisateur/nom\_du\_dossier).
+
+## Mot de la fin
+
+Voilà, ce tutoriel est terminé ! Si vous pensez que certaines parties auraient pu être plus claires, si vous avez des suggestions, ou des infos pour gérer la version Steam de RPG Maker XP, n’hésitez pas à contacter Rey (pw\_rey) sur le serveur Discord officiel de Pokémon Workshop !
+
+Amusez-vous bien avec RMXP en attendant la sortie de Studio 3.0 !
+

@@ -1,0 +1,114 @@
+---
+title: FLUtil
+seoDescription: Adds a lot of useful classes and methods for scripters
+publishDate: '2025-06-07 16:00:00'
+order: 20250607
+---
+
+This script is for RPG Maker XP. It adds a lot of useful classes and methods for scripters:
+
+- RandomHelper who make doing things like raffle a lot easier. **Recommended even for non-scripters**.
+- Variable Switches Alias, who makes switch/variable access shorter and more readable
+- Tween system
+
+## Installation
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" %}
+{% column %}
+1. Download the psdkplugin, throw it in your project's script folder
+2. Run the game
+
+{% /column %}
+{% column %}
+{% cta href="https://echozone.nekoweb.org/top_secret_psdk_stuff/FLUtil.psdkplug" align="center" %}Download Plugin{% /cta %}
+
+{% /column %}
+{% /row %}
+
+{% row columns="1/1" bottom_margin="margin-s" %}
+{% column %}
+## Credits
+
+- [FLUtil](https://github.com/FL-/RMXP-FLUtil) plugin by [FL](https://github.com/FL-)
+
+## How to use
+
+### RandomHelper {% id="random-helpers" %}
+
+RandomHelper provides several helper classes allowing to select an option randomly with custom weights.
+
+The default helper is RandomHelper and accepts any kind of values. Example:
+
+```text
+helper = RandomHelper.new
+helper.add(50, "SomeString")
+helper.add(25, 6)
+helper.add(25, :some_symbol)
+
+value = helper.get # => 50% "SomeString"; 25% 6; 25% :some_symbol
+```
+
+You can use a RandomHelper for items:
+
+```text
+helper = ItemRandomHelper.new
+helper.add(60, :potion) 
+helper.add(30, :antidote)
+helper.add(10, :ether)
+give_item(helper.get, 1) # => 60% chance getting potion; 30% getting antidote; 10% getting ether
+```
+
+You can use a RandomHelper for Creatures:
+
+```text
+helper = PokemonRandomHelper.new
+helper.add(50, :pikachu)
+helper.add(50, :meowth)
+add_pokemon(helper.get, 5) # => 50% chance getting Pikachu; 50% getting Meowth
+```
+
+**Note:** `ItemRandomHelper` _and_ `PokemonRandomHelper` _will actively check if the dbSymbol of the entity you're trying to randomize actually exists in Game Data. If it doesn't, the game will crash (unless you catch it)._
+
+### Variable Switches Alias {% id="switch-variable-alias" %}
+
+Utility classes allowing you to defined Aliases for Switches or Variables.
+
+#### Alias for switches
+
+In a script, you can add the following code:
+
+```text
+$gs = SwitchesAlias.new({
+  alias1: 36,
+  alias2: 58
+})
+```
+
+This allows you to pull the value from Switch 36 using `$gs[:alias1]` and pull the value from Switch 58 using `$gs[:alias2]`.
+
+Of course, you can also assign Switch state, example: `$gs[:alias1] = true`
+
+#### Alias for variables
+
+In a script, you can add the following code:
+
+```text
+$gv = VariablesAlias.new({
+  aliasForSomething: 899,
+  elite4BeatCount: 556
+})
+```
+
+This allows you to pull the value for Variable 899 using `$gv[:aliasForSomething]` and pull the value from Variable 556 using `$gv[:elite4BeatCount]`.
+
+Of course, you can also update Variable value, example: `$gv[:elite4BeatCount] += 1`
+
+**Note:** Unlike RMXP or Essentials, PSDK variables are only accepting Integers. If you need to store any other sort of data, please use the standard variable `$user_data` for that.
+
+### Tweener
+
+The tweener utility is a nice alternative to `Yuki::Animation`, take a look on the official documentation to understand how it's used: [https://github.com/FL-/RMXP-FLUtil?tab=readme-ov-file#tweener](https://github.com/FL-/RMXP-FLUtil?tab=readme-ov-file#tweener)
+
+{% /column %}
+{% /row %}
+

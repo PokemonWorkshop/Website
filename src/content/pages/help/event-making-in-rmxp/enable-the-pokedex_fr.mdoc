@@ -1,0 +1,77 @@
+---
+title: Activer le Pokédex
+seoDescription: Comment activer le Pokédex dans RMXP pour Pokémon SDK
+order: 0
+---
+
+## Activer le Pokédex
+
+Par évènement : Activer l'interrupteur `100`.  
+Par script :
+
+```text
+$pokedex.enable
+```
+
+## Désactiver le Pokédex
+
+Par évènement : Désactiver l'interrupteur `100`.  
+Par script :
+
+```text
+$pokedex.disable
+```
+
+## Connaître l'état d'activation du Pokédex
+
+Par évènement : Lire l'interrupteur `100`.  
+Par script :
+
+```text
+$pokedex.enabled?
+```
+
+## Définir le mode national ou non du Pokédex
+
+Par évènement : Modifier l'interrupteur `99`.  
+Par script :
+
+```text
+$pokedex.set_national(is_national)
+```
+
+Paramètres :
+
+- `is_national`:`true`si le dex doit être national,`false`sinon.
+
+## Détecter si le Pokédex est national
+
+Par évènement : Lire l'interrupteur `99`.  
+Par script :
+
+```text
+$pokedex.national?
+```
+
+## Connaître le nombre de Pokémon Vus
+
+Par évènement : Lire la variable `2`.  
+Par script :
+
+```text
+$pokedex.pokemon_seen
+```
+
+## Connaître le nombre de Pokémon capturés
+
+Par évènement : Lire la variable `3`.  
+Par script :
+
+```text
+$pokedex.pokemon_captured
+```
+
+## Autres info
+
+Il existe tout un tas d'infos que vous pouvez obtenir/modifier dans le Pokédex à partir de `$pokedex`. Tout est documenté ici : [PFM::Pokedex](https://psdk.pokemonworkshop.fr/yard/PFM/Pokedex.html)
+

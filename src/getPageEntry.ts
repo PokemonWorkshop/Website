@@ -2,7 +2,7 @@ import { getEntry, getCollection } from 'astro:content';
 import { sortPages } from './sortPages';
 
 export const getPageEntry = async (slugParam: string, locale: 'en' | 'fr') => {
-  const [slug, tag] = slugParam.split('_');
+  const [slug, tag] = (slugParam ?? 'index').split('_');
   const options = [`${slug}_${locale}`, `${slug}/index_${locale}`];
   const entries = await Promise.all(options.map((o) => getEntry('pages', o)));
   const entry = entries.filter((e) => !!e)[0];

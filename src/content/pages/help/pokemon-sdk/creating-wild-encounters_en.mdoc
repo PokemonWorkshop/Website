@@ -1,0 +1,107 @@
+---
+title: How to create wild encounters
+seoDescription: Goes over how to set up wild Pokémon/groups in Studio!
+cover:
+- "./images/image_2024-01-04_121621346.png"
+publishDate: '2023-02-19 17:15:00'
+order: 0
+---
+
+## Setting the Group's Characteristics {% id="characteristics" %}
+
+Wild Encounters are known as "Groups" in Pokémon Studio! You can do very basic groups that appear all day or you can even do custom ones that change throughout the day. It's entirely up to you!
+
+When creating a new group you can set a few characteristics:
+
+- Group name - The name displayed in Studio's list of groups so you know what it represents
+- Activation - A specified switch needs to be active for this group to appear (time, or a custom switch)
+- Battle type - "Simple" (single) or "double" battles
+- Environment - What system tag this group will spawn in
+- Variation - What terrain tag this group will spawn in
+
+![Group creation dialog](./images/image_2023-02-19_112355879.png)
+
+## Setting up the Pokémon in a Group {% id="group" %}
+
+![Group page](./images/image_2023-02-19_113022253.png)
+
+## Adding a Pokémon {% id="add_pokemon" %}
+
+If you just set your first group's characteristics and are looking at a screen similar to the one above, it's time to set the Pokémon you will find! Adding a new Pokémon is literally as easy as hitting a button. Click "Add a Pokémon" and type in the Pokémon's name that you want to add.
+
+Now is where you can decide if you want to make the Pokémon a typical basic wild encounter or if you want to spice them up! Set their level and their encounter chance first, and we'll go over the rest.
+
+By default PSDK will always give wild Pokémon:
+
+- One of their available abilities (including the Hidden Ability)
+- The last 4 level-up moves in their learnpool
+- A random nature
+- Default shiny odds
+- A random gender (based on the Pokémon's gender odds)
+- The Pokémon's default loyalty
+- The Pokémon's default rareness (catch rate)
+- The Pokémon default EV rewards
+
+**However,** if you want to make the wild Pokémon in the group to be super specific you can change all of these **for each individual Pokémon** :
+
+- Any one specific ability
+- Any specific nature
+- Always shiny, never shiny, customized shiny percentage
+- Asexual, male, or female gender
+- Set the loyalty to any value
+- Set the rareness to any value
+- Specify **any** of the 4 moves
+- Specify the EVs rewarded
+
+Once you're happy with the Pokémon you want to add, click the "Add the Pokémon" button at the bottom and continue to add Pokémon until you're at a combined encounter rate of 100%.
+
+**NOTE:** If you ever want to delete a Pokémon you added, just hover over it and click the "X" and then click "Delete!"
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+![Pokémon list in group](./images/image_2023-02-19_112914446.png)
+
+{% /column %}
+{% column %}
+![Deletion dialog](./images/image_2023-02-19_112921181.png)
+
+{% /column %}
+{% /row %}
+
+## Importing a Pokémon List &amp; Setting up Day/Night Groups {% id="import_pokemon" %}
+
+As someone who is taking advantage of the day/night cycle and always having thought the encounters and their rates changing based on the time was a cool feature, I use "Import a Pokémon list" quite a bit! It helps take out the repetitiveness of adding in the same Pokémon, and I can just modify their values instead. Let me show you!
+
+Obviously we will need an already existing group for this to work, so we're going to build off the table I made for "Route 1 - Grass (Day)" shown at the start of this page.
+
+So first, let's make a new group that will be used during the night. I'm going to call it "Route 1 - Grass (Night)." I'll only need to set the group's name and the activation switch for this example. (Shown below on left)
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+![New group dialog](./images/image_2023-02-19_115247293.png)
+
+{% /column %}
+{% column %}
+![Import group dialog](./images/image_2023-02-19_115610901.png)
+
+{% /column %}
+{% /row %}
+
+After adding this group, we're going to click on the "Import a Pokémon list" button and import from "Route 1 - Grass (Day)." You may notice a thing you can toggle that says "Replace Pokémon" - it's pretty self explanitory, but it will replace any existing mons in this group. (Shown above on right)
+
+If you've selected the right group to import from, click the import button and you'll see the table fill up! Now change any mons you'd like for the night variation, click save, and you're good to go!
+
+**NOTE:** If you don't want to set 4 different groups, it may be a good idea to make a copy so you have Morning & Day the same, Evening & Night the same.
+
+## Pokémon don't appear to be spawning? {% id="no_pokemon?" %}
+
+There's a few things that could be causing this:
+
+- First, if you have no Pokémon you will not encounter any Pokémon.
+- Second, you may not have set your environment (system tags) properly.
+- Third, you may have set a variation (terrain tag) on accident.
+
+If you have a Pokémon, it's likely the second or third thing. Open your project in Studio, hover over the play button, and click "Debug mode". Press F9 when you are where you expect encounters to be, and make sure the current systag is correct for the group you're looking for!
+
+![UI showing up when pressing F9 in game](./images/image_2023-02-19_120220871.png)
+

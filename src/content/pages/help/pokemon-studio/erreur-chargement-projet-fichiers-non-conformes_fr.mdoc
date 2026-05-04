@@ -1,0 +1,79 @@
+---
+title: Comment corriger les fichiers non conformes qui ont été détectés lors du chargement
+  de mon projet ?
+seoDescription: La procédure à suivre pour régler les erreurs de fichiers non conformes
+order: 0
+---
+
+Depuis la mise à jour 1.4 de Pokémon Studio, le logiciel intègre un service qui vérifie l'intégrité des données du projet. Le principe est simple : on attend un certain format de données, et si la valeur présente ne correspond pas on renvoie une erreur de conformité.
+
+Pour faciliter les choses, une fenêtre de dialogue vous informe de ces erreurs vous permet, en un clic, d'ouvrir le dossier contenant les logs de Pokémon Studio, utiles pour obtenir davantage d'informations et connaître les fichiers concernés.
+
+![La fenêtre d'erreur qui s'affiche quand des fichiers non conformes sont présents dans un projet](./images/screen_erreur_zod_fr.png)
+
+## Trouver les erreurs
+
+Cliquez sur le bouton **Accéder aux logs**. Il vous ouvre le dossier suivant :`C:\Users\PSEUDO\AppData\Roaming\pokemon-studio\logs`
+
+Ouvrez le fichier `renderer.log`, qui est directement surligné.
+
+À l'aide de l' **outil de recherche** (CTRL + F), recherchez les termes `ZodError`. Cette partie vous sera utile pour comprendre la raison de la non conformité de vos données. Remontez dans le log pour savoir quel est le fichier non conforme.
+
+```json
+ZodError: [
+  {
+    "validation": "regex",
+    "code": "invalid_string",
+    "message": "Invalid dbSymbol format",
+    "path": [
+      "dbSymbol"
+    ]
+  }
+]
+```
+
+## Cas courant des problèmes de dbSymbol
+
+Le cas le plus courant est un rejet d'un identifiant (ou dbSymbol) qui n'est pas au bon format. Pour rappel, les identifiants doivent suivre ces règles strictes :
+
+- Ils sont composés de lettres minuscules et de chiffres.
+- Ils commencent obligatoirement par une lettre minuscule.
+- Les espaces sont interdits, et sont remplacés par des underscores "\_".
+- Les caractères spéciaux sont interdits. C'est valable notamment pour les apostrophes et les tirets "-", ou encore ♂ et ♀.
+
+En cas de problème avec un dbSymbol :
+
+- Rendez-vous dans le dossier du fichier concerné. _Par exemple pour les Pokémon, data/studio/pokemon._
+- Ouvrez le fichier.
+- Corrigez le dbSymbol. _Par exemple pour Canarticho, remplacez "farfetch'd" par "farfetch\_d"._
+- Corrigez le nom du fichier pour qu'il corresponde au dbSymbol. _Dans notre exemple,_ `farfetch_d.json`_._
+- Répétez l'opération pour chaque fichier concerné. _Vous pouvez retenter d'ouvrir votre projet avec Pokémon Studio pour voir la progression._
+
+Si votre jeu est déjà distribué à des joueurs, continuez avec la rubrique **Corriger les sauvegardes des joueurs**.
+
+## Corriger les sauvegardes des joueurs
+
+Pour corriger les sauvegardes des joueurs, vous allez devoir corriger les identifiants (dbSymbol) des Pokémon qui s'y trouvent. Pour cela, créez un nouveau script Ruby appelé `99999 PSDK DbSymbol Fix.rb` dans votre dossier scripts. Insérez le code suivant à l'intérieur :
+
+```text
+module Scheduler
+  # A proc to fix the Pokémon dbSymbol and their moves
+  add_proc(:on_scene_switch, GamePlay::Load, 'Fix of the dbSymbol', 1000) do
+    next unless $scene.is_a?(Scene_Map)
+    next if PFM.game_state.trainer.current_version > 6664
+
+    log_info("Fix of the Pokémon & their moves' dbSymbol")
+    block = proc do |pokemon|
+      pokemon&.instance_variable_set(:@db_symbol, nil)
+      pokemon&.moveset.each { |move| move.instance_variable_set(:@db_symbol, data_move(move.id).db_symbol) }
+    end
+    $actors.each(&block)
+    $storage.each_pokemon(&block)
+  end
+end
+```
+
+Ce code va passer dans l'équipe du joueur ainsi que dans son PC pour corriger les dbSymbols en fonction de vos corrections.
+
+Vous avez maintenant un projet avec une base de données conforme !
+

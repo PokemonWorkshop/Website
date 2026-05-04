@@ -1,0 +1,97 @@
+---
+title: Create a shop
+seoDescription: How to create a shop where to buy and sell items in RPG Maker XP
+publishDate: '2022-09-02 18:50:00'
+order: 0
+---
+
+![Shop UI](https://image.communityscriptproject.com/psdkwiki/img/shop_ui.png)
+
+For starters, it's important to note that the Shop will not accept selling items with a price inferior or equal to 0. Keep that in mind, it's really important for the rest of the tutorial.
+
+ 
+
+There are two types of shops : those with unlimited stock and those with limited stock. This tutorial will teach you how to handle both.
+
+## Open an unlimited shop
+
+Here's how to open an unlimited shop :
+
+To open an unlimited shop, you have to use the `open_shop` script command. This command lets you temporarily change the price of your items, if you want. This commands accepts one mandatory and two optional parameters. Let's have a look.
+
+The `open_shop` script command obviously needs as first parameter a list of items to be sold, either as an ID Array or a Symbol (which we'll discuss later when we'll see the limited shops). The second parameter must be a Hash, to allow temporarily changing the price of some items. Finally, the third parameter is a Boolean (true ou false), and turns on or off the animated background of the interface of the shop.
+
+Here's an example we'll analyze together :
+
+```text
+open_shop([:poke_ball, :potion, :antidote, :paralyze_heal], {poke_ball: 150, potion: 300, paralyze_heal: 400}, show_background: true)
+```
+
+The first parameter is {poke\_ball: 150, potion: 300, paralyze\_heal: 400} and is **required**. It tells the shop it will sell : Poké Balls, Potions, Antidotes and Paralyze Heals. Easy, right?
+
+The second parameter is {poke\_ball: 150, potion: 300, paralyze\_heal: 400} and is **optional**. It tells the shop some items have another price than usual. In this case, the Poké Balls price is reduced to 150, the Potions price rises to 300 and Paralyze Heals price rises to 400. Antidotes have their default price.
+
+The third parameter is show\_background: true and is just as **optional**. Its default value is true. As such, we could as well not have mentioned it in the command. It tells the shop if it should use an animated background or not. True to enable it, false to disable it (thus showing the map in the background).
+
+The syntax really is important. The first parameter is incased in [], the second in {}, and the third is "show\_background: " followed by its boolean value.
+
+## Open a limited shop
+
+### Creation of the stock of the shop
+
+To open a limited shop, you'll first need to create a shop with the list of available items and quantities. You'll need to that end the script command `add_items_to_limited_shop`. It takes two mandatory parameters and two optional ones. Let's analyze this with an example.
+
+```text
+add_limited_shop(:shop_argenta, [:poke_ball, :potion, :antidote, :paralyze_heal], [5, 3, 2, 1], shop_rewrite: false)
+```
+
+The first parameter is :shop\_argenta and is required. It gives a name to your shop, which will serve later as an id for another command.
+
+The second parameter is [:poke\_ball, :potion, :antidote, :paralyze\_heal] and is also required. It tells the shop the available items are : Poké Balls, Potions, Antidotes and Paralyze Heals.
+
+The third parameter, [5, 3, 2, 1], is optional. It tells the shop how many of each items are available, in the same order as the previous Array. Meaning we'll have : 5 Poké Balls, 3 Potions, 2 Antidotes et 1 Paralyze Heal. If the Array doesn't hold enough entries or there's no Array at all, the shop will have only 1 unit of each item by default.
+
+The fourth parameter is shop\_rewrite: false and is optional. It tells the command if it should overwrite an existing shop with the same name. In the example, if :shop\_argenta already exists, true would overwrite the old shop, false would merely add the new items to the old shop.
+
+### Replenish the stock of items in a shop
+
+As said earlier, you could use the `add_limited_shop` script command to add items to your shop. Or you could use the ad hoc command, `add_items_to_limited_shop`. This command has the exact same first three parameters as `add_limited_shop`.
+
+### Deplete the stock of an item / remove an item from a shop
+
+To reduce the available stock of an item or to remove that item entirely, only one command : `remove_items_from_limited_shop`.
+
+ 
+
+This command accepts the same parameters as the command to add stock, except that the parameter about the amount to remove is optional. And if it's not used, then the item will be removed entirely from the shop. If it's used, it will remove the amount of items according to its position in the Array.
+
+ 
+
+Example :
+
+```text
+remove_items_from_limited_shop(:shop_argenta, [:poke_ball, :potion, :antidote, :paralyze_heal], [10, 15, 20])
+```
+
+This command will remove 10 Poké Balls, 15 Potions, 20 Antidotes, and completely remove Paralyze Heals from sales because there was no 4th number in the 3rd parameter.
+
+### Open the limited shop
+
+Now that the stock of the shop has been created, it's time to open it. And you only need to use the aforementioned `open_shop` script command with a twist in the parameters.
+
+ 
+
+If you remember, it was said that you could give a Symbol as first parameter for that command : that's the name you gave to your shop. You only need to use that Symbol as first parameter, the rest is the exact same thing as earlier.
+
+### Custom messages when leaving the shop
+
+The new Shop includes 5 different scénarios allowing you to create custom messages depending how the player left the Shop. To use this feature, you only need to create a condition using the value of game variable 26 TMP1. Here are its possible values and what they mean :
+
+- -1 : The shop could not open (no more stock)
+- 0 : The player left having bought nothing
+- 1 : The player left having bought 1+ units of the same item (1 Hyper Ball or 50 Hyper Ball will lead here)
+- 2 : The player left having bought different items
+- 3 : The player left having bought everything the shop had to offer, leaving it now empty (which will cause the auto closing of this shop and scenario in -1 afterwards)
+
+![Shop Scenario](https://image.communityscriptproject.com/psdkwiki/img/shop_scenario_en.png)
+

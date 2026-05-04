@@ -1,14 +1,23 @@
 ---
-import { getCollection } from "astro:content";
-import { indexStore } from "./indexStore";
-import PageRef from "./PageRef.astro";
+import { getCollection } from 'astro:content';
+import { indexStore } from './indexStore';
+import PageRef from './PageRef.astro';
 
 const [tag] = await getCollection('tags', (t) => t.id === indexStore.tag);
 ---
 
-{tag && <p>Tag: <strong>{tag.data[indexStore.locale]}</strong> <a class="remove-tag" href={Astro.url.pathname.split('_')[0]}>×</a></p>}
+{
+  tag && (
+    <p>
+      Tag: <strong>{tag.data[indexStore.locale]}</strong>{' '}
+      <a class="remove-tag" href={Astro.url.pathname.split('_')[0]}>
+        ×
+      </a>
+    </p>
+  )
+}
 <div class="index">
-  {indexStore.subPages.map(id => <PageRef id={id} description="source" />)}
+  {indexStore.subPages.map((id) => <PageRef id={id} description="source" />)}
 </div>
 
 <style>
@@ -16,6 +25,17 @@ const [tag] = await getCollection('tags', (t) => t.id === indexStore.tag);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+  }
+
+  div.index > :global(aside) {
+    max-width: calc((1120px - 0.5rem) / 3);
+  }
+
+  @media screen and (max-width: 480px) {
+    div.index {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   a.remove-tag {

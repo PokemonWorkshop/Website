@@ -1,0 +1,51 @@
+---
+title: Définir l'apparence de l'utilisateur
+seoDescription: Comment définir l'apparence de l'utilisateur !
+order: 0
+---
+
+## Informations rapides
+
+PSDK définira automatiquement l'apparence dans un format comme celui-ci : {apparence}\_{genre}_\__{état}
+
+Cela signifie que PSDK décide de l'apparence de l'utilisateur en fonction de quelques éléments :
+
+- L'apparence définit
+- Le genre choisit
+- L'état actuel de l'utilisateur (en train de marcher / courir / surfer, etc.)
+
+![](./images/image_2023-02-18_223049074.png)
+
+Si vous regardez l'événement d'introduction ci-dessus, vous pouvez remarquer deux choses :
+
+- Vous devez spécifier le genre et l'apparence dans un script.
+- Le genre est défini par un interrupteur, il y a donc deux façons de le régler. Soit vous mettez l'interrupteur n°1 sur ON si vous jouez une fille (ou sur OFF pour un garçon), soit vous le réglez via le script comme indiqué dans l'événement ci-dessus.
+
+```text
+# Sets the user's gender to female (false for male)
+$trainer.define_gender(true)
+# Sets the user's appearance
+$game_player.set_appearance_set('hero_01_white')
+```
+
+**NOTE :** N'oubliez pas de lancer extendtext.exe au moins une fois pour que chaque ligne s'adapte !
+
+## États par défaut
+
+Les états supportés par défaut que vous pouvez trouver dans votre dossier "graphics/characters" sont :
+
+- Marcher _(walk)_
+- Courir _(run)_
+- Marcher dans les marais _(swamp)_
+- Courir dans les marais _(swamp\_run)_
+- S'enfoncer dans les marais _(swamp\_sinking)_
+- S'enfoncer profondément dans les marais _(deep\_swamp\_sinking)_
+- Surfer _(surf)_
+- Pêcher _(fish)_
+- Pêcher pendant qu'on surfe _(surf\_fish)_ 
+- Centre Pokémon _(pokecenter)_
+- Bicyclette à l'arrêt _(cycle\_stop)_
+- Rouler en bicyclette _(cycle\_roll)_
+- Rouler en bicyclette en faisant une roue _(cycle\_roll\_to\_wheel)_
+- Bicyclette à l'arrêt faisant une roue _(cycle\_wheel)_
+

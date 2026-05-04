@@ -1,0 +1,31 @@
+---
+title: Autorun Toggle Option
+seoDescription: Permettre aux joueur de courir sans avoir à maintenir la touche pour
+  courir
+order: 20230723
+---
+
+Cela fait un moment que j'ai posté cette ressource et depuis, PSDK a eu quelques belles mises à jour&nbsp;! L'une d'entre elles est un gestionnaire de plugins, qui facilite grandement l'installation de ce genre de choses. Auparavant, vous deviez aller modifier tout un tas de code, mais ce n'est plus le cas ! Désormais, vous n'aurez plus qu'à ajouter le texte des options.
+
+## Comment installer le plugin
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+1.) Téléchargez `AutoRunOption.psdkplug` et sauvegardez le fichier dans le dossier **scripts** de votre projet  
+2.) Ouvrez `Data\configs\game_options_config.json` et ajoutez `"toggled_running_choice"` à la liste des options  
+3.) Lancez le jeu
+
+{% /column %}
+{% column %}
+{% cta href="https://www.mediafire.com/file/wwb4volaebuk45y/AutoRunOption.psdkplug/file" align="center" %}Télécharger le plugin{% /cta %}
+
+{% /column %}
+{% /row %}
+
+## Actions supplémentaires
+
+Si vous voulez que le texte de votre menu d'options ait l'air correct ou si vous voulez simplement le modifier&nbsp;:  
+1.) Allez dans `Data/Text/Dialogs` et ouvrez `100042.csv` (utilisez VSCode/Notepad, et faites attention à ce que le fichier reste un CSV lorsque vous sauvegardez)  
+2.) Vérifiez que la ligne 11 indique le texte que vous voulez pour "Activé" et que la ligne 12 indique le texte que vous voulez pour "Désactivé"  
+3.) Par défaut, le plugin utilise la ligne 68 pour le texte "Auto Run" et la ligne 69 pour la description de l'option. (Ceci peut être changé dans `scripts/00000 Plugins/xxxxx AutoRunOption/00100 Options_Menu.rb`.)
+

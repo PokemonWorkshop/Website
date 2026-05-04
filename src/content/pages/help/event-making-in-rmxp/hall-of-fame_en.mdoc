@@ -1,0 +1,24 @@
+---
+title: Hall of Fame
+seoDescription: How to launch the Hall of Fame after the Elite 4
+publishDate: '2022-09-02 21:10:00'
+order: 0
+---
+
+To launch the animation of the Hall of Fame and the registering of the player's victory, only one command is needed. You simply need to call the command `hall_of_fame` in your event, and PSDK will handle everything. It's also possible to give parameters to this command.
+
+ 
+
+Let's see an example on the way we wrote this command :
+
+```text
+hall_of_fame('audio/bgm/hall_of_fame_alternate', :league)
+```
+
+Here, we gave it two arguments :
+
+- The first one correspond to the music you want to play. By default, the file `audio/bgm/hall-of-fame.ogg` is the one which will be played if you don't put any parameter.
+- The second one, `:league`, specify the mode in which the victory is registered. If it's a victory against the Elite 4, you must write `:league`. And if it's a victory in the "Title Defense" mode (like in the 7th Gen), you must write `:title_defense`. Make sure you wrote well those two symbols, or else the victories might not be displayed in the interfaces that utilize those. Also, if your game possess another way of entering the Hall of Fame, it's totally possible to write another symbol, example `:championship` if your game has a tournament. However, you will be responsible for including victories using this symbol in your interfaces.
+
+Voilà, you may now profit from the animation of the Hall of Fame. Make sure to flash the screen in black after the Hall of Fame command, to ease the transition into the credit screen of your game.
+

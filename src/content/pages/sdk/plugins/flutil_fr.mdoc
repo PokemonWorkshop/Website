@@ -1,0 +1,109 @@
+---
+title: FLUtil
+seoDescription: Ajout de divers classe et méthodes utiles pour les scripteurs
+publishDate: '2025-06-07 16:00:00'
+order: 20250607
+---
+
+Ce script ajoute beaucoup de classe et méthodes pour les scripteurs:
+
+- RandomHelper qui permet de réaliser des tirages plus facilement. **Egalement recommandé pour les non scripteurs.**
+- Alias d'interrupteur et variable qui permet de rendre les accès plus court et lisible.
+- Animation "tween"
+
+## Installation
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" %}
+{% column %}
+1. Téléchargez le fichier psdkplug, et copiez le dans le dossier scripts de votre projet
+2. Lancez le jeu
+
+{% /column %}
+{% column %}
+{% cta href="https://echozone.nekoweb.org/top_secret_psdk_stuff/FLUtil.psdkplug" align="center" %}Télécharger le Plugin{% /cta %}
+
+{% /column %}
+{% /row %}
+
+## Crédits
+
+- [FLUtil](https://github.com/FL-/RMXP-FLUtil) plugin par [FL](https://github.com/FL-)
+
+## Comment l'utiliser
+
+### RandomHelper {% id="random-helpers" %}
+
+RandomHelper fourni divers classes permettant de selectionner une option avec des poids différents.
+
+L'utilitaire par défaut est `RandomHelper` et accepte n'importe quel type de valeur. Exemple:
+
+```text
+helper = RandomHelper.new
+helper.add(50, "SomeString")
+helper.add(25, 6)
+helper.add(25, :some_symbol)
+
+value = helper.get # => 50% "SomeString"; 25% 6; 25% :some_symbol
+```
+
+Vous pouvez utiliser un RandomHelper pour les objets:
+
+```text
+helper = ItemRandomHelper.new
+helper.add(60, :potion) 
+helper.add(30, :antidote)
+helper.add(10, :ether)
+give_item(helper.get, 1) # => 60% chance getting potion; 30% getting antidote; 10% getting ether
+```
+
+Vous pouvez utiliser un RandomHelper pour les Pokémon:
+
+```text
+helper = PokemonRandomHelper.new
+helper.add(50, :pikachu)
+helper.add(50, :meowth)
+add_pokemon(helper.get, 5) # => 50% chance getting Pikachu; 50% getting Meowth
+```
+
+**Note:** `ItemRandomHelper` _et_ `PokemonRandomHelper` _vont activement vérifier si le dbSymbol de l'entité que vous essayez de tirer au hasard existe. Si l'entité n'existe pas, le jeu crashera, sauf si vous capturez l'erreur._
+
+### Alias d'interrupteur et de variables {% id="switch-variable-alias" %}
+
+Classe utilitaire vous permettant de définir les Alias pour vos interrupteur ou variables.
+
+#### Alias pour les interrupteurs
+
+Dans un script, vous pouvez ajouter le code suivant:
+
+```text
+$gs = SwitchesAlias.new({
+  alias1: 36,
+  alias2: 58
+})
+```
+
+Cela vous permet d'accéder à l'état de l'interrupteur 36 en utilisant `$gs[:alias1]` et récupérer la valeur de l'interrupteur 58 en utilisant `$gs[:alias2]`.
+
+Bien sûr, vous pouvez assigner l'étant d'un interrupteur, exemple: `$gs[:alias1] = true`
+
+#### Alias pour les variables
+
+Dans un script, vous pouvez ajouter le code suivant:
+
+```text
+$gv = VariablesAlias.new({
+  aliasForSomething: 899,
+  elite4BeatCount: 556
+})
+```
+
+Ceci vous permet de récupérer la valeur de la variable 899 en utilisant `$gv[:aliasForSomething]` et récupérer la valeur de la variable 556 en utilisant `$gv[:elite4BeatCount]`.
+
+Bien sûr, vous pouvez mettre à jour la valeur d'une variable, exemple: `$gv[:elite4BeatCount] += 1`
+
+**Note:** A la différence de RMXP ou Essentials, les variables de PSDK sont uniquement des nombres entiers. Si vous avez besoin de stocker un quelconque autre type de donnée, utilisez `$user_data` à la place, c'est fait pour.
+
+### Tweener
+
+L'utilitaire Tweener est une alternative à `Yuki::Animation`, lisez la documentation officielle à cet endroit: [https://github.com/FL-/RMXP-FLUtil?tab=readme-ov-file#tweener](https://github.com/FL-/RMXP-FLUtil?tab=readme-ov-file#tweener)
+

@@ -1,0 +1,85 @@
+---
+title: 'Tiled2Rxdata v3: Les plans de Yuri'
+seoDescription: À quoi Tiled2Rxdata v3 pourrait ressembler
+cover:
+- "./images/worst_possible_banner_dot_jpeg.png"
+publishDate: '2023-12-09 11:55:00'
+order: 20231209
+---
+
+Vous n'êtes pas sans savoir que Tiled2Rxdata v2 (T2Rv2) arrive avec Pokémon Studio v2. Cette version de T2R doit être compatible avec le format de map RPG Maker XP (RMXP), la raison pour cela est que les évènements doivent toujours être édités avec RMXP sous Pokémon Studio v2.
+
+De ce fait, je prévois une nouvelle amélioration de T2R, T2Rv3. Cette version devrait arriver avec Pokémon Studio v3 et devrait pousser la version de PSDK vers v27. La raison étant que le moteur de map va potentiellement être réécrit pour être compatible avec ce nouveau format de map.
+
+## Le nouveau format de map {% id="format" %}
+
+Le nouveau format de map va pleinement se servir de la classe Table du RGSS. Le format RMXP est limité à une Table de trois couches. Mon plan est d'aller au dessus de trois couches, probablement jusqu'à dix pour stocker le plus d'information possible.
+
+Voici un exemple de format pour ces couches:
+
+- Couche 0: Tiles de sol
+- Couche 1: Tiles de sol
+- Couche 2: Tiles de sol ou Tiles de priorité
+- Couche 3: Tiles de priorité
+- Couche 4: Tiles de priorité
+- Couche 5: Meta données de Passages, Comptoire, Semi Transparence, Ponts & System Tag
+- Couche 6: System Tag
+- Couche 7: Terrain Tag (0~127) + meta données d'élévation
+
+Comme vous pouvez le voir, je prévois de stocker les méta données dans la map directement. Il y a plusieurs raisons à cela :
+
+- Lire les méta données telles que les passages, comptoire, semi transparence, etc... nécessite un nombre important de boucles et divers Table supplémentaires. En mettant cela sur les tiles de la map on supprime toute cette complexité.
+- Cette organisation réduit la pression sur le compresseur de tiles car maintenant ces données seront directement sur une couche de la carte, ça évitera d'avoir à dupliquer des tiles pour chaque variations.
+
+{% row columns="1/3 2/3" bottom_margin="margin-m" %}
+{% column %}
+**Fun Fact:** Saviez vous qu'avant la sortie de PSDK, l'édition des passages et System tags se faisait sur une couche spéciale des maps&nbsp;?
+
+{% /column %}
+{% column %}
+![Editeur de System Tag quand PSDK n'était pas encore sorti](./images/image_2023-12-09_120802376.png)
+
+{% /column %}
+{% /row %}
+
+## Conséquences sur la mémoire {% id="memory" %}
+
+Vous devez surement vous demander si ce nouveau format pourrait avoir de grosse conséquences sur la mémoire. Soyez rassurés, les conséquences sont pas aussi terrible qu'avoir des tas de tiles sur un tileset.
+
+Supposons que la map fasse 32x32 et que l'on utilise 10 couches. En mémoire, la Table utilise ~20Ko, c'est le poids de 5 tiles sur le tileset.
+
+Maintenant si ces maps de 32x32 sont liés par le MapLinker (9 cartes, 8 autour et 1 au centre), l'utilisation de la mémoire monte à ~180Ko, c'est l'utilisation de 45 tiles ou ~6 lignes dans le tileset.
+
+Pour une utilisation un peu plus realiste, des maps de 50x50 utilisent ~49Ko et ~440Ko pour 9 maps liées ensemble.
+
+C'est relativement raisonnable à mon avis. Le plus gros problème serait sûrement le cache du CPU qui risque d'être invalidé souvent lors du rendu de la carte. Il nous faudra tester cela parce qu'il est bien possible que Ruby tout seul invalide le cache souvent en s'exécutant.
+
+## Que sont les méta données d'élévation? {% id="elevation" %}
+
+Vous avez surement déjà essayé d'utiliser les pentes et escaliers dans PSDK. C'est relativement peu pratique et en terme d'animation c'est pas ça.
+
+Pour contrer ces soucis, j'ai pensé à stocker des données indiquant quelle est l'élévation du joueur et des évènements lorsqu'ils sont sur un tile particulier. Ainsi s'ils se déplacent, les animations peuvent prendre en compte ces informations.
+
+L'idée globale est que les méta données d'élévation contiennent:
+
+- L'élévation d'un entité sur un tile (0 à 31 sur 5 bits)
+- La nécessité de déplacer l'entité de +1 ou -1 en y lorsqu'elle avance vers la droite ou la gauche (4 bits)
+
+Comme les cellule d'une Table contient 16 bits, ça veut dire que les Terrain Tag auront 7 bits pour s'exprimer avec les couches suggérées plus haut. (Je pense que 128 Terrain Tag suffiront lorsqu'ils sont combinés avec 16.000 System Tags).
+
+Pour démontrer cela, j'ai préparé plusieurs cas d'usage:
+
+![Diverses pentes qui forcent le joueur à se déplacer en y](./images/slope_no_stop.png)
+
+Avec ces méta données on serait en mesure d'émuler l'offset y du joueur parce qu'on sait sans calcul quelle est l'élévation du joueur au milieu d'un tile.
+
+Les flèches brunes montrent que le joueur doit se déplacer de +1 ou -1 sur l'axe Y quand il se déplace vers la gauche ou la droite.
+
+![Pente avec une pause au milieu](./images/slope_with_stop.png)
+
+Sur cet exemple vous pouvez voir qu'on est capable d'arrêter un escalier à une élévation différente de 0 puis de le faire continuer. C'est d'autant plus puissant que les escaliers n'auront plus besoin d'être à 45° dans PSDK. (Vous pourriez également créer des pentes courbées).
+
+## Conclusion
+
+J'ai de grands espoirs pour le futur et cette idée me semble réaliste. Si vous avez des commentaires ou suggestions à faire, n'hésitez pas à le faire savoir sur le serveur Discord de Pokémon Workshop ou sur le fil lié à cet article!
+

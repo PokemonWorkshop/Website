@@ -1,0 +1,63 @@
+---
+title: How to block a move?
+seoDescription: Learn how to block a move with PSDK!
+tags:
+- PSDK
+- ruby
+publishDate: '2024-02-16 12:09:00'
+order: 0
+---
+
+## What are the ways to block a move?
+
+Blocking the move is a process that depends on the characteristics of the target. If there is a reason why the target causes a move block, the functions related to blocking should return `true` instead of `false` and provide a message indicating the reason for the block before returning `true`.
+
+### From the move code itself
+
+Some moves may fail due to their mechanics. For example, using `Bind` on a target that is already under the effect of `Bind` should fail. To handle this, there is a method in moves called `move_blocked_by_target?`, which should return `true` if the target is already under the effect of `Bind`.
+
+#### Example with "Octolock"
+
+![Code d'Octoprise](./images/octoprise.png)
+
+Note: To learn more about `move_blocked_by_target?`, _please refer_ to the [**Understanding the move\_blocked\_by\_target? function**](#heading_function-move-blocked) section at the end of the article.
+
+### From the code of an effect
+
+Effects provide a function that returns `true` when `move_blocked_by_target?` is invoked. This method is called `on_move_prevention_target`. Its functionality is similar to `move_blocked_by_target?`; if it returns `true`, the move will be dodged. This is useful for creating effects (abilities, items, weather, terrains, etc.) that grant a Pokemon immunity to certain moves.
+
+#### Example with the Ability "Good as Gold"
+
+![Code de Corps en Or](./images/corpsenor.png)
+
+## Understanding the function <code>move_blocked_by_target?</code> {% id="function-move-blocked" %}
+
+![Code de move_blocked_by_target](./images/fonction.png)
+
+What particularly interests us in this function:
+
+- `exec_hooks(Move, :move_prevention_target, binding)`
+
+**exec\_hooks:** This method is called to execute a series of `Hooks`. `Hooks` are functions or procedures triggered by specific events or conditions in the program. They allow modifications to the standard behavior of a function or the addition of extra functionalities without altering the original function's code.
+
+**Move:** The first argument specifies the context or domain of the `Hooks` to execute. Here, `Move` indicates that the `Hooks` are related to Pokemon moves, representing the class that groups `Hooks` associated with moves.
+
+**:move\_prevention\_target:** The second argument is a symbol that identifies the specific `Hooks` to execute. In this case, `:move_prevention_target` refers to `Hooks` that determine whether a Pokemon can perform a specific move. These `Hooks` may include checks for conditions such as status effects, terrain, weather, or other factors that might block the move.
+
+**binding:** The third argument **,** `binding`, encapsulates the execution context of the code in Ruby, including local variables, methods, and the value of `self`. Passing `binding` to `exec_hooks` enables the `Hooks` to access and modify the context in which `exec_hooks` was called, allowing them to interact seamlessly with the original code of the `move_blocked_by_target?` method.
+
+### Understanding the procedure of the function <code>move_blocked_by_target?</code>
+
+**Hook Call**  
+When `exec_hooks(Move, :move_prevention_target, binding)` is executed, it identifies and runs all Hooks associated with the event or condition `:move_prevention_target` in the context of moves (`Move`). These Hooks are triggered to evaluate whether the move can be performed under the current conditions.
+
+**Handling the Value Returned by the Hook**  
+If none of the executed Hooks raises a `Hooks::ForceReturn` exception, the `move_blocked_by_target?` function proceeds with its normal execution and eventually reaches the `return false` statement at the end. This indicates that the move is not blocked.
+
+However, if a Hook determines that the move should not be executed and returns `true`—either directly or by raising an exception like `Hooks::ForceReturn` with `e.data` set to `true`—the execution of `move_blocked_by_target?` is interrupted. In this case, the function immediately returns `true` to its caller.
+
+**Consequences of Returning** `true`  
+Returning `true` signifies that the move has been prevented due to specific conditions. This could result from various in-game factors such as terrain effects, abilities, status effects, or other mechanisms.
+
+The calling function or method that invoked `move_blocked_by_target?` must then handle this `true` return value to determine the next steps. For example, it might display a message to the player explaining why the move was blocked or apply additional effects resulting from the prevention.
+

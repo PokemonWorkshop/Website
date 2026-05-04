@@ -1,0 +1,52 @@
+---
+title: How to Change User's Appearance
+seoDescription: Going over how to set the user's appearance!
+publishDate: '2023-02-19 04:25:00'
+order: 0
+---
+
+## Quick Info
+
+PSDK will automatically set the appearance in a format like this: {appearance}\_{gender}_\__{state}
+
+Meaning that PSDK decides the user's appearance based on a few things:
+
+- The appearance set
+- The gender set
+- The user's current state (walking/running/surfing/etc.)
+
+![](./images/image_2023-02-18_223049074.png)
+
+If you look at the intro event you may notice two things:
+
+- You must specify the gender and the appearance in a script
+- The gender is defined by a switch, so there's actually two ways to set it. Either set switch 1 to ON if you're playing a female (off for male), or set it through the script like shown in the event above.
+
+```text
+# Sets the user's gender to female (false for male)
+$trainer.define_gender(true)
+# Sets the user's appearance
+$game_player.set_appearance_set('hero_01_white')
+```
+
+**NOTE:** Remember to launch extendtext.exe at least once so each line fits!
+
+## Default States
+
+The default supported states you can find in your graphics/characters folder are:
+
+- Walking _(walk)_
+- Running _(run)_
+- Swamp walking _(swamp)_
+- Swamp running _(swamp\_run)_
+- Swamp sinking _(swamp\_sinking)_
+- Deep swamp sinking _(deep\_swamp\_sinking)_
+- Surfing _(surf)_
+- Fishing _(fish)_
+- Fishing while surfing _(surf\_fish)_
+- Pokecenter _(pokecenter)_
+- Bike stop _(cycle\_stop)_
+- Bike roll _(cycle\_roll)_
+- Bike roll to wheelie _(cycle\_roll\_to\_wheel)_
+- Bike wheelie _(cycle\_wheel)_
+

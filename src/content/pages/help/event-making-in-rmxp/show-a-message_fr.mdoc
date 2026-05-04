@@ -1,0 +1,131 @@
+---
+title: Afficher un message
+seoDescription: Comment utiliser la commande de message dans RMXP pour PSDK
+order: 0
+---
+
+Sous PSDK, la fonction de base d’affichage des messages vous permet de couvrir un certain nombre de chose sans la moindre difficulté. Hormis certains cas particuliers, il est inutile de faire appel à des appels de script pour afficher vos messages.
+
+## Configuration des messages
+
+Deux interrupteurs ont une action sur les messages :
+
+- L'interrupteur `25` " **MSG Saut de ligne Auto**", il vous permet d'écrire des phrases sur une seule ligne et de gérer le saut de ligne automatiquement. (Vos propres saut de ligne ne sont pas affectés).
+- L'interrupteur `27` " **Pas de retour sur ponctuation**", il vous permet d'empêcher le système de saut de ligne automatique de sauter une ligne lorsqu'il rencontre une ponctuation qui termine une phrase.
+
+## Afficher un message simple
+
+![ListeCommande](https://image.communityscriptproject.com/psdkwiki/img/Msg1.png)
+
+Pour afficher un message simple, vous allez sur un évènement, vous insérez une nouvelle commande et vous choisissez "Afficher un message" (Show Message en anglais).
+
+Une fenêtre avec un champ de texte s'affiche, vous entrez votre message dans ce champ et vous validez. La liste des commandes devrait avoir un Message qui s'ajoute.
+
+Notez que sous PSDK, les messages s'affiche comme dans DPP ou HGSS, si vous mettez plusieurs lignes dans la même commande de message, au bout de la deuxième ligne, l'intégralité du texte est défilé vers le haut puis la deuxième ligne de la fenêtre affiche la ligne suivante. Si vous utilisez deux commandes de message séparées par contre, il n'y a pas de défilement.
+
+## Ajouter des couleurs
+
+Pour ajouter des couleurs, vous devez utiliser un code spécifique dans vos messages, le code est le suivant : `\c[x]`. Vous devez remplacer `x` par le numéro de la couleur, sous PSDK les couleurs sont les suivantes :
+
+![ListeCouleur](https://image.communityscriptproject.com/psdkwiki/img/Msg3.png)
+
+- 0 = Normal
+- 1 = Bleu
+- 2 = Rouge
+- 3 = Vert
+- 4 = Cyan
+- 5 = Magenta
+- 6 = Jaune
+- 7 = Gris
+- 8 = Blanc
+
+Ajoutez 10 pour obtenir la couleur qui va sur fond noir.
+
+## Mentionner le nom d'un Héros (base de données RMXP)
+
+Pour mentionner le nom d'un Héros, il faut utiliser le code `\n[x]` où `x` correspond au numéro du Héros dans la base de données. Généralement `x = 1` pour le Joueur, `x = 2` pour le rival ou un ami.
+
+## Mentionner le nom d'un Pokémon de l'équipe
+
+Pour mentionner le nom d'un Pokémon de l'équipe, il faut utiliser le code `\p[x]` où `x` correspond à la position du Pokémon dans l'équipe (1, 2, 3, 4, 5, 6).
+
+## Mentionner le nom d'une touche
+
+PSDK utilise un système d'input particulier qui lui permet de choisir les touches du clavier associés à des touches virtuelles. Les touches virtuelles sont les suivantes : A, B, X, Y, L, R, L2, R2, Select, Start, L3, R3, Down, Left, Right, Up. De manière générale, A est associée à la touche C du clavier, B à X, X à V, Y à W.
+
+ 
+
+Pour mentionner le nom des touches, il faut utiliser le code `\k[touche de virtuelle]` et le message affichera la touche sur laquelle le joueur doit appuyer pour que ça fonctionne.
+
+## Afficher la valeur d'une variable
+
+Pour afficher la valeur d'une variable il faut utiliser le code `\v[x]` où `x` est le numéro de la variable.
+
+## Ajouter un e à certains mots quand le héros est une fille
+
+Il suffit d'utiliser le code `\E` à la fin d'un mot.
+
+## Varier les mots en fonction du sexe du héros
+
+Il faut utiliser le code suivant `\f[MotFille§MotGarçon]`. Si le héros est une fille, ça affichera MotFille, sinon ça affichera MotGarçon. (Vous pouvez utiliser des caractères latins sans problème à la place de MotFille et MotGarçon).
+
+## Afficher un message provenant du fichier Texte de Ruby Host
+
+Pour afficher un message provenant du fichier Texte de Ruby Host il faut utiliser le code `\t[x, y]` où `x` correspond au numéro du fichier et `y` le numéro du texte. Ceci permet de réaliser des évènement qui ont leur texte dans la bonne langue en fonction des préférence du joueur, par exemple comme pour l'évènement de l'infirmière Joëlle.
+
+## Afficher un text provenant des fichiers CSV
+
+Pour afficher un message extrait des textes CSV il suffit de commancer le message deux nombres séparés par une virgule et un espace. Exemple : `0, 55 blablabla` ira chercher le texte de la ligne 57 (55 + 2) dans le fichier `Data/Text/Dialogs/0.csv`.
+
+## Afficher des texte dynamiques
+
+Pour afficher des textes dynamiques il faut utiliser une commande de script. Cette commande c'est :
+
+```ruby
+PFM::Text.set_variable("[Replacement Tag]", "Replacement text")
+```
+
+Après il faut entrer la commande de message et insérer le code `[ARemplacer]`. Par exemple, pour afficher l'heure :
+
+![Message heure](https://image.communityscriptproject.com/psdkwiki/img/Msg4.png)
+
+A la fin de l'évènement, il faut exécuter la commande : `PFM::Text.reset_variables` pour nettoyer les variables de texte. Notez qu'il faut toujours que les deux arguments de `PFM::Text.set_variable` soient des `String`. Si vous voulez mettre des valeurs numériques, utilisez la fonction `.to_s` pour la convertir en chaine.
+
+## Mettre un petit temps d'attente dans le message
+
+Pour mettre un petit temps d'attente comme dans le message d'apprentissage d'une nouvelle attaque, utilise le code `[WAIT x]` où `x` est le nombre de frame (60 = 1 seconde) où l'affichage de message attend avant d'afficher la suite.
+
+## Afficher le nom d'un personnage parlant dans un message
+
+Pour afficher le nom du personnage qui parle dans un message, utilisez le tag spécial `:[name=Nom à afficher]:`. Vous ne pouvez mettre qu'un tag de ce type par message (mais il peut contenir plusieurs commandes).
+
+## Afficher le battler d'un personnage pendant le message
+
+Il est possible d'afficher le battler d'un dresseur durant un message, pour cela il suffit d'utiliser le même tag que précédemment mais avec le sélecteur face= : `:[face=position_x,nom_dans_battlers,opacity]:`
+
+Notez que vous pouvez mettre plusieurs `face=` accompagné d'un `name=` dans le tag spécial, il suffit de tous les séparer par un point virgule.
+
+Exemple :
+
+![Exemple](https://image.communityscriptproject.com/psdkwiki/img/Psdk_message_tag_spe.png)
+
+## Afficher l'image d'une ville tout en changeant le windowskin de manière temporaire
+
+Il est possible d'afficher le plan de la ville à l'aide d'une image stockée dans `Graphics/Pictures`. Quand l'image est affichée, le texte est décalé vers la droite (de sorte à ne pas recouvrir l'image). Utilisez `:[city=nom_image]:` dans votre message. Pour modifier temporairement le windowskin utilisez la ligne suivante avant d'afficher le message :
+
+```ruby
+$scene.message_window.windowskin_overwrite = 'nom_dans_graphics/windowskins'
+```
+
+(Ce windowskin ne sera valide que durant le message suivant l'exécution de la commande.)
+
+![Example](https://image.communityscriptproject.com/psdkwiki/img/Psdk_message_city.png)
+
+## Faire se tourner le joueur vers l'event parlant ou vers un autre event
+
+Il est possible de faire tourner le joueur dans la direction de l'event affichant actuellement un message ou vers un autre event de votre choix. Pour cela, il vous suffit simplement d'écrire `:[lookto=X]:` dans votre message. X est à remplacer par 0 si vous souhaitez cibler l'event affichant le message ou par l'ID de l'event vers lequel le joueur doit se tourner.
+
+![Exemple](https://image.communityscriptproject.com/psdkwiki/img/Psdk_message_lookto_another_event.png)
+
+![Exemple](https://image.communityscriptproject.com/psdkwiki/img/Psdk_message_lookto_talking_event.png)
+

@@ -1,0 +1,60 @@
+---
+title: Mon jeu plante, et je ne sais pas quoi faire
+seoDescription: Comment gérer les crash dans Pokémon SDK
+order: 0
+---
+
+En général, quand le jeu crash, une fenêtre d'erreur s'affiche avec quelques informations à propos du crash. Ca devrait également créer un fichier Error.log
+
+![Fenêtre d'erreur de PSDK](./images/image_2022-08-30_174713212.png)
+
+Ce fichier Error.log se trouve à la racine de votre projet et contient beaucoup d'informations.
+
+![Racine du projet](./images/image_2022-08-30_174458147.png)
+
+## Que faire avec Error.log? {% id="error-log" %}
+
+Le but de ce fichier est d'aider tout le monde de savoir quel est le problème.
+
+Si vous prenez un peu de temps de lire ce fichier, vous devriez comprendre quel est le soucis (en particulier si c'est causé par un évènement que vous avez fait).
+
+![Fichier Error.log](./images/image_2022-08-30_175225553.png)
+
+Dans le fichier Error.log ci-dessus, vous pouvez voir que le crash a été causé par un évènement qui essaie d'utiliser la constante `VAR` qui n'est pas définie. Dans ce cas, il faut utiliser les bonnes choses pour corriger le problème.
+
+Certaines erreurs sont cela dit plus compliquées à comprendre. Surtout quand c'est pas de votre faute. Dans un tel cas, vous devez utiliser le salon dédié sur Discord pour rapporter votre problème.
+
+## Comment rapporter un problème sur Discord ? {% id="q2a" %}
+
+Dans le salon [🔧・support](https://discord.com/channels/143824995867557888/1019959831072866404 "Salon du support sur Discord"), vous pouvez poser une question et donner les détails nécessaires.
+
+Il y a quelques règles à respecter quand vous posez une question :
+
+- Le titre doit toujours être explicite, **«&nbsp;Mon jeu crash&nbsp;» est un mauvais titre**
+- Le corps de la question doit toujours contenir toute les informations à propos de ce que vous avez fait pour rencontrer votre problème
+- Si le jeu a crashé, collez le contenu de Error.log dans le corps de la question
+- Si le jeu crash mais ne met pas à jour Error.log, suivez le chapitre suivant
+- Répondez toujours aux personnes qui essaient de vous aider. Fournissez ce qu'on vous demande.
+
+## Que faire quand Error.log n'a pas été crée {% id="cmd-bat" %}
+
+Parfois, PSDK crash sans générer de fichier Error.log, surtout quand la fenêtre se ferme immédiatement. Dans un tel cas, il existe une solution pour vérifier quel est le problème.
+
+Ouvez le dossier de votre projet et écrivez `cmd` dans la barre d'adresse:
+
+![Barre d'adresse avec cmd écrit dedans](./images/image_2022-08-30_180314773.png)
+
+Ceci va ouvrir un invité de commande où vous pourrez écrire la commande: `psdk debug`
+
+Cette commande va ouvrir le jeu en mode debug et surtout garder l'intégralité des log dans la console. Ainsi, vous pourrez tout copier dans votre rapport de bug !
+
+![Log gardés dans la console](./images/image_2022-08-30_180536333.png)
+
+Avec cela, vous pouvez taper `CTRL+A` puis `cliquer droit` pour copier l'intégralité du contenu de la console. Ceci nous aidera à debugger car la console contient plein d'informations importante.
+
+## Gota go fast! {% id="skip-title" %}
+
+Comme vous avez pu voir précédemment, on peut démarer le jeu depuis `cmd`. Ceci a un autre avantage comparé à RPG Maker XP. Vous pouvez sauter l'intégralité de l'écran titre et directement choisir la sauvegarde. Pour ceci, tapez la commande: `psdk debug skip_title`
+
+Cela vous économisera beaucoup de temps.
+

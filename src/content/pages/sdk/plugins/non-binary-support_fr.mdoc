@@ -1,0 +1,61 @@
+---
+title: Support du genre Non-Binaire
+seoDescription: Permettez à votre fangame de proposer plus que deux genres
+order: 20230723
+---
+
+Par défaut les genders de PSDK sont contrôlés par un interrupteur, donc le but de ce plugin est de le basculer sur une variable&nbsp;!
+
+Vous pouvez théoriquement modifier le script et ajouter un support pour d'autres choses, mais voyons quelques exemples d'utilisation du script.
+
+## Installation
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+1.) Téléchargez le plugin et sauvegardez le dans le dossier **scripts** de votre fangame   
+2.) Lancez le jeu
+
+{% /column %}
+{% column %}
+{% cta href="https://www.mediafire.com/file/bqlo3gaaufvto3x/NBSupport.psdkplug/file" align="center" %}Télécharger le Plugin{% /cta %}
+
+{% /column %}
+{% /row %}
+
+## Utilisation
+
+Lorsque vous démarrez votre jeu, assurez-vous de définir le sexe des joueurs via la **variable 495** afin que tout fonctionne correctement. Par défaut, les valeurs vont représenter&nbsp;:
+
+- 0 = Féminin
+- 1 = Masculin
+- 2 = Non-Binaire
+
+Si vous voulez utiliser un texte différent dans vos message utilisez `\f[elle§il§iel]`&nbsp;!
+
+## Modifier la variable​
+
+Par défaut, le genre sera fixé à la variable 495. Si vous voulez changer cela, je vous conseille de faire un monkey-patch pour le changer. Quelque chose comme&nbsp;:
+
+```ruby
+# file: 00100 GenderVar.rb
+module Yuki
+  module Var
+    GenderVar = 495 #Change me
+  end
+end
+```
+
+## How to set the overworld sprite​
+
+Tout comme avec le PSDK par défaut, définissez l'apparence de votre personnage à l'aide d'une commande de script. Comme je l'ai dit plus haut, assurez-vous que la variable 495 est égale à la bonne valeur pour que tout fonctionne correctement. En supposant que vous l'ayez fait, le script va maintenant rechercher l'apparence que vous avez définie + `_m`_,_ `_f` ou `_nb`  
+Par exemple: `gp.set_appearance_set('hero_01_cindy')` avec la variable 495 = 1 chargera le character: "hero\_01\_cindy\_f\_walk"
+
+## Définir l'icône du joueur sur la carte du monde
+
+Sauvegardez l'icône dans `graphics/interface/worldmap` avec le même nom utilisé pour le character.  
+Par exemple: " **hero\_01\_white\_f\_walking**" devrait être " **hero\_01\_white\_1**" dans le dossier de la carte du monde.
+
+## Définir le sac
+
+Ajoutez simplement l'image `bag_nb` dans `graphics/interface/bag`.
+

@@ -1,0 +1,107 @@
+---
+title: Créer un magasin de Pokémon
+seoDescription: Comment créer un magasin vendant des Pokémon dans RPG Maker XP
+order: 0
+---
+
+![Shop UI](https://image.communityscriptproject.com/psdkwiki/img/pokemon_shop_ui_fr.png)
+
+Le magasin de Pokémon fonctionne d'une manière semblable au magasin lambda, à savoir qu'il ne vendra pas les Pokémon dont le prix est à 0. De même, deux types de magasin de Pokémon peuvent être ouverts.
+
+## Ouvrir un magasin illimité
+
+Pour ouvrir un magasin illimité, il n'existe qu'une seule méthode, qu'il faut absolument suivre à la lettre, sans quoi votre shop pourrait ne pas fonctionner correctement :
+
+### Utilisation de l'appel de script
+
+Cette méthode requiert d'utiliser la commande `pokemon_shop_open`, afin d'ouvrir un Shop dont les prix sont fixés dès le départ (les Pokémon n'ont pas de prix initial dans la base de données, il est donc impératif de leur en donner un). Cette commande requiert 3 paramètres obligatoires, et un autre facultatif (qui sert à désactiver le background ou non), que nous allons détailler par la suite.
+
+ 
+
+Le premier paramètre sert à initialiser la liste des Pokémon du magasin, qui peut soit prendre la forme d'un tableau à ID, soit d'un Symbol (nous y reviendrons plus tard, avec les magasins Pokémon limités). Le deuxième paramètre est soit un Array, soit un Hash (pareil, nous reviendrons sur ça), pour définir ou redéfinir le prix des Pokémon. Le troisième paramètre est forcément un Array, et sert à renseigner des informations spécifiques aux Pokémon vendus. Enfin, le quatrième paramètre doit être appelé dans la commande et doit être un Booléen (true ou false), afin d'activer ou désactiver le fond animé de l'interface du magasin.
+
+ 
+
+Voici un exemple que nous allons décortiquer ensemble :
+
+```text
+pokemon_shop_open([4, 17, 22, 50], [2500, 5000, 10000, 0], [5, 50, 30, {level: 100, shiny: true}], show_background: true)
+```
+
+Le premier paramètre correspond à [4, 17, 22, 50]. Il indique au magasin que les Pokémon à vendre sont : Salamèche, Roucoups, Rapasdepic et Taupiqueur.
+
+Le deuxième paramètre correspond à [2500, 5000, 10000, 0]. Il indique au magasin les prix des Pokémon susnommés. Nous aurons donc Salamèche à 2500 Pokédollars, Roucoups à 5000 Pokédollars, Rapasdepic à 10000 Pokédollars, et Taupiqueur ne sera tout simplement pas vendu, son prix étant de 0. Si ce 0 est enlevé, cela fera exactement la même chose, Taupiqueur n'aura pas de prix et ne sera donc pas vendu. Gardez bien à l'esprit : un Pokémon = un prix.
+
+Le troisième paramètre correspond à [5, 50, 30, {level: 100, shiny: true}] et est OBLIGATOIRE (vous devez ajouter autant de paramètres que vous avez ajouté de Pokémon). Il indique au magasin les données nécessaires à la création des Pokémon. Il y a deux cas de figure : premier cas, vous mettez simplement un chiffre =\> cela correspondra au niveau du Pokémon; deuxième cas, vous fournissez un hash qui donnera des informations bien plus précises concernant le Pokémon. Ici, le magasin vendra donc des Salamèche niveau 5, des Roucoups niveau 50, des Rapasdepic niveau 30, et des Taupiqueur niveau 100, obligatoirement shiny (sauf si le prix est de 0, ce qui est le cas ici :b)
+
+Le quatrième paramètre correspond à show\_background: true et est facultatif. Sa valeur de base est réglée sur true quoi qu'il arrive. Si vous n'en avez pas besoin, vous pouvez même ne pas le mettre dans votre commande. Il indique au magasin s'il faut afficher le fond animé ou non. True pour l'afficher, false pour ne pas l'afficher.
+
+Il est nécessaire de respecter la façon d'écrire cette méthode. Les trois premiers paramètres s'écrivent avec des [], et le quatrième avec show\_background: suivi de la valeur à assigner.
+
+## Ouvrir un magasin limité
+
+### Création du stock du magasin
+
+Pour ouvrir un magasin Pokémon limité, il faut d'abord créer un magasin qui contiendra les Pokémon et le nombre disponible pour chacun d'eux. Pour cela, il faudra utiliser la commande `add_new_pokemon_shop`. Cette commande prend 4 paramètres obligatoires, et 2 paramètres facultatifs. Détaillons ensemble ces paramètres avec un exemple.
+
+```text
+add_new_pokemon_shop(:pkm_shop_celadon, [1, 2, 3], [1250, 2500, 5000], [5, 16, {level: 36, shiny: true}], [3, 2, 1], shop_rewrite: false)
+```
+
+Je l'admets, cette commande fait PEUR. Elle fera largement moins peur une fois décortiquée.
+
+Le premier paramètre correspond à `:pkm_celadon_shop` et est obligatoire. Il permet de donner un "nom" à votre magasin, ce sera ce nom qu'il faudra renseigner plus tard à une autre commande.
+
+Les trois paramètres suivant correspondent EXACTEMENT aux précédents paramètres évoqués dans le magasin illimité. Ainsi, en combinant les paramètres 2, 3 et 4, on obtient l'information suivante : le magasin vendra des Bulbizarre Nv.5 coûtant 1250 P$, des Herbizarre Nv.16 coûtant 2500 P$, et des Florizarre Nv.36 shiny coûtant 5000 P$.
+
+Concernant le 5ème paramètre, celui-ci est facultatif. Il concerne cette partie de la commande : [3, 2, 1] et indique au magasin qu'il est possible de vendre 3 Bulbizarre, 2 Herbizarre et un Florizarre. Si le tableau ne contient pas suffisamment d'entrées ou s'il n'y a pas de tableau, le magasin possédera par défaut qu'un seul spécimen de chaque Pokémon envoyé en paramètre.
+
+Le sixième paramètre correspond à shop\_rewrite: false et est facultatif. Il indique s'il faut écraser le magasin existant ou non lors de la création du magasin. Ainsi, si :pkm\_shop\_celadon existe déjà, une valeur true effacera l'ancien avec le nouveau, une valeur false ne fera qu'ajouter les Pokémon dans le magasin existant.
+
+### Remise en stock de Pokémon dans un magasin
+
+Comme dit précédemment, vous pourriez utiliser la commande `add_new_pokemon_shop` pour ajouter des Pokémon à votre magasin. Ou bien vous pouvez utiliser une commande faite pour, `add_pokemon_to_shop`. Cette commande prend exactement les 5 mêmes premiers paramètres que `add_new_pokemon_shop`. Elle possède aussi un sixième paramètre, pkm\_rewrite: false. Ce paramètre s'associe au fonctionnement légèrement particulier de cette méthode, fonctionnement qui va être expliqué par la suite.
+
+Admettons que le magasin que nous voulons remplir possède déjà des Pokémon, et que nous voulons rajouter des Pokémon dedans. Dans ce magasin, il y est vendu un Miaouss et un Miaouss d'Alola (car il est possible de posséder plusieurs formes d'un même Pokémon dans un même magasin). Il existe ainsi deux cas de figure :
+
+- pkm\_rewrite: false -\> on ajoute le nombre d'exemplaire que nous avons fourni en paramètre, sans prendre compte du paramètre concernant les informations du Pokémon
+- pkm\_rewrite: true -\> on réécrit les informations contenues dans le magasin concernant cette espèce. Sachez que le système différencie totalement les différentes formes d'un Pokémon, et que si vous ne fournissez pas la forme du Pokémon ciblé dans vos paramètres, le système ciblera automatiquement celui dont la forme est égale à 0.
+
+Ainsi, il est totalement impossible d'avoir différentes instances d'un même Miaouss dans un même magasin, il ne peut y avoir qu'une seule instance de Miaouss forme 0, une seule de Miaouss forme 1 (Alola) etc. Retenez bien cette information.
+
+### Enlever du stock à un Pokémon / enlever totalement un Pokémon d'un magasin
+
+Pour enlever du stock à un Pokémon ou pour enlever ce Pokémon complètement, une seule commande : `remove_pokemon_from_shop`.
+
+ 
+
+Cette commande prend les mêmes paramètres que celle pour ajouter du stock, à deux-trois exceptions près : le paramètre concernant le prix n'est pas à mettre, et les paramètres concernant les infos du Pokémon à enlever et la quantité à enlever sont facultatives. Si les infos ne sont pas renseignées, la forme 0 du Pokémon sera automatiquement choisi, et si la quantité à enlever n'est pas renseignée le magasin supprimera tous les Pokémon fournis en paramètre. S'il est fourni, il supprimera le nombre de Pokémon correspondant à sa place dans le tableau.
+
+ 
+
+Exemple :
+
+```text
+remove_pokemon_from_shop(:pkm_shop_celadon, [1, 2, 3], [{ form: 0 }, {form : 0}, {form: 1}], [1, 3, 10])
+```
+
+Cette commande enlèvera 1 Bulbizarre forme 0, 3 Herbizarre forme 0 et 10 Florizarre forme 1 (s'ils existent bien entendu). A noter que si le paramètre quantité à enlever n'est pas donné, le magasin supprimera totalement le Pokémon du magasin.
+
+### Ouverture du magasin limité
+
+Maintenant que nous avons créé le stock du magasin, il faut l'ouvrir. Pour cela, il suffit de reprendre la commande pour ouvrir un magasin Pokémon illimité `pokemon_shop_open` mais de changer les paramètres.
+
+ 
+
+Souvenez-vous, il a été dit plus haut qu'il était possible de mettre un Symbol en premier paramètre et un Hash en deuxième paramètre: il vous suffit simplement de renseigner le Symbol de votre magasin dans le premier paramètre, un Hash en deuxième paramètre (un Hash pour les prix s'écrit ainsi : { ID\_du\_Pokemon =\> nouveau\_prix }) si vous souhaitez faire une promotion sur un/plusieurs Pokemon. Et en ce qui concerne le troisième paramètre, il n'est pas nécessaire. Mieux, il n'est pas utilisé lorsque le premier paramètre est un Symbol. Voici donc un exemple de magasin Pokémon limité.
+
+```text
+pokemon_shop_open(:pkm_shop_celadon, { 1 => 500, 4 => 800, 7 => 9000 }, show_background: true)
+```
+
+Ainsi, cette commande ouvre un magasin Pokémon nommé :pkm\_shop\_celadon, change les prix pour Bulbizarre, Salamèche et Carapuce (s'ils existent dans le magasin) et affiche le fond animé du magasin.
+
+### Messages personnalisés lors de la fermeture du magasin
+
+Ce point est exactement le même que dans le tutoriel du magasin d'objets, je vous invite à vous y rendre pour lire ce point si ce n'est pas déjà fait.
+

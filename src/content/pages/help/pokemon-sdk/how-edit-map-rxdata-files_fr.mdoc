@@ -1,0 +1,17 @@
+---
+title: Comment puis-je éditer ou versionner mes fichiers rxdata ?
+seoDescription: La manière de convertir ses fichiers rxdata pour les versionner ou
+  les éditer
+order: 0
+---
+
+Voici la procédure à suivre pour **convertir vos fichiers rxdata** :
+
+- Ouvrez le fichier `cmd.bat`,
+- Écrivez la commande `psdk --util=convert` pour convertir tous vos fichiers .rxdata en fichiers .yml, qui sont facilement éditables et modifiables avec Git.
+
+Une fois vos modifications effectuées :
+
+- Ouvez le fichier `cmd.bat` à nouveau,
+- Écrivez la commande `psdk --util=restore` pour convertir tous vos fichiers .yml en .rxdata qui seront lisibles par le moteur de jeu.
+

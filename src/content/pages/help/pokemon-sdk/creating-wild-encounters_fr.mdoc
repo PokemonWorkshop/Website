@@ -1,0 +1,97 @@
+---
+title: Comment configurer les rencontres de Pokémon sauvages
+seoDescription: Comment configurer des rencontres de Pokémon Sauvage dans Studio
+cover:
+- "./images/image_2024-01-04_121621346.png"
+order: 0
+---
+
+## Définir les caractéristiques du groupe
+
+Les rencontres sauvages sont appelées "groupes" dans le Studio Pokémon ! Vous pouvez créer des groupes très simples qui apparaissent toute la journée ou des groupes personnalisés qui changent tout au long de la journée. Tout dépend de vous !
+
+Lorsque vous créez un nouveau groupe, vous pouvez définir quelques caractéristiques :
+
+- Nom du groupe - Le nom affiché dans la liste des groupes de Studio pour que vous sachiez ce qu'il représente.
+- Activation - Un interrupteur spécifique doit être activé pour que ce groupe apparaisse (temps ou interrupteur personnalisé).
+- Type de combat - Combats "simples" ou "doubles".
+- Environnement - La balise système dans laquelle ce groupe va apparaître.
+- Variation - Quelle balise de terrain sera utilisée pour ce groupe.
+
+![Dialogue de création d'un nouveau groupe](./images/image_2023-02-19_112355879.png)
+
+## Configurer les Pokémon dans un groupe
+
+![Page du groupe](./images/image_2023-02-19_113022253.png)
+
+## Ajouter un Pokémon
+
+Si vous venez de définir les caractéristiques de votre premier groupe et que vous voyez un écran similaire à celui ci-dessus, il est temps de définir les Pokémon que vous allez trouver ! Pour ajouter un nouveau Pokémon, il suffit d'appuyer sur un bouton. Cliquez sur "Ajouter un Pokémon" et tapez le nom du Pokémon que vous souhaitez ajouter.
+
+C'est maintenant que vous pouvez décider si vous voulez que le Pokémon soit une rencontre sauvage typique ou si vous voulez le pimenter ! Définissez d'abord leur niveau et leur chance de rencontre, puis nous verrons le reste.
+
+Par défaut, le PSDK donnera toujours des Pokémon sauvages :
+
+- L'un de ses talents disponibles (y compris le talent caché)
+- Les 4 derniers attaques de montée en niveau de leur moveset
+- Une nature aléatoire
+- Les chances de brillance par défaut
+- Un sexe aléatoire (basé sur les chances de sexe du Pokémon)
+- La loyauté par défaut du Pokémon
+- La rareté par défaut du Pokémon (taux de capture)
+- Récompenses EV par défaut du Pokémon
+
+**Toutefois** , si vous souhaitez que les Pokémon sauvages du groupe soient très spécifiques, vous pouvez modifier **tous** ces éléments pour chaque **Pokémon individuel**.
+
+Une fois que vous êtes satisfait des Pokémon que vous souhaitez ajouter, cliquez sur le bouton "Ajouter le Pokémon" en bas de la page et continuez à ajouter des Pokémon jusqu'à ce que vous atteigniez un taux de rencontre combiné de 100 %.
+
+**REMARQUE** : si vous souhaitez supprimer un Pokémon que vous avez ajouté, survolez-le et cliquez sur le "X", puis sur "Supprimer".
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+![Liste des Pokémon dans le groupe](./images/image_2023-02-19_112914446.png)
+
+{% /column %}
+{% column %}
+![Dialogue de suppression d'un Pokémon du groupe](./images/image_2023-02-19_112921181.png)
+
+{% /column %}
+{% /row %}
+
+## Importer une liste de Pokémon et créer des groupes jour/nuit
+
+En tant que personne qui profite du cycle jour/nuit et qui a toujours pensé que les rencontres et leurs taux changeant en fonction de l'heure étaient une fonctionnalité sympa, j'utilise beaucoup l'option " Importer une liste de Pokémon " ! Cela m'évite d'avoir à ajouter les mêmes Pokémon, et je peux simplement modifier leurs valeurs. Laissez-moi vous montrer !
+
+Évidemment, nous aurons besoin d'un groupe déjà existant pour que cela fonctionne, donc nous allons nous baser sur le tableau que j'ai fait pour "Route 1 - Herbe (Jour)" montré au début de cette page.
+
+Tout d'abord, créons un nouveau groupe qui sera utilisé pendant la nuit. Je vais l'appeler "Route 1 - Herbe (Nuit)". Pour cet exemple, je n'aurai qu'à définir le nom du groupe et l'interrupteur d'activation. (Ci-dessous à gauche)
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+![Création d'un nouveau groupe](./images/image_2023-02-19_115247293.png)
+
+{% /column %}
+{% column %}
+![Import d'un groupe](./images/image_2023-02-19_115610901.png)
+
+{% /column %}
+{% /row %}
+
+Après avoir ajouté ce groupe, nous allons cliquer sur le bouton "Importer une liste de Pokémon" et importer depuis "Route 1 - Herbe (Jour)". Vous remarquerez qu'il est possible d'activer l'option "Remplacer le Pokémon" - c'est assez explicite, mais cela remplacera tous les mons existants dans ce groupe. (Ci-dessus à droite)
+
+Si vous avez sélectionné le bon groupe à importer, cliquez sur le bouton d'importation et vous verrez le tableau se remplir ! Modifiez maintenant les mons que vous souhaitez pour la variation nocturne, cliquez sur Enregistrer, et c'est parti !
+
+**NOTE** : Si vous ne voulez pas définir 4 groupes différents, il peut être judicieux de faire une copie afin d'avoir Morning & Day identique, Evening & Night identique.
+
+## Le Pokémon n'apparait pas
+
+Plusieurs facteurs peuvent être à l'origine de ce problème :
+
+- Premièrement, si vous n'avez pas de Pokémon, vous ne rencontrerez aucun Pokémon.
+- Deuxièmement, il se peut que vous n'ayez pas défini correctement votre environnement (SystemTag).
+- Troisièmement, vous avez peut-être défini une variation (Terrain Tag) par accident.
+
+Si vous avez un Pokémon, c'est probablement la deuxième ou la troisième chose. Ouvrez votre projet dans Studio, survolez le bouton play et cliquez sur "Debug mode". Appuyez sur F9 lorsque vous êtes à l'endroit où vous attendez les rencontres, et assurez-vous que le systag actuel est correct pour le groupe que vous recherchez !
+
+![Interface s'affichant lorsque vous appuyez sur F9 en Map](./images/image_2023-02-19_120220871.png)
+

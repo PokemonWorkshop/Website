@@ -1,0 +1,69 @@
+---
+title: Spawn Event PSDK
+seoDescription: Dynamically spawn a new event based on an existing one.
+publishDate: '2024-09-01 18:05:00'
+order: 20240901
+---
+
+## Brief Description
+
+Dynamically spawn a new event based on an existing one. Useful for making multiple copies or directly spawning a follower.
+
+**Link to the Plugin:** [https://crypticsky.itch.io/spawn-event-psdk](https://crypticsky.itch.io/spawn-event-psdk "https://crypticsky.itch.io/spawn-event-psdk")
+
+Password : `psdk`
+
+## Installation Procedure
+
+1. Download the psdkplugin to scripts folder
+2. Run the game
+
+**Dependencies:** No dependencies beyond psdk itself. Don't know if it conflicts with anything else either, tell me if so.
+
+## Credits
+
+Based on Yanfly Engine Ace - Spawn Event v 1 .00  
+Edited for RPG Maker XP in 2012 by Wrinkle  
+Source of the original XP script: [https://rmrk.net/index.php?topic=49541.0](https://rmrk.net/index.php?topic=49541.0)
+
+Credit to Modern Algebra for fixing the graphic refresh bug also in 2012.  
+Credit to unknown author (Possibly Drakhaine) for self-switch changing code: [https://www.rpg-maker.fr/scripts-490-interrupteurs-locaux-a-distance.html](https://www.rpg-maker.fr/scripts-490-interrupteurs-locaux-a-distance.html)
+
+2023-2024 PSDK overhaul by CrypticSky
+
+## Now with a 2.0 version!
+
+### Events
+
+`[copymap=map_id,copyeventid=event_id]` Give your event this name. Replaces event with a perfect copy of another event even from another map, except for location and ID. Using 0 will default to the current map or current id.
+
+Example: `[copymap=3,copyeventid=5]` will fetch event 5 in map 3 .
+
+### Plugin commands
+
+`change_self_switch(event_id, switch, status, map_id=@map_id)`
+
+Change a self-switch from a script . Leaving `map_id` empty will use the current map.
+
+Example: `change_self_switch(5, "A", true)` will change the current map 's Event 5 's Switch A to true.
+
+`spawn_event_location(x, y, event_id, map_id=@map_id)`
+
+Spawns a copy of the event with ID `event_id` from map with ID `map_id` to the current map, in (x, y). If map ID is left out or set to 0, will take from current map. This event will disappear if you leave the map.
+
+`spawn_event_random_location(lower_x, higher_x, lower_y, higher_y, event_id, map_id=@map_id)`
+
+Spawns the event somewhere random between the bounds defined by ( `[lower_x ,higher_x[` , `[lower_y ,higher_y[`). Otherwise works the same as spawn\_event\_location.
+
+`spawn_event_follower(event_id, map_id=@map_id, follow_this_event_id=0, movetocharacter=true)`
+
+Spawns the event as a psdk follower event. If you keep `follow_this_event_id` at 0 it will go to the tail of the player's following crew.
+
+_Check psdk documentation for more on the_ `move_follower_to_character` _function, it's not mine, it's built-in._
+
+Regular event functions should work with the copy as it has its own brand new unique ID.
+
+`spawn_event_follower_at_location(event_id, dx, dy, map_id=@map_id, follow_this_event_id=0, movetocharacter=true)`
+
+The same as `spawn_event_follower` except you can define where the follower will appear with (dx, dy).
+

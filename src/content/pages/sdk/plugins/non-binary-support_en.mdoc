@@ -1,0 +1,63 @@
+---
+title: Non-Binary Support
+seoDescription: Allow your fangame to have more than two gender options
+publishDate: '2023-07-23 15:54:00'
+order: 20230723
+---
+
+By default PSDK's genders are controlled by a switch, so TLDR this plugins goal is to switch it to a variable!
+
+You can theoretically modify the script and add support for other things but let's go over some examples of how to use the script.
+
+## Installation
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+1.) Download the psdkplugin, throw it in your project's script folder   
+ 2.) Run the game
+
+{% /column %}
+{% column %}
+{% cta href="https://www.mediafire.com/file/bqlo3gaaufvto3x/NBSupport.psdkplug/file" align="center" %}Download Plugin{% /cta %}
+
+{% /column %}
+{% /row %}
+
+## How to use
+
+When starting your game, make sure you set the players gender through **variable 495** so everything works properly.   
+By default the values are gonna represent:
+
+- 0 = female
+- 1 = male
+- 2 = nb
+
+If you want it to display a different text based on the variable do something like `\f[she§he§they]` in your text!
+
+## How to change the variable​
+
+By default the gender will be set to variable 495. If you want to change that, I advise you make a monkey-patch to change it. Something like:
+
+```ruby
+# file: 00100 GenderVar.rb
+module Yuki
+  module Var
+    GenderVar = 495 #Change me
+  end
+end
+```
+
+## How to set the overworld sprite​
+
+Just like with default PSDK, set your character's appearance through a script command. As I said earlier, make sure variable 495 is equal to the proper value so everything will work properly. Assuming you've done that, it will now look for the appearance you set + "\_m" \_f" or "\_nb"   
+ For example: `gp.set_appearance_set('hero_01_cindy')` w/ variable 495 = 1 would load the graphic "hero\_01\_cindy\_f\_walk"
+
+## How to set the character's region map icon
+
+Save an image in your `graphics/interface/worldmap` folder with the same name used for your character's overworld sprite.  
+For example: " **hero\_01\_white\_f\_walking**" would be " **hero\_01\_white\_1**" in the worldmap folder.
+
+## How to set the bag
+
+Just add another graphic to `graphics/interface/bag` called "bag\_nb"
+

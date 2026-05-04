@@ -7,7 +7,7 @@ const pages = defineCollection({
   schema: ({ image }) =>
     z.object({
       seoDescription: z.string(),
-      cover: image().array().nullable(),
+      cover: image().array().nullish(),
       title: z.string(),
       tags: z.string().array().nullish(),
       publishDate: z.string().nullish(),

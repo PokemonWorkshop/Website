@@ -1,0 +1,153 @@
+---
+title: Give an item
+seoDescription: How to give an item to the player in RMXP for Pokémon SDK
+publishDate: '2022-09-02 18:25:00'
+order: 0
+---
+
+## Give an item from an event
+
+### Command
+
+To give an item from an event you can use the following command :
+
+```text
+add_item(id, no_delete)
+```
+
+Parameters are:
+
+- `id`: ID of the item (# field or db\_symbol field in [List of Items](https://psdk.pokemonworkshop.com/db/db_item.html)).
+- `no_delete`: If the event shouldn't be permanently deleted. (Deleted by default).
+
+Hovewer, there are also more specific commands for some actions :
+
+ 
+
+To pick items from the ground :
+
+```text
+pick_item(item_id, count, no_delete)
+```
+
+Parameters are:
+
+- `item_id`: ID of the item (# field or db\_symbol field in [List of items](https://psdk.pokemonworkshop.com/db/db_item.html))
+- `count`: the item amount (optional, 1 by default)
+- `no_delete`: If the event shouldn't be permanently deleted. (Deleted by default).
+
+To give an item thanks to a NPC :
+
+```text
+give_item(item_id, count)
+```
+
+Parameters are:
+
+- `item_id`: ID of the item (# field or db\_symbol field in [List of items](https://psdk.pokemonworkshop.com/db/db_item.html))
+- `count`: the item amount (optional, 1 by default)
+
+### Examples
+
+Item on the ground giving a Potion:
+
+```text
+pick_item(:potion)
+```
+
+or
+
+```text
+pick_item(17)
+```
+
+NPC giving a TM (and that should not be removed):
+
+```text
+give_item(:tm01, true)
+```
+
+or
+
+```text
+give_item(328, true)
+```
+
+## Silently give an item
+
+### Command
+
+You can add an item to the bag without notification using the following command:
+
+```text
+$bag.add_item(id, quantity)
+```
+
+The parameters are :
+
+- `id`: ID of the item (# field or db\_symbol field in [List of Items](https://psdk.pokemonworkshop.com/db/db_item.html)).
+- `quantity`: Number of items to add.
+
+### Examples
+
+Add 5 potions:
+
+```text
+$bag.add_item(:potion, 5)
+```
+
+or
+
+```text
+$bag.add_item(17, 5)
+```
+
+## Drop an item from the bag
+
+### Command
+
+To drop an item, use the following command:
+
+```text
+$bag.drop_item(id, quantity)
+```
+
+Parameters are:
+
+- `id`: ID of the item (# field or db\_symbol field in [List of items](https://psdk.pokemonworkshop.com/db/db_item.html)).
+- `quantity`: Number of items to drop.
+
+### Examples
+
+Drop a potion :
+
+```text
+$bag.drop_item(:potion, 1)
+```
+
+or
+
+```text
+$bag.drop_item(17, 1)
+```
+
+## To Know if the Player has an item
+
+To know if the Player has a particular item in his bag, use the Command:
+
+```text
+$bag.has_item?(id)
+```
+
+The `id` parameter is the item ID which should be in the bag.
+
+## Check if the player has an item
+
+To check if the player has an item in the bag, you can use the command:
+
+```text
+quantite = $bag.item_quantity(id)
+```
+
+The parameter `id` is the ID of the item.
+
