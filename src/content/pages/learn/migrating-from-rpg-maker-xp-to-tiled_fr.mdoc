@@ -1,0 +1,122 @@
+---
+title: Migrer de RPG Maker XP à Tiled pour créer ses cartes avant la version 3 de
+  Pokémon Studio
+seoDescription: La procédure à suivre pour réussir la migration de son projet et utiliser
+  Tiled comme outil de création avant la sortie de la version 3.0 de Pokémon Studio
+cover:
+- "./images/studio-v3-com-fr.png"
+publishDate: '2025-12-08 18:10:00'
+order: 20251208
+---
+
+Pour pouvoir utiliser la version 3.0 de Pokémon Studio sur son projet, il est **imposé** de **migrer son projet et ses cartes sur Tiled AVANT**.
+
+**Cela sous-entend que vous devrez obligatoirement utiliser Tiled pour créer vos cartes à l'avenir.**
+
+Il s'agit d'une première étape pour s'assurer que votre projet sera prêt à être migré vers la version 3.0 de Pokémon Studio à venir en 2026.
+
+Prendre le temps de le faire maintenant, c'est réduire le nombre d'actions à effectuer lors de la montée de version de Pokémon Studio 3.0, et c'est augmenter ses chances que la migration se passe bien. Et donc avec un minimum de bugs.
+
+**Pensez à réaliser une sauvegarde de votre projet AVANT toute action**. 💾
+
+Si vous utilisez Git, il est conseillé de créer une branche dédiée à cette migration pour pouvoir revenir en arrière facilement.
+
+Nous prévenons en avance pour permettre aux projets d'anticiper ce changement que nous devinons impactant et potentiellement source de stress.
+
+Ce changement a pour but de permettre l'utilisation d'un outil que nous savons plus efficace pour la création de cartes de jeu. Il est toujours activement maintenu par son créateur, open source, et gratuit. C'est une première étape nécessaire pour permettre à terme de créer vos projets gratuitement, ce qui a toujours été notre vision en démarrant le projet Pokémon Studio.
+
+Dès la version 3.0 de Pokémon Studio lancée, nous n'assurerons plus de support pour la partie RPG Maker XP qui sera peu à peu supprimée de nos plateformes.
+
+## Convertir ses cartes pour migrer son projet sur Tiled
+
+**Pensez à réaliser une sauvegarde de votre projet AVANT toute action**. 💾
+
+Au préalable, suivre ces étapes :
+
+1. Vérifier que votre projet est bien à jour sur les dernières versions de Pokémon Studio et de Pokémon SDK.
+2. Votre projet doit être en mode "RPG Maker XP" (vérifiable dans le fichier `project.studio` à la racine de votre projet), via la variable `isTiledMode`. **Ne la modifiez PAS depuis le fichier.**
+3. Téléchargez et installez le [logiciel Tiled](https://www.mapeditor.org/) au préalable.
+4. Vérifiez que toutes vos cartes RPG Maker XP sont associées à un Tileset existant.
+
+### Activer le mode Tiled sur Pokémon Studio
+
+Depuis la mise à jour 2.8.0 de Pokémon Studio, une bannière jaune s'affiche à chaque chargement de votre projet si vous n'avez pas encore activé le mode Tiled sur votre projet.
+
+Cette bannière affiche le message suivant : "Le support de RPG Maker XP en tant qu'outil de création de vos cartes sera arrêté dans une prochaine mise à jour et l'utilisation de Tiled sera obligatoire."
+
+![La page de mise à jour de PSDK sur le logiciel Pokémon Studio avec un aperçu de la bannière demandant de passer au logiciel Tiled](./images/capture-d-ecran-2025-12-08-211117.png)
+
+Pour information, ce mode sera forcé à la montée de version 3.0 de Pokémon Studio, et ne pourra pas être désactivé pour revenir en arrière, sous peine de corruption des données du projet.
+
+Pour activer ce mode, vous avez deux possibilités :
+
+- Cliquer sur le bouton `Utiliser Tiled` sur la bannière jaune qui s'affiche au chargement de votre projet et laissez-vous guider par l'interface.
+- Se rendre dans les paramètres de Pokémon Studio, section `Gestion des cartes`, et activer le switch `Utiliser Tiled comme outil de création des cartes du jeu`.
+
+Une fois activé, vous devrez préciser le chemin d'installation de Tiled sur votre ordinateur pour pouvoir ouvrir les cartes avec Tiled depuis Pokémon Studio, ou même faciliter la génération des aperçus disponibles des cartes.
+
+**Pensez à sauvegarder votre projet sur Pokémon Studio.** 💾
+
+Si vous avez un projet Tiled pré existant, ne suivez pas l'étape "Convertir ses cartes au format Tiled grâce à l'outil Rxdata2Tiled" et sautez directement à l'étape "Importer ses cartes créées avec Tiled sur Pokémon Studio".
+
+### Convertir ses cartes au format Tiled grâce à l'outil Rxdata2Tiled
+
+Pour convertir ses cartes du format `.rxdata` de RPG Maker XP au format `.tmx` attendu par Tiled, il faut utiliser un outil nommé `Rxdata2Tiled`. Il s'agit d'un convertisseur développé par la communauté. Il faudra l'utiliser depuis la console de son jeu.
+
+Vous n'avez pas besoin de l'installer manuellement, il est déjà disponible dans le code source de Pokémon SDK depuis la version .26.21.
+
+- Lancer le jeu en mode debug pour pouvoir utiliser la console.
+- Lancer la commande suivante et vérifier que la console renvoie bien `true`.
+
+```ruby
+ScriptLoader.load_tool('Rxdata2Tiled/Rxdata2Tiled')
+#> True
+```
+
+- Lancer la commande suivante et vérifier que la console liste bien toutes les cartes à convertir avec une ligne par carte au format `Converting MAP_NAME`.
+
+```ruby
+Rxdata2Tiled.run
+```
+
+- Fermer le jeu et la console, et effectuer les vérifications suivantes :
+  - Le dossier `data/tiled/maps` de votre projet contient bien les cartes converties via la commande de l'étape 3 au format .tmx
+  - Le dossier `data/tiled/tilesets` de votre projet contient bien les tilesets liés aux cartes converties au format `.tsx`
+  - Le dossier `data/tiled/assets` de votre projet contient bien les assets utilisés pour réaliser les cartes au format `.png`
+
+### Importer ses cartes créées avec Tiled sur Pokémon Studio
+
+1. Démarrer Pokémon Studio
+2. Ouvrir et charger son projet
+3. Se rendre dans la section `Gestion du monde`
+4. Cliquer sur `+ Nouvelle carte`
+5. Tout en bas du panneau d'édition, cliquer sur le bouton `Importer` dans la section `Importer des cartes Tiled`
+6. Sélectionner le dossier `data/tiled/maps` de son projet, puis cliquer sur `Sélectionner un dossier`
+7. Dans la liste qui apparaît, sélectionner les cartes à importer, assigner chaque carte à sa carte RPG Maker XP existante puis cliquer sur `Importer les X cartes`.
+  1. Il est possible de renommer les cartes si nécessaire
+  2. Cette étape est importante pour s'assurer que les cartes Tiled soient bien assignées aux bons ID de carte existants. Sans ça, votre projet risque d'avoir des problèmes et vos cartes seront converties dans le mauvais ordre.
+
+8. Les cartes sont maintenant bien importées et il est possible de les voir dans la liste des cartes existantes de son projet.
+9. Vérifier que les cartes sont bien converties en les ouvrant avec Tiled. Il est possible de le faire depuis Pokémon Studio.
+10. Fermer RPG Maker XP s'il est encore ouvert avant de poursuivre.
+11. Sauvegarder les modifications sur Pokémon Studio. 💾
+12. Lancer le jeu via le bouton `Play` de Pokémon Studio pour générer les cartes au format RPG Maker XP. Une ligne pour chaque carte devrait s'afficher dans la console, mentionnant en vert le message suivant, avec `MAP_NAME` correspondant au nom de la carte générée : `[Tiled2Rxdata] Processing Map MAP_NAME`
+13. Ouvrir le projet avec RPG Maker XP pour vérifier que les cartes sont bien visibles.
+
+## Vérifier la cohérence de vos cartes
+
+Dans l'ordre, vérifiez les éléments suivants pour chaque carte après conversion.
+
+- Vérifier la position des collisions / passages, qui sont maintenant gérés via le calque `Passages` sur Tiled.
+- Vérifier la position des SystemTags, qui sont maintenant gérés via le calque `SystemTags` sur Tiled.
+- Créer les autotiles manquants. Si nécessaire, vous inspirer de la démo technique.
+- Réassigner les brouillards (fogs) et panoramas sur vos nouveaux tilesets sur RPG Maker XP.
+
+## Mettre à jour ses cartes sur Pokémon Studio une fois le mode Tiled activé
+
+Dès qu'une carte sera modifiée sur Tiled et enregistrée, il sera alors possible de mettre à jour les cartes modifiées depuis Pokémon Studio en cliquant sur le bouton jaune `Mettre à jour les cartes modifiées`. Ce bouton apparaîtra dès que l'application aura détecté une modification dans vos fichiers de carte `.tmx`.
+
+Il faut ensuite sauvegarder son projet pour prendre en compte les modifications, et relancer le jeu pour reconvertir les cartes et ainsi pouvoir constater les modifications sur Pokémon Studio et RPG Maker XP.
+
+Voilà, vous êtes dorénavant prêt(e) pour l' **arrivée de la version 3.0 de Pokémon Studio**! 🎯
+

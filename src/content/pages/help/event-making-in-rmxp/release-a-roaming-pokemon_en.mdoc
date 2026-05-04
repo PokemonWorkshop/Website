@@ -1,0 +1,70 @@
+---
+title: Release a roaming Pokémon
+seoDescription: How to release a roaming Pokémon
+publishDate: '2022-09-02 19:05:00'
+order: 0
+---
+
+PSDK has a system allowing to encounter roaming Pokémon, this system relies on a `proc` that gives the information to where the Pokémon should be each time it's called.
+
+## Define the roaming Pokémon proc
+
+All the roaming Pokémon proc are stored inside `PFM::Wild_RoamingInfo::RoamingProcs`. This constant is an Array associating a `proc_id` (Integer) to a `Proc`.
+
+Definition of a new proc needs to be added as a custom script in the /scripts folder.
+
+Here's an example :
+
+```text
+PFM::Wild_RoamingInfo::RoamingProcs[proc_id] = proc do |infos|
+    # The Pokemon will be in Grass
+    infos.zone_type = 1
+    # With terrain tag 0 (RMXP tileset)
+    infos.tag = 0
+    # We assign a random map
+    maps = [25, 46, 35, 27]
+    if (infos.map_id == $game_map.map_id && infos.spotted) || infos.map_id == -1
+      infos.map_id = (maps - [infos.map_id]).sample
+      infos.spotted = false
+    end
+end
+```
+
+The condition in this proc is split in two parts :
+
+- `infos.map_id == -1`That allows to assign a map\_id if no map\_id is assigned.
+- `infos.map_id == $game_map.map_id && infos.spotted`that allows the roaming Pokémon to change map if it has been encountered in the map where the player is.
+
+This condition can be customized, for example :
+
+```text
+if infos.map_id != $game_map.map_id || infos.spotted || infos.map_id == -1
+    infos.map_id = (maps - [infos.map_id]).sample
+    infos.spotted = false
+end
+```
+
+Will allow the roaming Pokémon to change map if the player isn't in the same map or if it has been encountered.
+
+## Release a roaming Pokémon
+
+Write the following command in an event to release a roaming Pokémon :
+
+```text
+$wild_battle.add_roaming_pokemon(chance, proc_id, pokemon_hash)
+```
+
+The paramaters are :
+
+- `chance`luck to encounter denominator (2 = 1/2, 4 = 1/4 etc...)
+- `proc_id`ID of the proc used to assign the roaming Pokémon location (same number as above).
+- `pokemon_hash`is the same parameter sent to[`PFM::Pokemon.generate_from_hash`](https://psdk.pokemonworkshop.fr/yard/PFM/Pokemon.html#generate_from_hash-class_method)
+
+Example :
+
+```text
+$wild_battle.add_roaming_pokemon(5, 0, id: 151, level: 20)
+```
+
+This command release a level `20` Mew with one out of `5` chance to encounter it in the map defined by the proc `0`.
+

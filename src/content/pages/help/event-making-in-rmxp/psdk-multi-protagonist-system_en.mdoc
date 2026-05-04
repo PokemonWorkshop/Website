@@ -1,0 +1,54 @@
+---
+title: PSDK multi-protagonist system
+seoDescription: PSDK switch system between protagonist
+tags:
+- PSDK
+publishDate: '2023-10-04 22:03:00'
+order: 0
+---
+
+## TL;DR
+
+For now, the basic usage is the function `switch_player_safe(id_player)`.
+
+By having `switch_player_safe(2)` in an event,&nbsp; you switch to player 2 (by default, you are player 1). At first, the player has no appearance, money or anything, but once you have set those (see how the start event define the player 1 for example), the data is kept in memory for all the futur switches. The number of players is not limited.
+
+---
+
+## Details of the implementation and the possibilities
+
+All the switches are based on the same function architecture. For exemple, regarding the party, the switch uses
+
+\* empty\_and\_save\_party(from\_player\_id)
+
+\* retrieve\_saved\_party(to\_player\_id)
+
+Note : The current player\_id is kept in the variable 51, to prevent the maker from doing the mistake of switch an player id with itself, which would result in erasing all the data. This is the "safe" in switch\_player\_safe, you're welcome, my pleasure.
+
+In detail, the switch currently adresses :
+
+- bag
+- party
+- trainer
+- appearance
+- money
+- pokedex
+
+By default, every category is switched. However, you can decide not to switch some of these by using the options switch\_X and set them to false.
+
+For exemple, if your scenario imposes that the money and pokedex is shared among your protagonist, to go from the current player to the player 2, you can use :
+
+```ruby
+switch_player_safe(2, switch_pokedex: false, switch_money: false)
+```
+
+Note that by default, a player has no money, no appearance, etc... It is mandatory to initialize a player the first time it is used. A example could be in an event :
+
+```ruby
+switch_player_safe(2)
+$pokemon_party.trainer.set_gender(true)
+$game_player.set_appearance_set('hero_01_white')
+$game_player.update_appearance
+$trainer.name = 'White'
+```
+

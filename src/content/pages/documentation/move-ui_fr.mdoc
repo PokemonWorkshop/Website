@@ -1,0 +1,199 @@
+---
+title: Interface d'édition d'attaque
+seoDescription: Apprends à utiliser l'interface des attaques
+cover:
+- "./images/move.png"
+publishDate: '2022-11-06 16:23:00'
+order: 0
+---
+
+L'interface **Attaques** de Pokémon Studio vous permet d'éditer et de créer des attaques. Si vous souhaitez créer vos propres attaques, vous êtes au bon endroit !
+
+Bonne lecture.
+
+## Introduction
+
+{% row columns="1/1" bottom_margin="margin-l" %}
+{% column %}
+Nous allons diviser ce tutoriel en différentes étapes allant de 1 à 9 de la façon suivante :
+
+{% /column %}
+{% /row %}
+
+![Ordre du tutoriel](./images/capture.png)
+
+•&nbsp;1 - Bouton de création d'attaques,
+
+•&nbsp;2 - Menu déroulant des attaques,
+
+• 3 - Onglet d'édition de l'attaque,
+
+• 4 - Onglet d'édition des donnés de l'attaque,
+
+•&nbsp;5 - Onglet de paramètre,
+
+• 6 - Onglet des caractéristique,
+
+• 7 - Onglet des statuts,
+
+• 8 - Onglet de modification des statistiques,
+
+•&nbsp;9 - Onglet des Pokémon possédant l'attaque.
+
+## Création d'une attaque
+
+Cliquez sur le bouton **+ Nouvelle attaque** et cette interface apparaîtra.
+
+![Interface de creation d'attaque](./images/attaque2.png)
+
+•&nbsp;La case **Nom** vous permet de définir le nom de l'attaque.
+
+•&nbsp;La case **Description** vous permet d'ajouter une description d'attaque.
+
+•&nbsp;La case **Type** vous permet de définir le type de l'attaque.
+
+•&nbsp;La case **Catégorie** vous permet de configurer si l'attaque est "Physique" (et touche donc directement l'adversaire), "Spéciale" (et touche l'adversaire à distance) ou de "Statut" (qui ne fait pas de dégâts).
+
+•&nbsp;La case **Identifiant** sert à définir le `db_symbol`_._ C'est avec ce `db_symbol` que vous appellerez vos attaques _(remplacement de l'ID)_.
+
+**Attention** : le `db_symbol` n'est PAS modifiable une fois validé.
+
+## Le menu déroulant
+
+![Interface de selection d'attaque](./images/attaque3.png)
+
+Le menu déroulant permet de faire une recherche via le nom de l'attaque, que vous pouvez écrire en français ou en anglais dans la barre de recherche.
+
+## Édition d'attaque
+
+Cliquez sur le **nom de l'attaque** et cette interface apparaîtra.
+
+![Interface d'édition des informations de l'attaque](./images/attaque4.png)
+
+Cette interface vous permet de de modifier les mêmes paramètres qu'à la création d'une nouvelle attaque, mais pour une attaque déjà créée, à savoir :
+
+•&nbsp;Nom,
+
+•&nbsp;Description,
+
+•&nbsp;Type,
+
+• Catégorie.
+
+## Données de l'attaque
+
+Cliquez sur l'onglet **Données** et cette interface apparaîtra.
+
+![Interface d'édition des données de l'attaque](./images/attaque5.png)
+
+•&nbsp;La case **Puissance** permet de modifier la puissance de l'attaque, à savoir la base de calcul des dégâts infligés.
+
+•&nbsp;La case **Précision** permet de modifier la précision de l'attaque. Une précision de 100 fait que l'attaque ne râtera jamais.
+
+•&nbsp;La case **Points de Potentiel** permet de gérer les PP de base de votre attaque.
+
+•&nbsp;La case **Taux de critique** permet de gérer le pourcentage de chance que votre attaque effectue un coup critique. Le taux peut aller de 0 % _(n'infligera jamais de coup critique)_ à 100 % _(infligera toujours un coup critique)_. Pour information, les attaques de base ont un taux de critique de 6,25 %.
+
+• La case **Effet secondaire** permet de gérer le pourcentage de chance que l'attaque déclenche un effet secondaire, comme brûler la cible _(ex : Lance-flamme possède 10 % de chance de brûler l'adversaire)_ ou modifier une statistique du lanceur _(ex : Aile d'Acier possède 10 % de chance d'augmenter la Défense du lanceur d'un niveau)_. Les effets secondaires produits par l'attaque sont gérés dans les interfaces **Caractéristiques** et **Statuts** , présentées aux paragraphes VI et VII.
+
+• La case **Priorité** permet d'augmenter la priorité de son attaque, sur une échelle de -7 à 5. Si elle est à 0, elle sera d'une priorité classique. Si vous la mettez à 5, elle passera devant toutes les autres attaque _(ex : Vitesse Extrême)_. Inversement, une attaque à -7 sera lancée après toutes les autres _(ex : Distorsion)_.
+
+•&nbsp;La case **Événement commun** permet de mettre l'ID d'un événement de RPG Maker qui se déclenchera quand l'attaque est utilisée en dehors des combats _(ex : Coupe ou Doux Parfum)_. Cela nécessite également de configurer l'attaque dans la BDD de RPG Maker.
+
+{% row columns="1/1" bottom_margin="margin-l" %}
+{% column %}
+## Paramètres
+
+{% /column %}
+{% /row %}
+
+Cliquez sur l'onglet **Paramètre** et cette interface apparaîtra.
+
+![Interface d'édition des paramètres de l'attaque](./images/attaque-6.png)
+
+•&nbsp;La case **Cible** permet de définir le ou les Pokémon visés. Cela peut par exemple être l'utilisateur de l'attaque, un Pokémon au hasard sur le terrain, ou tout le monde.
+
+•&nbsp;La case **Procédure** permet de dire à l'attaque ce qu'elle doit faire _(ex : nombre de coups à effectuer, infliger un statut, changer une statistique, etc.)_.
+
+•&nbsp;La case **Fonction** se raccorde à la case **Procédure**. Dans cette case, vous trouverez les attaque complexes qui utilisent un script de la BDD de Studio pour fonctionner et qui ne peuvent pas simplement être paramétrées _via_ Studio.
+
+## Caractéristiques
+
+Cliquez sur l'onglet **Caractéristiques** et cette interface apparaîtra.
+
+![Interface d'édition des caractéristiques de l'attaque](./images/attaque-7.png)
+
+Dans cet onglet, vous trouverez un grand nombre de caractéristiques à assigner à vos attaques. Nous allons les détailler dans leur ordre d'apparition :
+
+•&nbsp; **Crée un contact** signifie que l'attaque touche physiquement l'adversaire,
+
+•&nbsp; **Attaque à distance** signifie à l'inverse qu'aucun contact n'est fait avec l'adversaire,
+
+• **Bloquée par Abri** signifie que l'attaque échouera si la cible utilise une attaque de la classe `s_protect` _(de base : Abri, Blocage, Blockhaus, Bouclier Royal, Détection, Garde Large, Gardomax, Pico-Défense, Piège de Fil, Prévention, Tatamigaeshi et Vigilance)_.
+
+• **Ignore Clonage** signifie que l'attaque touchera sa cible même si celle-ci a lancé l'attaque Clonage précédemment,
+
+• **Active la Roche Royale** signifie que si l'attaque réussit et que son lanceur porte une Roche Royale, celle-ci se déclenchera _(et pourra apeurer la cible dans 10 % des cas),_
+
+• **Reflétée par Reflet Magik** signifie que si la cible a précédemment utilisé Reflet Magik, l'attaque ne produira pas d'effet sur la cible mais sera renvoyée sur le lanceur. En principe, cette caractéristique ne concerne que des attaques non offensives,
+
+• **Peut être copiée par Mimique** [ou Copie ?] signifie que l'attaque peut être copiée par l'attaque Mimique _(qui copie la dernière attaque lancée par la cible jusqu'à ce que le lanceur soit mis KO ou retiré ou que le combat finisse)_,
+
+• **Affectée par Saisie** signifie que si un Pokémon a préalablement utilisé l'attaque Saisie, l'attaque concernée ne produira pas ses effets sur son lanceur mais sur le Pokémon ayant lancé Saisie. De base, Saisie concerne uniquement des attaques de statut dont les effets se produisent sur le lanceur ou sur son équipe _(ex : Gonflette ou Mur Lumière)_,
+
+• **Effets sur le mental** signifie que l'attaque cause un effet secondaire mental _(ex: Attraction, Anti-Soin, Corps Maudit, Encore, Entrave, Provoc et Tourmente)_ qui est bloqué par Aroma-Voile et guéri par Herbe Mental,
+
+• **Possède un tour de charge** signifie que l'attaque s'effectue sur deux tours : elle charge au premier tour et produit ses effets au second _(ex : Lance-Soleil)_,
+
+• **Nécessite un tour de recharge** signifie qu'une fois l'attaque lancée avec succès, le lanceur ne pourra rien faire au tour suivant _(ex : Ultralaser)_,
+
+• **Attaque sonore** signifie que l'attaque déclenche les effets liés au son _(ex : le Talent Punk Rock augmente la puissance de base de ce type d'attaques de 30 %)_,
+
+• **Basée sur la morsure** signifie que l'attaque déclenche des effets liés à la morsure _(ex : le Talent Prognathe augmente la puissance de base de ce type d'attaques de 50 %)_,
+
+• **Basée sur les balles** signifie que l'attaque déclenche des effets liés à l'utilisation de projectiles, balles, bombes et autres sphères _(ex : le Talent Pare-Balles immunise son porteur contre les attaques Balle-Graine ou Boue-Bombe)_,
+
+• **Basée sur les ondes** signifie que l'attaque déclenches des effets liés à l'utilisation d'ondes _(ex : Aurasphère, Champlification, Draco-Choc, Onde Originelle, Vibraqua, Vibra Soin, Vibrobscur)_ et bénéficie donc d'un bonus de 50% à ses dégats ou soins quand elle est lancée par un pokémon avec le talent Méga Blaster,
+
+• **Basée sur les poings** signifie que l'attaque déclenche des effets liés à l'utilisation de poings _(ex : le Talent Poing de Fer augmente la puissance de base de ce type d'attaques de 20 %)_,
+
+• **Basée sur les poudres** signifie que l'attaque déclenche des effets liés à l'utilisation de poudres _(ex : le Talent Envelocape immunise son porteur contre ce type d'attaques)_,
+
+• **Danse** signifie que l'attaque déclenche des effets liés à l'utlisation de danses _(ex : le talent Danseuse permet à son utilisateur de reproduire les attaques de cette catégorie immédiatement)_,
+
+•&nbsp; **Dégèle quand utilisée** permet d'enlever le statut Gelé quand l'attaque est utilisée,
+
+•&nbsp; **Soigne** donne l'attribut `:is_heal` à l'attaque, ce qui permet à la capacité Anti-Soin de la bloquer,
+
+•&nbsp; **Inutilisable sous Gravité** signifie que l'attaque ne peut pas être utilisée sous l'effet de la capacité Gravité _(ex: Rebond, Vol, Pied Voltige)_, et le pokémon utilisera Lutte à sa place,
+
+•&nbsp; **Inutilisable en Combat Aérien** signifie que cette attaque ne pourra pas être utilisée en combat aérien _(ex: Plaquage, Tunnel, Plongée)_, et le pokémon utilisera Lutte à sa place.
+
+## Statuts
+
+Cliquer sur l'onglet **Statuts** et cette interface apparaîtra.
+
+![Interface d'édition des status infligés par l'attaque](./images/attaque-8.png)
+
+•&nbsp;La case **Statut 1** permet de mettre un statut sur l'attaque, comme la brûlure, le sommeil, la peur, etc.
+
+•&nbsp;La case **Chance** permet de configurer le pourcentage de chance que l'attaque inflige le statut au Pokémon. Cette option est liée&nbsp;à la case **Effet secondaire** de l'onglet **Données**.
+
+Vous pouvez attribuer jusqu'a 3 statuts par attaque (ex : Tri-Attaque permet de brûler, paralyser ou geler la cible).
+
+## Modification des statistiques
+
+Cliquer sur l'onglet **Modification des statistiques** et cette interface apparaîtra.
+
+![Interface d'édition des statistiques de l'attaque](./images/attaque-9.png)
+
+Dans cet onglet, vous pourrez définir les modifications de statistiques appliquées au lanceur et/ou à la cible de l'attaque. Une valeur positive augmentera d'autant de niveaux la statistique ; une valeur négative la diminuera d'autant.
+
+## Pokémon possédant l'attaque
+
+Cliquer sur le bouton **Afficher la liste des Pokémon** et cette interface apparaîtra.
+
+![List des entités relative à l'attaque](./images/attaque-10.png)
+
+Vous pourrez retrouver la liste des Pokémon possédant l'attaque, que ce soit par niveau (avec le niveau d'apprentissage), via le Maître des capacité, par CT/CS, par reproduction ou par évolution, en cliquant sur la flèche à droite de la catégorie souhaitée.
+

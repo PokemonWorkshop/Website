@@ -1,0 +1,61 @@
+---
+title: My game crashs and I don't know what to do.
+seoDescription: How to handle crash in Pokémon SDK
+publishDate: '2022-08-30 17:40:00'
+order: 0
+---
+
+Usually, when the game crashes it shows a Window with few information about the crash and it ultimately generate a Error.log file.
+
+![Error window of PSDK](./images/image_2022-08-30_174713212.png)
+
+This Error.log file is located in the root folder of your project. And contain a lot of information.
+
+![Root folder of the project](./images/image_2022-08-30_174458147.png)
+
+## What to do with Error.log? {% id="error-log" %}
+
+The goal of this file is to help everyone to know what the problem was.
+
+If you take a bit of time to read the error log, you might understand what the issue is (especially when it's caused by events you made).
+
+![Error.log file](./images/image_2022-08-30_175225553.png)
+
+In the Error.log file above you can see that the crash was caused by an event trying to use a constant named `VAR` which is defined nowhere. In that case fixing the event to use the proper things should be sufficient.
+
+Some errors are harder to understand, especially when it's not due to your own mistakes. In such case, you can use our Discord channel to report your issue.
+
+## How to report an issue on Discord {% id="q2a" %}
+
+In the [🔧・support](https://discord.com/channels/143824995867557888/1019959831072866404 "Support channel for Studio and PSDK") channel, you can ask a question and provide all the information needed.
+
+There's few rules to follow in order to report an issue:
+
+- The title should always be explicit **"My game crashed" is a bad title**
+- The body of the question should always contain all the information about what you did in order to encounter your issue
+- If the game crashed. Paste the content of the Error.log file
+- If the game crash without leaving any new log, follow the next chapter
+- Always answer to people trying to help you and provide what you're being asked to provide
+
+## What to do when Error.log was not created {% id="cmd-bat" %}
+
+It might happen that sometimes a new Error.log file is not created or even worse the game immediately closes. In such case there's a solution to check what the problem.
+
+Open your project folder and write `cmd` in the address bar:
+
+![Address bar with cmd written on it](./images/image_2022-08-30_180314773.png)
+
+This will open a new prompt command where you can write the following command: `psdk debug`
+
+This command will start the game in debug mode and will keep all the log in the console. This way you can copy everything to your report!
+
+![Logs preserved in the console](./images/image_2022-08-30_180536333.png)
+
+With this console, you can just press `CTRL+A` and `right click` to copy the whole content of the console. This might help us to debug your problem because the console contains a lot of information.
+
+## Gota go fast! {% id="skip-title" %}
+
+As you have seen previously, you can start the game from `cmd`, this has another advantage compared to RPG Maker XP. You can skip the whole screen title section and directly go to choose your save by starting the game with the following command: `psdk debug skip_title`
+
+This might save you ton of time!
+

@@ -1,0 +1,73 @@
+---
+title: Comment empêcher la sélection d'une attaque ?
+seoDescription: Un tutoriel rapide expliquant comment empêcher la sélection d'une
+  attaque avec Pokémon SDK
+order: 0
+---
+
+## Quelles sont les façons d'empêcher la sélection d'une attaque ?
+
+La sélection d'une attaque est un processus découlant de votre choix d'action au début du tour. Si il existe une raison pour laquelle l'attaque ne peut être sélectionnée, alors les fonctions relatives au blocage doivent retourner un `proc` au lieu de `nil` et dans ce `proc` indiquer la raison du blocage avec un message.
+
+### Depuis le code de l'attaque en lui-même
+
+Certaines attaques ne peuvent pas être sélectionnées à cause de leur fonctionnement. Par exemple, il n'est pas possible de sélectionner **Garde-à-Joues** si l'utilisateur ne possède pas une baie. Pour ce faire, il existe une méthode dans les attaques : `disable_reason` qui devra retourner un `proc` si l'utilisateur ne tient pas de baie.
+
+#### Exemple avec "Gardes-à-Joues"
+
+![Code de Gardes-à-Joues](./images/gardesajoues.png)
+
+Note : Si vous souhaitez en apprendre plus sur `disable_reason`, rendez vous dans la section [Comprendre la fonction disable\_reason](#heading_function-disable-reason "Comprendre la fonction disable\_reason") à la fin de l'article.
+
+### Depuis le code d'un effet
+
+Les effets exposent une fonction permettant de renvoyer un `proc` lorsque `disable_reason` est invoqué. Cette méthode se nomme `on_move_disabled_check`. Le fonctionnement est similaire à `disable_reason`, si vous retournez un `proc`, alors l'attaque ne peut pas être sélectionnée. Ceci est pratique pour créer des effets (talent, objet, météos, terrains, etc...) qui permettent à un Pokémon de ne pas pouvoir sélectionner une capacité.
+
+#### Exemple avec l'effet de l'attaque "Éxécu-Son"
+
+![Code de l'effet d'Éxécu-Son](./images/execuson.png)
+
+## Comprendre la fonction disable_reason {% id="function-disable-reason" %}
+
+![Code de disable_reason](./images/fonction.png)
+
+Ce qui nous intéresse particulièrement dans cette fonction :
+
+- `exec_hooks(Move, :move_disabled_check, binding)`
+
+`exec_hooks` : C'est une méthode qui est appelée pour exécuter une série de **Hooks**. Les **Hooks** sont des fonctions ou des procédures qui sont déclenchées en réponse à certains événements ou conditions dans le programme. Ils permettent de modifier le comportement standard d'une fonction ou d'ajouter des fonctionnalités supplémentaires sans changer le code original de la fonction.
+
+`Move` : Ce premier argument spécifie le contexte ou le domaine d'application des **Hooks** à exécuter. Ici, **Move** indique que les **Hooks** concernent les capacités des Pokémon. **Move** représente la classe qui regroupe les **Hooks** relatifs aux capacités.
+
+`:move_disabled_check` : Le deuxième argument est un symbole qui identifie spécifiquement les **Hooks** à exécuter. Dans ce cas, `:move_disabled_check` réfère à un ensemble de **Hooks** destinés à vérifier si le Pokémon utilisateur peut sélectionner une certaine capacité. Ces **Hooks** peuvent inclure des vérifications pour des conditions comme les effets de terrain, les talents, les objets, etc., qui pourraient empêcher la sélection de la capacité. (exemples : l'effet de Gravité, Entêtement, Mouchoir Choix)
+
+`binding` : Le troisième argument, **binding** , est un peu plus complexe. En Ruby, un **binding** est un objet qui encapsule le contexte d'exécution d'un bout de code, y compris les variables locales, les méthodes disponibles, la valeur de **self** , etc. Passer **binding** à `exec_hooks` permet donc aux **Hooks** d'accéder au contexte dans lequel `exec_hooks` a été appelé. Cela signifie qu'ils peuvent lire et modifier les variables locales, appeler des méthodes, et ainsi de suite, comme s'ils faisaient partie du code original de la méthode `move_disabled_check`.
+
+### Comprendre la procédure de la fonction disable_reason
+
+**Appel de Hook**
+
+Lorsque `exec_hooks(Move, :move_disabled_check, binding)` est exécuté, il va chercher et exécuter tous les **Hooks** associés à l'événement ou à la condition `:move_disabled_check` dans le contexte des capacités ( **Move** ).
+
+**Gestion de la valeur retournée par le Hook**
+
+Si aucun des **Hooks** exécutés ne lève une exception `Hooks::ForceReturn`, la fonction `move_disabled_check` continue son exécution normalement et atteint le `return nil` à la fin, indiquant que la capacité est sélectionné.
+
+Cependant, si un **Hook** décide que la capacité ne doit pas être utilisée et renvoie un proc (directement ou via une exception comme `Hooks::ForceReturn` avec `e.data` contenant le proc), le flux d'exécution de `move_disabled_check` est interrompu, et il renvoie le proc à son appelant.
+
+**Conséquences du retour du proc**
+
+Le retour du `proc` signifie que quelque chose a empêché la sélection de la capacité. Cela peut être dû à diverses raisons spécifiques au jeu, comme les effets de terrain, les talents, les objets etc...
+
+La fonction ou méthode appelante qui a invoqué `move_disabled_check` doit alors gérer ce `proc` pour décider de la suite des actions. Par exemple, cela peut entraîner l'affichage d'un message à l'utilisateur indiquant que la capacité ne peut pas être sélectionnée.
+
+**Nécéssité d'une autre fonction**
+
+Cette fonction et son **Hook** associé permettent d'empêcher l'exécution d'une attaque. Cependant, il est possible que certains effets, tels que **Métronome** , évitent cette fonction. Il est donc indispensable de gérer cette situation dans un `move_usable_by_user` ou son **Hook** associé, notamment lorsque vous intervenez dans un effet, comme illustré dans les exemples précédents.
+
+### Qu'est-ce qu'un <code>proc</code> ?
+
+Un `Proc` en Ruby est un objet encapsulant un bloc de code, qui peut être stocké dans une variable, passé comme argument ou appelé à un moment ultérieur. Cela permet de définir des actions à éxécuter plus tard, facilitant ainsi la gestion des callbacks et des opérations conditionnelles. Les `Procs` sont particulièrement utiles pour organiser et manipuler des blocs de code qui doivent être exécutés de manière répétitive ou en réponse à certaines conditions.
+
+Dans la fonction `disable_reason`, la ligne `return proc {} if pp == 0` utilise un `Proc` pour gérer une condition spécifique : si l'attaque n'a plus de PP (points de pouvoir) et ne peut donc pas être utilisée, elle retourne immédiatement un proc vide. Ce retour signifie que l'attaque est désactivée sans nécessiter d'action immédiate, le proc vide servant de marqueur pour indiquer cette condition spécifique sans effectuer d'opération supplémentaire.
+

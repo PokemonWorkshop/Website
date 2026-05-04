@@ -1,0 +1,13 @@
+---
+title: How can I update my sprites' offsets?
+seoDescription: How to adjust Pokémon position on the menu screen
+publishDate: '2022-09-03 14:40:00'
+order: 0
+---
+
+First of all, make sure that all non flying Pokémon do have their feet on the bottom of the sprites. This will ensure greater shadow in Battle.
+
+Once done: Open `cmd.bat` in your project's root and write `psdk --util=calc_front_offset_y` then `Enter`.
+
+This should make sure all Pokémon are centered in menus!
+

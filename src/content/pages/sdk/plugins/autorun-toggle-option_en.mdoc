@@ -1,0 +1,31 @@
+---
+title: Autorun Toggle Option
+seoDescription: Allow use to run without having to maintain the run key
+publishDate: '2023-07-23 15:05:00'
+order: 20230723
+---
+
+It's been a while since I originally posted this resource and since then PSDK has had some nice updates! One is a Plugin Manager, which makes installing things like this a lot easier for you. Previously you had to go in and modify a bunch of code, but no more! Now you will only have to add the options text.
+
+## How to install
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+1.) Download `AutoRunOption.psdkplug` and put it in your game's scripts folder  
+2.) Open your `Data\configs\game_options_config.json` and add `"toggled_running_choice"` to the list of options  
+3.) Launch the game
+
+{% /column %}
+{% column %}
+{% cta href="https://www.mediafire.com/file/wwb4volaebuk45y/AutoRunOption.psdkplug/file" align="center" %}Download Plugin{% /cta %}
+
+{% /column %}
+{% /row %}
+
+## Additional steps
+
+If you want the text in your options menu to look right or just modify them:  
+1.) Go to `Data/Text/Dialogs` and open `100042.csv` (use VSCode/Notepad/whatever, make sure it's still a CSV when saved)  
+2.) Make sure line 11 says whatever you want to represent "on" and 12 to represent "off"  
+3.) By default I use line 68 for the title "Auto Run" and line 69 for the description of the option. (This can be changed in `scripts/00000 Plugins/xxxxx AutoRunOption/00100 Options_Menu.rb`.)
+

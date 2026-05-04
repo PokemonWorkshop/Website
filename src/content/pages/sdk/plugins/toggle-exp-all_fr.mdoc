@@ -1,0 +1,48 @@
+---
+title: Activer ou Désactiver le partage d'expérience
+seoDescription: Permettre au joueur de votre fangame d'activer le partage d'écpérience
+order: 20230723
+---
+
+Je me suis senti très concerné par la surpuissance du Multi-Exp actuel dans les jeux Pokémon et j'ai voulu faire une sorte de retour en arrière. Ceci vous permet d'activer/désactiver le partage d'exp. tout en conservant la fonction du Multi-Exp&nbsp;!
+
+## Quel est le soucis​?
+
+Par défaut dans le PSDK, il y a deux façons de déclencher l'exp partagé&nbsp;: en désactivant l'interrupteur 40 ou en ayant le Multi-Exp dans son sac. Le Multi-Exp peut être donné à un Pokémon pour fonctionner comme dans les anciennes générations, mais s'il n'est pas tenu, il fonctionne comme un partage d'expérience.
+
+## Que fait le plugin?​
+
+Ce plugin va changer cela en ajoutant un nouvel objet rare - l'_Exp. All_, tout en conservant le Multi-Exo ! Le nouvel _Exp. All_ peut être manipulé dans votre sac et activera/désactivera le partage.
+
+Il garantit que :
+
+- Lorsque l'option Hard EXP est **activée** , le gestionnaire d'expérience vérifie chaque Pokémon pour lui donner de l'expérience. Cette version de l'expérience fonctionnera comme les anciennes générations où il était plus difficile de monter en niveau. (L'expérience est divisée entre le nombre de participants et s'échelonne en fonction des niveaux). **Si Exp. All est activé** , le Pokémon actif reçoit l'intégralité de l'expérience, tandis que tous les autres reçoivent leur part.
+- Si Hard EXP est **désactivé** , le gestionnaire d'expérience récompensera le Pokémon actif avec 100 % d'expérience et tous les autres avec 50 %.
+- Si quelqu'un tient un Multi-Exp et que _Exp. All_ est activé OU qu'il a participé à une bataille, il recevra l'intégralité de l'expérience.
+
+## Installation
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+1.) Téléchargez le plugin.  
+2.) Sauvegardez le plugin dans le dossier **scripts** de votre projet.  
+3.) Allez dans les évènement communs et configurez un évènement conditionant les message et l'inversion du switch 127.  
+4.) Si le switch est actif, désactivez le, et inversement.
+
+{% /column %}
+{% column %}
+{% cta href="https://www.mediafire.com/file/jxfxlq8fpvzbz57/Toggle_Exp_All.psdkplug/file" align="center" %}Télécharger le Plugin{% /cta %}
+
+{% /column %}
+{% /row %}
+
+![Image montrant comment l'évènement commun est censé être configuré](./images/image_2023-07-21_221819668.png)
+
+5.) Ouvrez Studio et modifiez le Multi-Exp. Je recommande les paramètres suivants:
+
+![Image showing how the Exp Share item should be setup in Studio](./images/image_2023-07-22_132731466.png)
+
+6.) Maintenant ajoutez un nouvel objet de type **Evènement** qui sera par exmple nommé _Exp. All_.  
+7.) Modifiez la poche de l'objet pour quoi soit un objet Rare et modifiez son paramètre pour qu'il soit fonctionnel qu'en Map.  
+8.) Lancez le jeu et donnez vous les deux objets pour tester.
+

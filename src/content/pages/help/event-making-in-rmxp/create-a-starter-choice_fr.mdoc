@@ -1,0 +1,32 @@
+---
+title: Créer un choix de starter
+seoDescription: Comment donner les Pokémon Starter au joueur dans RPG Maker XP
+order: 0
+---
+
+Comme dans tous les jeux Pokémon officiels, votre Fangame comporte sûrement un choix de Pokémon de départ (dit `Starters`).
+
+## Obtention via un PNJ
+
+Pour créer un choix de starter, il faut déjà avoir compris comment [Donner un Pokémon](/fr/help/event-making-in-rmxp/give-a-pokemon). Si ceci est acquis, vous pouvez commencer à suivre ce tutoriel. La première étape est de créer une variable que vous nommerez `Starter`. Ajoutez ensuite une condition à votre événement, comme ceci :
+
+![Single condition](https://image.communityscriptproject.com/psdkwiki/img/event_making/001fr.png)
+
+Une fois fait, ajoutez un choix avec le nom du Pokémon que vous souhaitez donner. Par exemple :
+
+![Choice](https://image.communityscriptproject.com/psdkwiki/img/event_making/002fr.png)
+
+Il faut ensuite [Donner un Pokémon](fr/help/event-making-in-rmxp/give-a-pokemon) selon le choix du Joueur.
+
+![FullChoice](https://image.communityscriptproject.com/psdkwiki/img/event_making/003fr.png)
+
+Répétez ce script pour chaque Pokémon, mais n'oubliez surtout pas de modifier la valeur de la variable `Starter` (1 pour le premier Pokémon, 2 pour le second, et ainsi de suite). Elle vous sert si vous voulez affronter un Pokémon différent en fonction du starter (face au Rival par exemple). La dernière étape est simple, créez une deuxième page qui s’activera à condition que l'interrupteur local [A] soit activé, pour empêcher le Joueur de prendre plusieurs Pokémon.
+
+## Obtention via une Ball (1G / 2G)
+
+Cette méthode-ci est la plus simple, vous devez créer un événement (Ball) et le configurer de cette façon :
+
+![BallChoice](https://image.communityscriptproject.com/psdkwiki/img/event_making/004fr.png)
+
+L'événement marche exactement pareil que celui de la méthode précédente, à la différence que dans celui-ci il n’y a pas l'apparition d’un choix dans l'événement, ce choix sera fait manuellement par le Joueur qui cliquera sur les Balls. Encore une fois, n’oubliez pas de modifier la valeur de la variable `Starter` en fonction du Pokémon choisi.
+

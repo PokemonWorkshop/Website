@@ -1,0 +1,78 @@
+---
+title: Start a wild battle
+seoDescription: How to create a wild battle from events in RPG Maker XP
+publishDate: '2022-09-02 19:00:00'
+order: 0
+---
+
+## Start a simple wild battle
+
+To start a wild battle, just call the command : `call_battle_wild(id_pokemon, level)`
+
+ 
+
+Example :
+
+```text
+call_battle_wild(:pikachu, 5)
+```
+
+(Use the [List of Pokémon](https://psdk.pokemonworkshop.com/db/db_pokemon.html) to find the correct Pokémon ID)
+
+## Start double wild battle
+
+It's possible to start a 2v2 wild battle using the following command : `call_battle_wild(id_pokemon1, level1, id_pokemon2, level2)`
+
+ 
+
+Example :
+
+```text
+call_battle_wild(:pikachu, 5, :meowth, 5)
+```
+
+## Start a wild battle against a specific Pokémon
+
+You can generate a Pokemon using the following command :
+
+```text
+pokemon = PFM::Pokemon.generate_from_hash(id: id_pokemon, level: level_pokemon)
+```
+
+The various parameter of the command (aside id & level) are :
+
+- `item`: Numerical ID of the item the Pokémon should hold
+- `stats`: IV array [hp, atk, dfe, spd, ats, dfs]
+- `moves`: List of Numerical Move ID the Pokémon should know (0 = default)
+- `gender`: Gender of the Pokémon (0 = none, 1 = male, 2 = female)
+- `shiny`: If the Pokémon IS shiny
+- `no_shiny`: If the Pokémon cannot be shiny
+- `form`: Numerical form of the Pokémon (ex: unknown C is 2, alolan meowth is 1)
+- `rareness`: Numerical catch rate (0 = uncatchable, even with the Master Ball)
+- `trainer_name`: Original Trainer name
+- `trainer_id`: Original Trainer ID
+- `given_name`: Pokémon's nick name
+- `loyalty`: Pokémon's happyness
+- `ball`: Numerical ID of the ball used to catch the Pokémon
+- `bonus`: EV array [hp, atk, dfe, spd, ats, dfs]
+- `nature`: Numerical ID of the Pokémon's nature.
+
+Use case :
+
+ 
+
+1v1 against Cosplayer Pikachu :
+
+```text
+pokemon = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 2, gender: 2)
+call_battle_wild(pokemon, nil)
+```
+
+2v2 against two Cosplayer Pikachu :
+
+```text
+pokemon1 = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 2, gender: 2)
+pokemon2 = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 5, gender: 2)
+call_battle_wild(pokemon1, nil, pokemon2)
+```
+

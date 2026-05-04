@@ -21,10 +21,10 @@ const pageUrl = `/${localeFragment}/${fullSlug}`; // TODO: figure out a fix for 
 <aside class="note-excerpt">
   <a href={pageUrl}>
     <header>
-      {cover && <Picture formats={['avif', 'webp']} layout="full-width" alt={`${title} cover image`} src={cover} />}
+      {cover && <Picture formats={['avif', 'webp']} layout="constrained" alt={`${title} cover image`} src={cover} />}
       <h3 class="note-excerpt-title">{title}{!cover && <small> ➔</small>}</h3>
     </header>
-    {description && <div class="note-excerpt-text">{description}</div>}
+    {description && <p class="note-excerpt-text">{description}</p>}
   </a>
 </aside>
 
@@ -44,5 +44,13 @@ const pageUrl = `/${localeFragment}/${fullSlug}`; // TODO: figure out a fix for 
   .note-excerpt a {
     text-decoration: none;
     color: #000;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 8px;
   }
 </style>

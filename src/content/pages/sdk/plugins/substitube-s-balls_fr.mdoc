@@ -1,0 +1,70 @@
+---
+title: Substitube's Balls
+seoDescription: Ajouter d'avantage d'effet de ball à votre fangame
+order: 20230723
+---
+
+Si vous ne savez pas qui est [Substitube](https://www.youtube.com/watch?v=n4VLVbA61L0&t=92s), c'est un YouTuber qui donne des idées sous forme de vidéos. Ils ont publié une vidéo sur [50 idées différentes de Pokéball](https://www.youtube.com/watch?v=n4VLVbA61L0), et j'ai envie de les faire toutes ! Ce plugin ajoute actuellement les fonctions/modificateurs pour la plupart des premières balles:
+
+- Dex Ball - Complète l'entrée dex, même en cas d'échec.
+- Cycle Ball - Returns the ball if the target was inactive. Didn't attack or is asleep/fully paralyzed.Not in yet
+- Dawn Ball - Similaire à la sombre ball mais pendant la journée.
+- Luck Ball - Le taux de capture est aléatoire entre 0-255.
+- Stat Ball - Augment le taux de capture si la cible a des statistiques plus faibles.
+- Evo Ball - Augmente le taux de capture sur des cibles évolué.
+- Seeker Ball - Peut capturer des Pokémon Semi-Invulnérable.
+- Shiny Ball - Augment le taux de capture des Pokémon Shiny.
+- Value Ball - Guaranteed 3 max IVs.Not in yet
+- Shrink Ball - Augmente le deux de capture des Pokémon léger ou sous Liliput.
+- Nuzlocke Ball - Only catches first encounter of Routes.Not in yet
+- Trap Ball - Augment le taux de capture si le Pokémon est sous l'emprise d'une attaque piège.
+- Rage Ball - Increased catch rate if one of your Pokémon fainted last turn.Not in yet
+- Executive Ball - Permet à l'utilisateur de voler le Pokémon d'un dresseur. (PSDK a cette balle par défaut: Rocket Ball)
+- Para Ball - Augment le taux de capture des Pokémon électrique ou paralysés.
+- Burn Ball - Augment le taux de capture des Pokémon feu ou brûlés.
+- Poison Ball - Augment le taux de capture des Pokémon poison ou empoisonnés.
+- Freeze Ball - Augment le taux de capture des Pokémon glace ou gelés.
+- Dizzy Ball - Augment le taux de capture des Pokémon psy ou confus.
+
+Veuillez noter que cette ressource ne comprend que le code de ces balles. Vous devrez créer un graphique pour elles vous-même et ajouter les balles que vous voulez à votre base de données.
+
+## Installation
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+1.) Téléchargez le plugin et sauvegardez le dans le dossier **scripts** de votre projet.  
+2.) Ouvrez votre projet dans le Pokémon Studio  
+3.) Créez un nouvel objet, assurez-vous que la catégorie est "Ball" et que l'identifiant correspond à l'un de ceux listés dans la section suivante  
+4.) Sauvegardez et profitez
+
+{% /column %}
+{% column %}
+{% cta href="https://www.mediafire.com/file/tqdxkn6mcdazvks/SubstitubesBalls_FirstBatch.psdkplug/file" align="center" %}Télécharger le Plugin{% /cta %}
+
+{% /column %}
+{% /row %}
+
+## Identifiant des balles
+
+Si ce n'est pas évident, l'identifiant va permettre au jeu de savoir quel code donner à la balle. Il est important de noter que si vous voulez la " **Executive Ball**", vous devez lui donner l'identifiant " **rocket\_ball**" ! C'est le seul qui soit unique.
+
+- Dex Ball - `dex_ball`
+- Cycle Ball - `cycle_ball` **(Non disponible pour le moment)**
+- Dawn Ball - `dawn_ball`
+- Luck Ball - `luck_ball`
+- Stat Ball - `stat_ball`
+- Evo Ball - `evo_ball`
+- Seeker Ball - `seeker_ball`
+- Shiny Ball - `shiny_ball`
+- Value Ball - `value_ball` **(Non disponible pour le moment)**
+- Shrink Ball - `shrink_ball`
+- Nuzlocke Ball - `nuzlocke_ball` **(Non disponible pour le moment)**
+- Trap Ball - `trap_ball`
+- Rage Ball - `rage_ball` **(Non disponible pour le moment)**
+- Executive Ball - `rocket_ball`
+- Para Ball - `para_ball`
+- Burn Ball - `burn_ball`
+- Poison Ball - `poison_ball`
+- Freeze Ball - `freeze_ball`
+- Dizzy Ball - `dizzy_ball`
+

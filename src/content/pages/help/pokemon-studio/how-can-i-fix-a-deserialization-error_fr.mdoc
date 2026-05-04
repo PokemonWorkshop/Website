@@ -1,0 +1,70 @@
+---
+title: How can I fix a Deserialization Error?
+seoDescription: The way to fix a Deserialization Error in Pokémon Studio
+order: 0
+---
+
+{% row columns="1/1" bottom_margin="margin-m" centered_items=true %}
+{% column %}
+## What is a Deserialization Error?
+
+{% /column %}
+{% /row %}
+
+A Deserialization Error is an error which is triggered when at least one of your files doesn't pass the validation process that happen when you try to load your project into Studio.
+
+This process ensures you don't have any unstandardized data in your project. Rarely, it can happen that an input lets you enter an unstandardized value and lets you save it, which triggers the error when you reload the project at a later date.
+
+Don't worry, this step-by-step guide will teach you everything there is to know about correcting these errors.
+
+But first:
+
+## Where to find the logs for a Deserialization Error?
+
+When a Deserialization Error happens, Pokémon Studio will prompt an error dialog telling you an error occured during the loading of the project. At this moment, you will be able to click the "Access the logs" button which will open the folder that stores the logs. Then, you will only need to open the renderer.log file with a text editor software. You can also read this article which tells you how to access the logs: [Where are the Studio logs?](https://pokemonworkshop.com/en/help/pokemon-studio/where-are-studio-s-logs "Where are the Studio logs?")
+
+Note: We strongly advise you to use the VSCode software, as it is able to colorize the log's texts. It also allows you to deploy and/or retract a part of the log, which will be very useful for the next part of this article.
+
+## Structure of a Deserialization Error
+
+{% row columns="1/2" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+A Deserialization Error is a simple error, but it can be quite verbose. In the image shown here, we have different sections which give us precious information:
+
+- The green bracket shows the date at which the Deserialization Error happened, and the term "Deserialization Error"
+- The orange bracket shows the filename of the file for which the Deserialization Error occured
+- The blue bracket shows the content of the file for which the Deserialization Error occured
+  - Note: the "data:" part of the log is generally **a lot longer and was cut to fit in this screenshot**. VSCode allows you to retract this whole section to make it easier to read. You only need to hover your mouse over the space between "data:" and the number of the line, and click the arrow that appears when doing so.
+
+- The red bracket shows the Error the validator reported, and there is always at least one error (there can be more depending on how many unstandardized values your data contains). An Error reported by the validator has a specific structure we'll detail in the next part of this article.
+
+{% /column %}
+{% column %}
+![](./images/tuto-zod.png)
+
+{% /column %}
+{% /row %}
+
+## How to read the Error part?
+
+The Error part is composed of multiple information that need to be understood in order to correctly repair your data:
+
+- code: A generic string that tells you the problem that was found (not necessarily a problem related to numeric values)
+- minimum: Gives the minimum value that was expected by the validator (this keyword only appears when the "code" gives an error about numeric values)
+- message: Gives a more detailed explanation of the encountered problem
+- path: Probably the most important part of the Error. You need to read it from top to bottom, line per line. Each line represent the key or the "index" to search for.
+
+## How to correct the error in my file?
+
+With all these explanations done, here are the steps to do to correct your data:
+
+- Open your `renderer.log` file
+- Search for the errors. You will need to check the date of the error and make sure that you are currently verifying a current error
+- Open the right file using the filename given by the Error
+- Scroll down to the Error part, or retract the data part
+- Read the Error part
+- Using the path given, navigate in your json file to the problematic point and correct it (using the other information given by the Error).
+  - If we take the screenshot above as an example, we'd need to first find the forms key, then the first entry of the forms key (0 means the first entry), then finally find the height key for this entry. Now, you only need to correct the 0 value by a standard value, 0.01 in this specific case. **_Also, make sure to only modify the problematic value and nothing else!_**
+
+- Save the file. If you don't have any other file that returns a Deserialization Error, you can try to load your project in Studio again. If you still have more, you just need to repeat steps 2 to 7 for the other files.
+

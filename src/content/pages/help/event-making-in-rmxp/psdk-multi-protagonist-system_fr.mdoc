@@ -1,0 +1,51 @@
+---
+title: PSDK multi-protagonist system
+seoDescription: Comment avoir plusieurs protagoniste dans PSDK
+order: 0
+---
+
+## TL;DR
+
+Pour l'instant, la fonction de base du système est la fonction switch_player_safe(id\_player).
+
+En mettant `switch_player_safe(2)` dans un événement, vous allez passer sur le joueur 2 (le joueur par défaut étant le joueur 1). Au début, le joueur n'a pas d'apparence, d'argent ou quoi que ce soit. Cependant, une fois que tout a été mis en place, la donnée est conservée en mémoire pour tous les prochains changements. Vous pouvez regarder l'événement "Start" de la démo pour avoir un exemple de mise en place d'un joueur. Le nombre de joueurs n'est pas limité.
+
+---
+
+## Quelques détails de l'implémentation et des possibilités
+
+Tous les changements du joueurs (ou "switch" en anglais) sont basés sur la même architecture de fonctions. Par exemple, pour l'équipe ("party") du joueur, les switches sont :
+
+\* empty\_and\_save\_party(id\_joueur\_initial)
+
+\* retrieve\_saved\_party(id\_joueur\_final)
+
+A noter que l'id du joueur courant est gardé en mémoire dans la variable 51, pour éviter au maker de faire un changement entre un joueur et lui-même, ce qui conduirait à effacer toutes les données. C'est le côté "safe" de la fonction "switch\_player\_safe".
+
+Dans les détails, les switches couvrent aujourd'hui :
+
+- le sac ("bag")
+- l'équipe ("party")
+- les informations du dresseurs ("trainer")
+- L'apparence ("appearance")
+- L'argent ("money")
+- Le pokédex (eh beh... "pokedex")
+
+Par défaut, toutes les catégories sont changées. Cela dit, vous pouvez décider de ne changer qu'une partie en utilisant les options switch\_X (où X est le nom en anglais de la catégorie) en les mettant à false.
+
+Par exemple, si votre scénario impose que l'argent et le pokédex sont partagés entre les protagonistes, pour aller du joueur courant au joueur 2, vous pouvez utiliser :
+
+```ruby
+switch_player_safe(2, switch_pokedex: false, switch_money: false)
+```
+
+A noter que par défaut, un joueur n'a pas d'argent, d'apparence, etc. Il est obligatoire d'initialiser le joueur la première fois qu'il est utilisé. Un exemple d'événement cela est donné ci-dessous :
+
+```ruby
+switch_player_safe(2)
+$pokemon_party.trainer.set_gender(true)
+$game_player.set_appearance_set('hero_01_white')
+$game_player.update_appearance
+$trainer.name = 'White'
+```
+

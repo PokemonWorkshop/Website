@@ -1,0 +1,74 @@
+---
+title: Gérer les quêtes
+seoDescription: Comment gérer les quêtes dans RPG Maker XP
+order: 0
+---
+
+Dans PSDK, la gestion des quêtes se fait au travers de la variable `$quests`. Toute les méthodes sont expliqué dans la documentation : [PFM::Quests](https://psdk.pokemonworkshop.fr/yard/PFM/Quests.html).
+
+ 
+
+Nous allons voir comment utiliser correctement cette variable pour gérer les quêtes.
+
+## 1ère étape : Démarrer une ou plusieurs quêtes
+
+Pour démarrer une ou plusieurs quêtes vous allez appeler un certain nombre de fois : `$quests.start(id)` où `id` est l'id de la quête dans Ruby Host.
+
+ 
+
+Une fois que vous avez appelé `$quests.start(id)` il faut indiquer au système de quête qu'il faut effectivement démarrer les quêtes :
+
+```text
+$quests.check_up_signal
+```
+
+Cette méthode vérifie les quêtes démarrées et terminées puis les valide définitivement. Cette méthode est également censé gérer l'affichage de la nouvelle quête mais ce n'est actuellement pas codé par **manque d'interface**.
+
+## 2ème étape : Valider les objectifs
+
+Il existe un certain nombre de méthodes pour valider les objectifs :
+
+- `$quests.beat_npc(quest_id, npc_name_index)`où`quest_id`est l'id de la quête et`npc_name_index`est l'index du nom du PNJ dans l'ordre de définition des dresseurs à battre dans l'éditeur de quête.
+- `$quests.speak_to_npc(quest_id, npc_name_index)`où les paramètres sont les mêmes.
+
+Les autres objectifs sont validés automatiquement par PSDK.
+
+## 2ème étape bis : Afficher un objectif caché
+
+Il est possible de cacher les objectifs d'une quête, Ruby Host n'est juste pas capable de permettre de les cacher. Cela dit, si vous trouvez le moyen de définir les objectifs cachés, pour les afficher il faut utiliser la méthode suivante :
+
+```text
+$quests.show_goal(quest_id, goal_index)
+```
+
+Les paramètres sont :
+
+- `quest_id`est l'id de la quête
+- `goal_index`est l'index de l'objectif dans l'ordre des objectifs (s'ils sont tous affichés).
+
+## 3ème étape : Vérifier la fin d'une quête et distribuer les gains
+
+Pour terminer les quêtes il y a deux choses à faire, vérifier si elle est terminée et distribuer les gains.
+
+### Vérifier si une quête est terminée
+
+Pour vérifier si tous les objectifs ont été réalisés, rien de plus simple, appelez la commande suivante dans une condition :
+
+```text
+$quests.finished?(quest_id)
+```
+
+### Vérifier que les gains ont été distribués
+
+Pour vérifier si les gains ont été distribués, il faut écrire la commande suivante dans une condition :
+
+```text
+$quests.earnings_got?(quest_id)
+```
+
+Si les gains n'ont pas été distribués, distribuez les ainsi :
+
+```text
+$quests.get_earnings(quest_id)
+```
+

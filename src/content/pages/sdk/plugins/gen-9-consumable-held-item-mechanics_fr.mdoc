@@ -1,0 +1,92 @@
+---
+title: Mécanique des objets consommable (9G)
+seoDescription: Ajouter la mécanique des objets consommable de Scarlet et Violet à
+  votre fangame
+order: 20230723
+---
+
+Voici un nouveau plugin psdk&nbsp;!
+
+La 9ème génération a introduit quelques mécanismes de qualité de vie vraiment bons, et c'est l'un d'entre eux.les objets consommables sont maintenant capables d'être "utilisés" comme dans Scarlet et Violet en appuyant sur un interrupteur&nbsp;! (ainsi que trois nouveaux objets)
+
+## Que fait ce plugin ?
+
+A la base, il ajoute un nouvel interrupteur (126 par défaut) qui vous permet de transformer les objets consommables en objets qui s'épuisent. Je crois que cela a été introduit dans Scarlet et Violet. Il ajoute également les effets de trois nouveaux objets qui ont été introduits après la gen 6. Ces objets sont le "Eject Pack", le "Throat Spray" et le "Room Service". Des icônes sont fournies avec le téléchargement au cas où vous voudriez les ajouter à votre jeu, mais elles sont techniquement optionnelles.
+
+Ce plugin aura également un effet sur ces objets/attaques :
+
+- Ballon
+- Attraction/Herbe Mental (Herbe Mental est gérée dans le code de Attraction)
+- Bouton Fuite
+- **Eject Pack**
+- Ceinture Force
+- Carton Rouge
+- **Room Service**
+- **Throat Spray**
+- Herbe Blanche
+
+_\* Les objets en gras sont ceux qui ont été ajoutés par le plugin_
+
+## Installation
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+1.) Téléchargez le fichier zip   
+2.) Ouvrez le fichier zip et extrayez le plugin ainsi que `00001 Gen9HeldItemPatches` dans le dossier **scripts** de votre projet   
+**OPTIONEL:** Extrayez les trois icones dans `Graphics/Icons` pour ajouter "Eject Pack" "Throat Spray" et "Room Service" à votre jeu!   
+3.) Maintenant vous devez ajouter les nouveaux texts en bas du fichier `Data/Text/Dialogs/100019.csv`&nbsp;:
+
+{% /column %}
+{% column %}
+{% cta href="https://www.mediafire.com/file/6heans08mw58jfe/Gen9_HeldItem_Mechanics.zip/file" align="center" %}Télécharger le zip{% /cta %}
+
+{% /column %}
+{% /row %}
+
+```text
+[VAR PKNICK(0000)]'s Focus Sash was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Focus Sash was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Focus Sash was used upp...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Air Balloon was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Air Balloon was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Air Balloon was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Throat Spray was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Throat Spray was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Throat Spray was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Eject Button was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Eject Button was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Eject Button was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Eject Pack was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Eject Pack was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Eject Pack was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s White Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s White Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s White Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Mental Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Mental Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Mental Herb was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Red Card was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Red Card was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Red Card was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+[VAR PKNICK(0000)]'s Room Service was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The wild [VAR PKNICK(0000)]'s Room Service was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+The opposing [VAR PKNICK(0000)]'s Room Service was used up...,[~0],[~0],[~0],[~0],[~0],[~0]
+```
+
+4.) Ensuite ouvrez le dossier `00001 Gen9HeldItemPatches` et assignez proprement le text à chaque objet. Vous pouvez également modifier le switch d'activation du plugin si vous le voulez.
+
+## Ajouter les trois nouveaux objets​
+
+1.) Si vous l'avez oublier, extrayez les icones dans le dossier `Graphics/Icons`  
+2.) Ouvrez votre projet dans studio et allez dans la base de données des objets  
+3.) Ajoutez les nouveaux objets et garantissez que leurs identifiants sont les suivants:
+
+- Eject Pack -\> `:eject_pack`
+- Throat Spray -\> `:throat_spray`
+- Room Service -\> `:room_service`
+
+4.) Assignez l'icône  
+5.) Vérifiez que les paramètres sont " **Utilisation limitée**" et " **peut être porté**"
+
+Et voilà.
+

@@ -48,6 +48,11 @@ export default defineMarkdocConfig({
           type: String,
           required: false,
         },
+        align: {
+          type: String,
+          required: false,
+          matches: ['left', 'right', 'center']
+        }
       },
       render: component('./src/components/CTA.astro')
     },

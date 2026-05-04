@@ -1,0 +1,74 @@
+---
+title: Donner un badge
+seoDescription: Comment gérer les badges dans RMXP pour Pokémon SDK
+order: 0
+---
+
+## Donner un badge au joueur
+
+### Commande
+
+Pour donner un badge au joueur vous pouvez utiliser la commande suivante :
+
+```text
+$trainer.set_badge(badge_num, region_num, obtenu_ou_non)
+```
+
+Les paramètres sont :
+
+- `badge_num`: Le numéro du badge (1, 2, 3, 4, 5, 6, 7, 8)
+- `region_num`: Le numéro de la région de votre jeu (1, 2, ...). 1 par défaut.
+- `obtenu_ou_non`:`true`si vous voulez que le badge soit considéré comme obtenu,`false`sinon. (true par défaut).
+
+### Exemples
+
+Donner le 5ème badge :
+
+```text
+$trainer.set_badge(5)
+```
+
+Retirer le 5ème badge :
+
+```text
+$trainer.set_badge(5, 1, false)
+```
+
+Donner le 5ème badge de la 3ème région de votre jeu :
+
+```text
+$trainer.set_badge(5, 3)
+```
+
+## Connaître le nombre de badge possédé par le joueur
+
+Pour connaître le nombre exact de badge que le joueur possède, utilisez la commande :
+
+```text
+$trainer.badge_counter
+```
+
+## Détecter si le joueur possède un badge en particulier
+
+### Commande
+
+Pour détecter la possession d'un badge vous pouvez utiliser la commande de condition :
+
+```text
+$trainer.badge_obtained?(badge_num, region_num)
+```
+
+### Exemples
+
+Détecter si le joueur possède le 5ème badge :
+
+```text
+$trainer.badge_obtained?(5)
+```
+
+Détecter si le joueur possède le 5ème badge de la 3ème région :
+
+```text
+$trainer.badge_obtained?(5, 3)
+```
+

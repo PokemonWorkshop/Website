@@ -1,0 +1,63 @@
+---
+title: How to fail a move ?
+seoDescription: Learn how to fail a move with PSDK!
+publishDate: '2024-02-14 19:49:00'
+order: 0
+---
+
+## What are the ways to fail a move?
+
+A move failure results from various factors. If a specific reason causes the move to fail, the concerned functions should return false rather than true. Within this returned false, the reason for the failure should be clearly indicated by a message.
+
+### From the code of the move itself
+
+Some moves can fail due to their mechanics. For example, using Gravity in an area already under the effect of Gravity will cause the move to fail. To handle this, there is a method within moves: `move_usable_by_user` which should return false if the terrain is already under the effect of Gravity.
+
+#### Example with "Gravity"
+
+![Code Gravité](./images/gravite.png)
+
+Note: If you wish to learn more about `move_usable_by_user`, please go to the section [Understanding the move\_usable\_by\_user](#heading_function-move-usable-by-user "Understanding the move\_usable\_by\_user") function at the end of the article.
+
+### From the code of an effect
+
+Effects expose a function that allows returning false when `move_usable_by_user` is invoked. This method is called `on_move_prevention_user`. Its operation is similar to `move_usable_by_user`: if you return false, then the move will fail. This is useful for creating effects (abilities, items, weathers, terrains, etc.) that will cause certain moves to fail.
+
+#### Example with the effect of the move "Throat Chop"
+
+![Code de l'effet d'Éxécu-Son](./images/execuson.png)
+
+## Understanding the <code>move_usable_by_user</code> {% id="function-move-usable-by-user" %}
+
+![Code de move_usable_by_user](./images/fonction.png)
+
+What particularly interests us in this function :
+
+- `exec_hooks(Move, :move_prevention_user, binding)`
+
+`exec_hooks` : This is a method that is called to execute a series of **Hooks**. **Hooks** are functions or procedures that are triggered in response to certain events or conditions in the program. They allow modifying the standard behavior of a function or adding additional functionalities without changing the original code of the function.
+
+`Move` : This first argument specifies the context or scope of application of the **Hooks** to be executed. Here, **Move** indicates that the **Hooks** pertain to Pokémon abilities. **Move** represents the class that groups together the **Hooks** related to abilities.
+
+`:move_prevention_user` : The second argument is a symbol that specifically identifies the **Hooks** to be executed. In this case, `:move_prevention_user` refers to a set of **Hooks** aimed at checking if the user Pokémon can perform a certain move. These **Hooks** can include checks for conditions like status effects, terrain effects, weather conditions, etc., which could cause the move to fail.
+
+`binding` : The third argument, **binding** , is a bit more complex. In Ruby, a **binding** is an object that encapsulates the execution context of a piece of code, including local variables, available methods, the value of **self** , etc. Passing **binding** to `exec_hooks` thus allows the **Hooks** to access the context in which `exec_hooks` was called. This means they can read and modify local variables, call methods, and so on, as if they were part of the original code of the method `move_prevention_user`.
+
+### Understanding the procedure of the function <code>move_prevention_user</code>
+
+**Hook Call**
+
+When `exechooks(Move, :move_prevention_user, binding)` is executed, it searches for and executes all the **Hooks** associated with the event or condition `:move_prevention_user` in the context of moves ( **Move** ).
+
+**Management of the value returned by the Hook**
+
+If none of the executed **Hooks** raises a `Hooks::ForceReturn` exception, the function `move_prevention_user` continues its execution normally and reaches the `return true` at the end, indicating that the move will perform.
+
+However, if a **Hook** decides that the move should not be used and returns false (either directly or via an exception such as `Hooks::ForceReturn` with `e.data` containing false), the execution flow of `move_prevention_user` is interrupted, and it returns false to its caller.
+
+**Consequences of returning false**
+
+The return of false means that something has prevented the selection of the move. This could be due to various game-specific reasons, such as field effects, abilities, items, etc...
+
+The calling function or method that invoked `move_prevention_user` must then handle this false to decide on the subsequent actions. For example, this may result in displaying a message to the user indicating that the move failed.
+

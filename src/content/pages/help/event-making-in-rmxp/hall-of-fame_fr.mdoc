@@ -1,0 +1,23 @@
+---
+title: Panthéon
+seoDescription: Comment lancer le Panthéon après la Ligue
+order: 0
+---
+
+Pour lancer l'animation du Panthéon et l'enregistrement de la victoire du joueur, une seule commande est nécessaire. Il vous suffit d'appeler la commande `hall_of_fame` dans votre événement, et PSDK s'occupera de tout. Il est d'ailleurs possible de donner des paramètres à cette commande.
+
+ 
+
+Prenons exemple sur cette façon d'écrire la commande :
+
+```text
+hall_of_fame('audio/bgm/hall_of_fame_alternatif', :league)
+```
+
+Ici, nous avons donné deux arguments à la commande :
+
+- Le premier correspond à la musique que vous voulez jouer. Par défaut, le fichier `audio/bgm/hall-of-fame.ogg` est celui qui sera joué si vous ne mettez aucun paramètre.
+- Le deuxième, `:league`, spécifie le mode dans lequel la victoire est enregistrée. S'il s'agit d'une victoire à la ligue Pokémon, il faudra marquer `:league`. Et s'il s'agit d'une victoire en mode "Défense du titre" (comme en 7G par exemple), il faudra marquer `:title_defense`. Assurez vous de bien écrire ces deux symboles, sans quoi les victoires pourraient ne pas être affichées dans les interfaces les exploitant. De même, si votre jeu comporte une autre façon de rentrer au Panthéon, il vous est tout à fait possible de marquer un autre symbole, exemple `:championship` si votre jeu comporte un tournoi. Cependant, il vous incombera la tâche de faire l'inclusion des victoires utilisant ce symbole dans vos interfaces.
+
+Voilà, vous pouvez maintenant profiter de l'animation du Panthéon. Assurez vous de flasher l'écran en noir après la commande du Panthéon, pour faciliter la transition vers les crédits de votre jeu.
+

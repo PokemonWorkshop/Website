@@ -1,0 +1,187 @@
+---
+title: Créer un combat de dresseur
+seoDescription: Going over how to make a trainer, in detail!
+order: 0
+---
+
+![Présentation d'un combat de dresseur dans Pokémon Umbra](./images/ruby_zrg3oilquq.gif)
+
+## Création d'un dresseur dans Pokémon Studio
+
+Tout d'abord, vous devez ouvrir le Pokémon Studio, aller dans l'onglet des dresseurs et cliquer sur le bouton "+ Nouveau dresseur" en haut à gauche.
+
+- Indiquez le nom du dresseur. Ce nom s'affiche lorsque le dresseur vous défie, lorsqu'il envoie ses Pokémon ou dans toute autre référence utilisée lors d'un combat.
+- Indiquez la classe du dresseur. Elle s'affiche également lorsque le dresseur vous défie et lorsque vous gagnez/perdez.
+- Sélectionnez le niveau de l'IA, c'est-à-dire le degré de difficulté de l'IA. Il y a 7 niveaux. Ils sont décrits plus bas.
+- **Si vous voulez un combat double,** changez le type de combat de "simple" à "double".
+- Laissez le combat scénarisé à 0 pour l'instant, c'est pour les dresseurs plus avancés.
+- Sélectionnez le sprite du dresseur. (Pokémon SDK fournit à l'utilisateur quelques graphismes de style XY, mais surtout des graphismes de style DP (génération 4). Ils se trouvent dans votre dossier graphics/battlers)
+  - **REMARQUE : Si vous n'utilisez que les sprites de génération 4, changez la variable 31 en 2. Si vous utilisez les sprites de style XY, laissez-la à 1. Le changement de variable doit être effectué dans RPG Maker XP.**
+
+- Sélectionnez l'argent de base, sous lequel s'affichera le montant réel gagné.
+
+Vous devriez maintenant obtenir quelque chose de similaire à ceci :
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+![Présentation de la moitié supérieure de l'écran "créer un dresseur"](./images/trainer-example.png)
+
+{% /column %}
+{% column %}
+![Présentation de la moitié inférieure de l'écran "créer un dresseur"](./images/trainer-example-2.png)
+
+{% /column %}
+{% /row %}
+
+Cliquez sur le bouton "Ajouter le dresseur" et passez à l'étape suivante !
+
+**REMARQUE :** Si vous souhaitez modifier les informations relatives au dresseur que nous venons de définir, vous pouvez le faire. Une fois que vous avez ajouté un dresseur, il vous suffit de cliquer sur la section supérieure qui contient la classe et le nom du dresseur.
+
+## Passage en revue rapide des niveaux de l'IA
+
+- Niveau 1 - Peut voir la puissance de base de leurs attaques et décider en fonction de cela (généralement utilisé par les jeunes dresseurs).
+- Niveau 2 - Identique au niveau précédent, peut en plus voir l'efficacité du type (typiquement le niveau des ornithologues)
+- Niveau 3 - Identique au niveau précédent, peut voir en plus la catégorie de l'attaque (spéciale / physique) (typiquement le niveau des marins)
+- Niveau 4 - Identique au niveau précédent, peut méga-évoluer, changer de Pokémon et utiliser des objets à l'exception des objets de guérison (généralement le niveau des croupiers).
+- Niveau 5 - Identique au précédent, peut choisir sa cible (typiquement le niveau "Boss").
+- Niveau 6 - Identique au précédent, peut utiliser des objets de guérison (typiquement le rival, champion d'arène, conseil des 4)
+- Niveau 7 - Identique au niveau précédent, peut lire les mouvements de l'adversaire (utilisateur) (généralement au niveau du maître de la Ligue Pokémon).
+
+## Attribution des données du dresseur
+
+![Affiche le dresseur nouvellement créé](./images/image_2023-02-18_180824246.png)
+
+Vous devriez maintenant voir un écran similaire à celui-ci. Si vous vous demandez comment afficher à la fois le sprite de style XY et le sprite de style génération 4, sélectionnez le sprite de style XY pour le "Image du dresseur" et ayez un sprite de dresseur dans votre dossier "battlers" avec le même nom (comme indiqué ci-dessous).
+
+**REMARQUE** : Pokémon SDK utilisera toujours qu'un seul de ces graphismes pour la transition de combat, en fonction de la valeur de votre variable 31.
+
+![Affichage des graphismes "XXX_big", "XXX_sma" et "xxx".](./images/image_2023-02-18_181102305.png)
+
+- Pour définir le dialogue du dresseur, il suffit de cliquer sur l'onglet " **Dialogues**" et de modifier les messages de victoire et de défaite. Le message "Victoire du dresseur" est affiché **lorsque le dresseur gagne**. Le message "Défaite du dresseur" est affiché **lorsque le dresseur perd**.
+- Pour définir l'équipe du dresseur, vous pouvez soit importer une équipe déjà existante, soit ajouter de nouveaux Pokémon un par un.
+- Pour ajouter un nouveau Pokémon, cliquez sur le bouton "Ajouter un Pokémon", tapez le nom du Pokémon et cliquez sur "Ajouter le Pokémon".
+- **Par défaut,** le Pokémon aura un talent disponible aléatoire, les 4 dernières attaques qu'il peut apprendre dans sa réserve d'apprentissage de niveau, une nature aléatoire, pas d'EV ni d'IV, et pas de surnom. Ces caractéristiques peuvent être modifiées en **cliquant sur le Pokémon en question dans l'onglet du groupe**.
+- Si vous voulez que le dresseur ait des objets, ajoutez-les dans son sac. **REMARQUE** : Seule l'IA \>= niveau 4 peut utiliser des objets, et les objets de soins seulement à partir du niveau 6 !
+
+Cliquez sur le bouton de sauvegarde dans le coin inférieur gauche de Studio, puis ouvrez votre projet dans RPG Maker XP.
+
+## Création d'un dresseur dans RPG Maker XP
+
+Il y a plusieurs façons de mettre en place un dresseur, mais nous allons en étudier deux. La première méthode sera la bonne vieille méthode "appuyez sur quelques boutons pour en terminer rapidement" (qui utilise simplement les boutons d'événements de RPG Maker XP), la seconde méthode consistera simplement à configurer le dresseur via une commande de script.
+
+[Il est également possible de créer un dresseur très avancé entièrement à l'aide d'un script (cela fera l'objet d'un autre tutoriel)](https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/%23%20Create%20Trainer%20With%20Script.md)
+
+**REMARQUE :** pour les deux méthodes, vous devez connaître **l'identifiant du dresseur** , qui se trouve dans Pokémon Studio (voir ci-dessous). Il s'agit d'une valeur dont vous devrez vous souvenir.
+
+![Montrer où se trouve l'identifiant du dresseur](./images/image_2023-02-18_190827930.png)
+
+## Facultatif : Détection des dresseurs (sera toujours la première page si elle est utilisée)
+
+Ceci est **UNIQUEMENT** nécessaire si vous voulez que l'événement s'active à quelques tuiles de distance. Il faut utiliser une fonction appelée "trainer\_spotted(x)" qui permet à l'événement de se déclencher si le dresseur passe devant leur champ de vision à une distance spécifiée de tuiles ! Ce n'est pas une exigence pour les dresseurs, **mais si vous voulez l'utiliser, vous devrez le faire sur la première page.**
+
+Régler le déclenchement de la première page en processus parallèle en utilisant simplement ceci dans la commande de l'événement (vous pouvez changer le 7, il s'agit de la distance de détection) :
+
+![](./images/image_2023-02-18_192048495.png)
+
+Assurez-vous que la page 2 contient le "Self Switch A" comme actif (ou celui que vous avez activé) et réglez son déclenchement sur "Autorun". Si vous voulez que le dresseur s'approche du joueur, ouvrez "extendtext.exe" dans le dossier racine de votre projet, et au début de la page 2, placez l'un de ces scripts avant d'appeler le combat :
+
+```text
+# Le dresseur s'approchera de vous et vous dira "Hello!".
+trainer_eye_sequence('Hello!')
+
+# Le dresseur s'approchera de vous, vous dira "Hello!" et changera le BGM (musique) lorsqu'il s'approchera.
+trainer_eye_sequence('Hello!', eye_bgm: 'audio/bgm/pkmrs-enc7')
+```
+
+## MÉTHODE 1 : Les boutons d'événements de RPG Maker XP
+
+C'est la méthode la plus simple, la plus sûre, mais aussi la plus limitée. Elle est conseillée pour la plupart des dresseurs.
+
+- Ouvrez un événement dans RPG Maker XP et cliquez sur "Control Variables..." à la page 1 des "Event Commands" et sélectionnez la variable 8.
+- Réglez la variable 8 sur l'identifiant du dresseur !
+- **OPTIONNEL** : Sélectionnez l'arrière-plan de combat en allant à la page 2, "Change Map Settings", et en réglant le "Battleback Graphic".
+- **OPTIONNEL**  **:** Sélectionnez le BGM (musique) de combat en allant à la page 1 et en sélectionnant le changement "Battle BGM" et en le sélectionnant.
+- Allez ensuite à la page 3 et cliquez sur "Battle Processing..."
+  - Sélectionner "Combat de dresseur"
+
+- **OPTIONNEL**  **:** Si vous le souhaitez, paramétrez le joueur pour qu'il ait la possibilité de fuir.
+- **OPTIONNEL**  **:** Si vous le souhaitez, vous pouvez faire en sorte que le jeu se poursuive lorsque vous perdez.
+- Définissez ce qui doit se passer lorsque le joueur gagne.
+- **OPTIONNEL**  **:** Si vous avez choisi de continuer lorsque vous perdez, vous pouvez modifier ce qui se passe lorsque le joueur perd !
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+![Affichage de la troisième page des boutons de commande d'événements de RPG Maker](./images/image_2023-02-18_185659586.png)
+
+{% /column %}
+{% column %}
+![Présentation de la fenêtre "Battle Processing" et de ses options](./images/image_2023-02-18_185712533.png)
+
+{% /column %}
+{% /row %}
+
+Félicitations, si vous avez suivi les explications précédentes, vous devriez avoir quelque chose de similaire à ceci :
+
+![Showing off how to make a trainer with RPGMaker's button commands](./images/image_2023-02-18_185641531.png)
+
+## MÉTHODE 2 : Une commande de script
+
+Cette méthode est essentiellement la même que la première. Elle est simple, infaillible, mais aussi assez limitée. Je la conseille si vous préférez utiliser des scripts plutôt que l'interface graphique.
+
+- **OPTIONNEL** : Sélectionnez l'arrière-plan de combat en allant à la page 2, "Change Map Settings", et en réglant le "Battleback Graphic".
+- Ouvrez un événement dans RPG Maker XP et cliquez sur "Script..." à la page 3 des "Event Commands"
+- Placez ceci dans votre script et remplacez la valeur par l'identifiant de votre dresseur
+
+```text
+# Changer 286 par l'identifiant de votre dresseur 
+start_trainer_battle(286)
+
+# Toutes les choses optionnelles qui DOIVENT être faites après start_trainer_battle mais dans la même commande de script :
+$game_temp.battle_can_lose = true
+```
+
+**REMARQUE** : Vous pouvez également changer le BGM (musique), ou même configurer des combats doubles et des combats doubles avec un allié de cette manière !
+
+```text
+# Pour définir un BGM spécifique :
+start_trainer_battle(286, bgm: 'pkmrb-battle3')
+
+# Pour configurer un combat double, changez 286 et 287 pour les identifiants des deux dresseurs :
+start_double_trainer_battle(286, 287)
+
+# Pour configurer un combat double avec un allié, changez 286 et 287 pour les identifiants des deux dresseurs ennemis et 289 pour l'identifiant de l'allié :
+start_double_trainer_battle_with_friend(286, 287, 289)
+```
+
+- **Si vous le réglez de façon à ce que le joueur puisse perdre,** mettez une branche conditionnelle sur l'interrupteur 37 pour vérifier s'il est sur ON. Si c'est le cas, vous avez gagné votre dernier combat ! S'il est OFF, c'est que vous avez perdu et que vous pouvez donc donner un comportement différemment.
+
+Félicitations, une fois cette étape franchie, vous devriez obtenir quelque chose comme ceci :
+
+![Showing off how to make a trainer with a script command](./images/image_2023-02-18_200211847.png)
+
+## Exemple final utilisant la détection et les commandes de scripts :
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+![](./images/image_2023-02-18_200700731.png)
+
+{% /column %}
+{% column %}
+![](./images/image_2023-02-18_200715858.png)
+
+{% /column %}
+{% /row %}
+
+## Exemple final utilisant la détection et les boutons d'événements
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+![](./images/image_2023-02-18_200700731.png)
+
+{% /column %}
+{% column %}
+![](./images/image_2023-02-18_201158607.png)
+
+{% /column %}
+{% /row %}
+

@@ -1,0 +1,41 @@
+---
+title: Edit Event attributes
+seoDescription: How to manage event attributes such as shadow, elevation offset etc...
+publishDate: '2022-09-02 21:00:00'
+order: 0
+---
+
+In PSDK the name of the event allows you to modify its attributes. This page details all of them.
+
+## Show an event without Shadow
+
+If you don't want shadow under an event, start its name by the following tag : `§`
+
+## Show an event on top of the player when it's at the same row
+
+If you'd like to perform the same effect as tileset priority 1 on an event start its name by the following tag : `¤`
+
+## Disable particles on an event
+
+Use the tag `[particle=off]` in the event name to disable particles on it.
+
+## Don't create a sprite for this event
+
+Use the tag `[sprite=off]` in the event name to prevent PSDK from generating a `Sprite_Character` object for this event.
+
+## Elevate an event
+
+To elevate an event (like birds) use the following tag `[offset_y={y}]` in its name. Replace `{y}` by the number of pixel on a 32x32 grid (2 = 1px to the bottom, -2 = 1px to the top).
+
+## Set page 1 appearance to all other pages
+
+To set the page 1 appearance to all the other pages of the event, put the following character in event name : `$`. This saves a lot of Making time.
+
+## Create an invisible item
+
+To make an event act like an invisible item, put the following tag in its name : `invisible_`.
+
+## Create a swimmer
+
+To allow an event to walk in water & not ground like swimmer, put this tag in its name : `surf_`
+

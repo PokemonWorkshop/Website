@@ -1,0 +1,69 @@
+---
+title: Lâcher un Pokémon errant
+seoDescription: Comment lâcher un Pokémon errant
+order: 0
+---
+
+PSDK intègre un système permettant d'avoir des Pokémon fuyards. Ce système utilise un `Proc` pour savoir si le Pokémon se trouve dans la map dans laquelle le héros est tout juste rentré.
+
+## Définir le Proc de présence du Pokémon fuyard
+
+Chacun des Proc de présence du Pokémon fuyard sont stockés dans `PFM::Wild_RoamingInfo::RoamingProcs`. Cette constante est un tableau qui associe `proc_id` (un nombre entier) à un Proc.
+
+La définition d'un nouveau Proc doit être ajoutée en tant que custom script dans le dossier /scripts.
+
+Voici un example de définition :
+
+```text
+PFM::Wild_RoamingInfo::RoamingProcs[proc_id] = proc do |infos|
+    # Pokémon défini pour les hautes herbes
+    infos.zone_type = 1
+    # Avec le terrain tag 0 (tileset RMXP)
+    infos.tag = 0
+    # On assigne une nouvelle map aléatoirement
+    maps = [25, 46, 35, 27]
+    if (infos.map_id == $game_map.map_id && infos.spotted) || infos.map_id == -1
+      infos.map_id = (maps - [infos.map_id]).sample
+      infos.spotted = false
+    end
+end
+```
+
+La condition est découpée en deux parties :
+
+- `infos.map_id == -1`qui permet de forcer l'assignement d'une map au fuyard s'il n'en a pas
+- `infos.map_id == $game_map.map_id && infos.spotted`qui permet au fuyard de changer de map uniquement s'il a été vu sur la map où le joueur de trouve.
+
+Cette condition peut être customisée, par exemple :
+
+```text
+if infos.map_id != $game_map.map_id || infos.spotted || infos.map_id == -1
+    infos.map_id = (maps - [infos.map_id]).sample
+    infos.spotted = false
+end
+```
+
+Fera changer le fuyard de map s'il n'est pas sur la map où je joueur se trouve ou s'il a été vu par le joueur. (Bien entendu il changera également de map s'il n'a pas de map assigné).
+
+## Lâcher le Pokémon Fuyard
+
+Dans une évènement vous entrerez la commande suivante pour lâcher le Pokémon Fuyard :
+
+```text
+$wild_battle.add_roaming_pokemon(chance, proc_id, pokemon_hash)
+```
+
+Les paramètres de cette commande sont :
+
+- `chance`le dénominateur de chance (par exemple 2 équivaut à une chance sur deux de le rencontrer en marchant dans le tile approprié).
+- `proc_id`l'id du proc qui défini la map dans laquelle le Pokémon se trouve (même nombre que plus haut)
+- `pokemon_hash`est le même paramètre qu'envoyé à[`PFM::Pokemon.generate_from_hash`](https://psdk.pokemonworkshop.fr/yard/PFM/Pokemon.html#generate_from_hash-class_method)
+
+Exemple :
+
+```text
+$wild_battle.add_roaming_pokemon(5, 0, id: 151, level: 20)
+```
+
+Cette commande relâche un Mew niveau `20` avec une chance sur `5` de rencontrer le Pokémon dans les hautes herbes selon le proc\_id `0`.
+

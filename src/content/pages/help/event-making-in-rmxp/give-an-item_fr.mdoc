@@ -1,0 +1,152 @@
+---
+title: Donner un objet
+seoDescription: Comment donner un objet au joueur dans RMXP pour Pokémon SDK
+order: 0
+---
+
+## Donner un objet depuis un évènement
+
+### Commandes
+
+Pour donner un objet depuis un évènement vous pouvez utiliser la commande générale:
+
+```text
+add_item(id, no_delete)
+```
+
+Les paramètres sont :
+
+- `id`: ID de l'objet (champ # ou db\_symbol de [Liste des objets](https://psdk.pokemonworkshop.com/db/db_item.html)).
+- `no_delete`: Indique si l'évènement doit être supprimé définitivement ou non (par défaut l'évènement est supprimé).
+
+Cependant, il existe également des commandes plus spécifiques à certains types d'actions :
+
+ 
+
+Pour ramasser des objets au sol :
+
+```text
+pick_item(item_id, count, no_delete)
+```
+
+Les paramètres sont :
+
+- `item_id`: ID de l'objet (champ # ou db\_symbol de [Liste des objets](https://psdk.pokemonworkshop.com/db/db_item.html))
+- `count`: le nombre d'objets (optionnel, par défaut à 1)
+- `no_delete`: Indique si l'évènement doit être supprimé définitivement ou non (par défaut il sera supprimé).
+
+Pour donner un objet via un PNJ :
+
+```text
+give_item(item_id, count)
+```
+
+Les paramètres sont :
+
+- `item_id`: ID de l'objet (champ # ou db\_symbol de [Liste des objets](https://psdk.pokemonworkshop.com/db/db_item.html))
+- `count`: le nombre d'objet (optionnel, par défaut à 1)
+
+### Exemples
+
+Objet au sol qui donne une potion :
+
+```text
+pick_item(:potion)
+```
+
+ou
+
+```text
+pick_item(17)
+```
+
+Personnage qui donne une CT : (Qui ne doit donc pas être supprimé)
+
+```text
+give_item(:tm01, true)
+```
+
+ou
+
+```text
+give_item(328, true)
+```
+
+## Ajouter un objet de manière silencieuse
+
+### Commande
+
+Il est possible d'ajouter un objet dans le sac de manière silencieuse :
+
+```text
+$bag.add_item(id, quantity)
+```
+
+Les paramètres sont :
+
+- `id`: ID de l'objet (champ # ou db\_symbol de [Liste des objets](https://psdk.pokemonworkshop.com/db/db_item.html)).
+- `quantity`: Le nombre d'objets à donner.
+
+### Exemples
+
+Ajouter 5 potions :
+
+```text
+$bag.add_item(:potion, 5)
+```
+
+ou
+
+```text
+$bag.add_item(17, 5)
+```
+
+## Retirer un objet
+
+### Commande
+
+Pour retirer un objet, il suffit d'utiliser la commande :
+
+```text
+$bag.drop_item(id, quantity)
+```
+
+Les paramètres sont :
+
+- `id`: ID de l'objet (champ # ou db\_symbol de [Liste des objets](https://psdk.pokemonworkshop.com/db/db_item.html)).
+- `quantity`: Le nombre d'objets à retirer.
+
+### Exemples
+
+Retirer une potion :
+
+```text
+$bag.drop_item(:potion, 1)
+```
+
+ou
+
+```text
+$bag.drop_item(17, 1)
+```
+
+## Savoir si le joueur possède un objet
+
+Pour savoir si le joueur possède un objet en particulier dans son sac, utilisez la commande :
+
+```text
+$bag.has_item?(id)
+```
+
+Le paramètre `id` est l'ID de l'objet qui doit être présent dans le sac.
+
+## Connaitre la quantité d'un objet que le joueur possède
+
+Pour connaître la quantité exacte d'un objet dans le sac utilisez la commande suivante :
+
+```text
+quantite = $bag.item_quantity(id)
+```
+
+Le paramètre `id` est l'ID de l'objet dont vous voulez connaître la quantité.
+

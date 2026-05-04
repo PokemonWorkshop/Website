@@ -1,0 +1,114 @@
+---
+title: Mining Game
+seoDescription: How to start the mining game and reveal items like evolve stone
+publishDate: '2022-09-02 21:15:00'
+order: 0
+---
+
+This tutorial will give everything needed to successfully launch and operate the Mining Game system. It'll include the way to launch the mini-game, setup the number OR the list of item(s) to find, and of course how to add new items to the system. You will even be able to easily customize the music played during the mini-game. Finally, this tutorial will talk about the little secondary features which may be useful to you.
+
+## Launch the Mining Game
+
+To launch the Mining Game, you only need one command. You simply need to call the command `mining_game` in your event and PSDK will handle everything (your player will have to possess the Explorer Kit in order for the Mining Game to begin). It's also possible to give parameters to this command. Two routes exist: the first one is to give a number as the parameter, while the second is an array containing the wanted items. The next chapters will show how this is done.
+
+### First Route: Pick the number of items to be dug up.
+
+Let's see an example on how to write this command:
+
+```ruby
+mining_game(4, 'audio/bgm/alternate_music', delete_after: false)
+```
+
+Here, we gave it three arguments:
+
+- The first part is a number included between 2 and 5. It tells the system the specific number of random items it should generate. If you put a lower number than 2 or a higher number than 5, the system will only take the lowest or highest number of the aforementioned interval. Make sure to put the right number if you don't want any surprises.
+- The second part corresponds to the music you want to play. By default, the file`audio/bgm/mining_game.ogg`is the music which will be played if you don't put any parameter. This parameter is optional, so for clarity of your event only insert it if you plan on changing the music.
+- The third part is optional too. It indicates to the system if the event should be deleted forever after mining it. If 'false' is chosen, you'll have to make sure it is deleted one way or another. (Its default value is true)
+
+### Second Route: Tell the item(s) you want
+
+This specific way is useful in some cases: for example, you can create some types of events in which the player must retrieve a special object in the Mining Game. You can then check if the player did find the item and delete the event accordingly. Let's see how we can tell the system what we want:
+
+```ruby
+mining_game([:fire_stone, :claw_fossil, :yellow_shard])
+```
+
+Here, we have only one argument:
+
+- `[:fire_stone, :claw_fossil, :yellow_shard]`means you're sending an array containing the exact items you want in that specific instance of the Mining Game. Here, you are telling the system you want a Fire Stone, a Claw Fossil and a Yellow Shard. Using this way, you are limited between 1 and 5 items. To write this argument correctly, you have to write the db\_symbol of the wanted item inside a`[]`and separated by comma (only if you're writing more than one db\_symbol).
+- Please note that here, the second AND third argument are not forwarded to the system. As mentioned before, they are optional and only serve the purpose of changing the music for THIS SINGLE instance and tell the system if the event must be deleted forever at the end of this instance or not (in this case, the default music will play and the event will be deleted forever at the end of the mini-game).
+
+So, for example, if you want to launch a game with the four primary evolutionary stones, you'll have to write this : `mining_game([:fire_stone, :water_stone, :leaf_stone, :thunder_stone])`
+
+## Change the "Do you want to mine that?" texts
+
+The system possesses two different texts concerning the "Do you want to mine that?". By default, the system will assume your event is a wall (in D/P/Pl you mine in wall) and so the message displayed will concern mining into a wall. But, it is possible, by changing the name of your event, to change the text displayed. To do that, you just have to rename your event `miningrock`. That's all there is to it.
+
+## Add new items to the Mining Game
+
+In this section, we'll talk about how you can add your own items in the Mining Game database. First, we'll talk about how your resource should be, then we'll talk about how to script it in the database (it's really easy, you'll see).
+
+### Create the resource for the item
+
+First, before creating your resource, you need to know some things: the system uses resources based on a 16x16 grid and the system itself does NOT detect if the image is placed correctly in the grid or not. It'll be your job to do it right. Now, let's see an example:
+
+![PlaceItemInGrid](https://image.communityscriptproject.com/psdkwiki/img/event_making/PlaceItemInGrid.png)
+
+As you can see, the item is placed within a grid of 16x16 squares. The image's width and heigth should consequently be divisible by 16. Please make sure you respect this.
+
+### Create an entry for an item in the Mining Game database
+
+Now that we have the needed image we can insert your item into the Mining Game. To that end, you'll have to create a new script in the scripts folder of your project. If you don't know how to do that, we suggest you check the following video tutorial (with subtitles because nobody translated it...): [How to program under Pokémon Studio on Youtube](https://www.youtube.com/watch?v=E9zYkR_3rbM)
+
+Create a new script in your scripts folder, name it how you want as long as it respects the norm described in the linked tutorial, then paste this in it:
+
+```ruby
+module GameData
+  module MiningGame
+    register_item(:your_item, 20, [[x,x,x],[x,x,x],[x,x,o]], 3)
+  end
+end
+```
+
+Here, 4 arguments are ABSOLUTELY necessary, let's explain each one of those:
+
+- `:your_item`here is the db\_symbol of your item. Pretty explicit. Change it by the db\_symbol of your item in the PSDK database.
+- `20` is the probability of the item to spawn. Its chances are the number put as argument divided by the total of every probability number of every item. You can check the actual percentage in the GameData\_MiningGame script.
+- `[[x,x,x],[x,x,x],[x,x,o]]` is the layout of your item, its pattern. Here is an image to further explain how it works.
+
+![GoodGrid](https://image.communityscriptproject.com/psdkwiki/img/event_making/GoodGrid.png)
+
+As you can see, the red squares indicate where your item exists in the pattern (signified in the argument as a `x` ) while green squares indicate that your item does not exist in that square (signified in the argument by a `o` ). To write the pattern correctly, first write the first [], then inside it write one new [] per line. In the case of that image, the pattern will be the following: `[[o,x,x,x,o],[o,x,x,x,o],[x,x,x,x,x],[o,x,x,x,o]]`
+
+- `3` is the number of allowed rotation, and must be between 0 and 3 included. 0 means no rotation, 1 means a 90° rotation, 2 means a 180° one and 3 means a 270° one. You don't need to set up a pattern for each rotation; the system calculates it itself.
+
+### Create an entry for an iron (obstacle) in the Mining Game database
+
+Creating an iron in the Mining Game database follows the same logic as for the items, just for one difference. Instead of copying the code given in the previous chapter, please copy this one.
+
+```ruby
+module GameData
+  module MiningGame
+    register_iron(:your_iron, 20, [[x,x,x],[x,x,x],[x,x,o]], 3)
+  end
+end
+```
+
+Here, the arguments are the same, unless for the first: now, you have to put the symbol corresponding to the name of the image of your iron.
+
+## Unlock the dynamite, access the statistics for the Mining Game and activate the Hard mode
+
+Yes, you read that right: PSDK's Mining Game has dynamite, statistics AND a Hard mode. Some commands are available for you to access everything. Here is a list:
+
+- `$pokemon_party.mining_game.dynamite_unlocked = true` activates the dynamite. Replacing true by false will deactivate it again. (The dynamite is locked by default.)
+- `$pokemon_party.mining_game.nb_items_dug` will return the number of time an item was dug
+- `$pokemon_party.mining_game.nb_game_launched` will return the number of time the mini-game was launched
+- `$pokemon_party.mining_game.nb_game_success` will return the number of time the mini-game was won
+- `$pokemon_party.mining_game.nb_game_failed` will return the number of time the mini-game was failed
+- `$pokemon_party.mining_game.nb_pickaxe_hit` will return the number of time the pickaxe was used
+- `$pokemon_party.mining_game.nb_mace_hit` will return the number of time the mace was used
+- `$pokemon_party.mining_game.nb_dynamite_hit` will return the number of time the dynamite was used
+- `$pokemon_party.mining_game.hard_mode = true` activates the Hard mode (change how the squares to hit are generated). Replacing true by false will deactivate it again. (At false by default.)
+
+Here is everything you need to know about the Mining Game! Have fun with it, and good luck mining!
+

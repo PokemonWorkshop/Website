@@ -1,0 +1,68 @@
+---
+title: How to prevent selecting a move?
+seoDescription: A quick tutorial explaining how to prevent selecting a move with Pokémon
+  SDK
+publishDate: '2024-02-15 20:34:00'
+order: 0
+---
+
+## What are the ways to prevent the selection of a move?
+
+Selecting a move is a process stemming from your choice of action at the beginning of the turn. If there is a reason why the move cannot be selected, then the functions related to blocking must return a `proc` instead of `nil`, and within this `proc`, indicate the reason for the blockage with a message.
+
+### From the code of the move itself
+
+Some moves cannot be selected because of how they work. For example, it is not possible to select **Stuff Cheeks** if the user does not have a berry. To do this, there is a method in the move: `disable_reason` which must return a `proc` if the user is not holding a berry.
+
+#### Example with "Stuff Cheeks"
+
+![Code de Gardes-à-Joues](./images/gardesajoues.png)
+
+Note: If you wish to learn more about `disable_reason`, please go to the section [Understanding the disable\_reason](#heading_function-disable-reason "Understanding the disable\_reason") function at the end of the article.
+
+### From the code of an effect
+
+Effects expose a function that allows returning a proc when `disable_reason` is invoked. This method is called `on_move_disabled_check`. The operation is similar to `disable_reason`, if you return a proc, then the move cannot be selected. This is useful for creating effects (ability, item, effects of move etc.) that prevent a Pokemon from being able to select a move.
+
+#### Example with the effect of the move "Throat Chop"
+
+![Code de l'effet d'Éxécu-Son](./images/execuson.png)
+
+## Understanding the disable_reason function {% id="function-disable-reason" %}
+
+![Code de disable_reason](./images/fonction.png)
+
+What particularly interests us in this function:
+
+- `exec_hooks(Move, :move_disabled_check, binding)`
+
+`exec_hooks`: This is a method that is called to execute a series of **Hooks**. **Hooks** are functions or procedures that are triggered in response to certain events or conditions in the program. They allow modifying the standard behavior of a function or adding additional functionalities without changing the original code of the function.
+
+`Move`: This first argument specifies the context or scope of application of the **Hooks** to be executed. Here, **Move** indicates that the **Hooks** pertain to Pokémon abilities. **Move** represents the class that groups together the **Hooks** related to abilities.
+
+`:move_disabled_check`: The second argument is a symbol that specifically identifies the **Hooks** to be executed. In this case, `:move_disabled_check` refers to a set of **Hooks** designed to check if the Pokémon user can select a certain move. These **Hooks** can include checks for conditions such as field effects, abilities, items, etc., that might prevent the move selection. (examples: the effect of Gravity, Gorilla Tactics, Choice Scarf)
+
+`binding`: The third argument, **binding** , is a bit more complex. In Ruby, a **binding** is an object that encapsulates the execution context of a piece of code, including local variables, available methods, the value of **self** , etc. Passing **binding** to `exec_hooks` thus allows the **Hooks** to access the context in which `exec_hooks` was called. This means they can read and modify local variables, call methods, and so on, as if they were part of the original code of the method `move_disabled_check`.
+
+### Understanding the procedure of the function disable_reason
+
+**Hook Call**
+
+When `exec_hooks(Move, :move_disabled_check, binding)` is executed, it searches for and executes all the **Hooks** associated with the event or condition `:move_disabled_check` in the context of abilities ( **Move** ).
+
+**Management of the value returned by the Hook**
+
+If none of the executed **Hooks** raises a `Hooks::ForceReturn` exception, the function `move_disabled_check` continues its execution normally and reaches the `return nil` at the end, indicating that the move is selected.
+
+However, if a **Hook** decides that the move should not be used and returns a proc (either directly or via an exception such as `Hooks::ForceReturn` with `e.data` containing the `proc`), the execution flow of `move_disabled_check` is interrupted, and it returns the `proc` to its caller.
+
+**Consequences of returning the proc**
+
+The return of the `proc` means that something has prevented the selection of the move. This could be due to various game-specific reasons, such as field effects, abilities, items, etc...
+
+The calling function or method that invoked `move_disabled_check` must then handle this proc to decide on the subsequent actions. For example, this may result in displaying a message to the user indicating that the move cannot be selected.
+
+**Necessity of another function**
+
+This function and its associated **Hook** are used to prevent the execution of an move. However, it is possible that some effects, such as **Metronome** , bypass this function. Therefore, it is essential to manage this situation in a `move_usable_by_user` or its associated **Hook** , especially when intervening in an effect, as illustrated in the previous examples.
+

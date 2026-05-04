@@ -1,0 +1,211 @@
+---
+title: Pokémon SDK Battle Weather effect class Overview
+seoDescription: Everything you need to know about weather effects in Pokémon SDK,
+  including how to create one yourself.
+tags:
+- PSDK
+publishDate: '2025-09-08 17:19:00'
+order: 0
+---
+
+The&nbsp;`Battle::Effects::Weather`&nbsp;class within the&nbsp;`Battle`&nbsp;module is designed to manage various weather effects during battles in a game. It inherits from&nbsp;`EffectBase`&nbsp;and includes several subclasses representing different types of weather conditions such as fog, hail, hard rain, hardsun, rain, sandstorm, snow, strong winds, and sunny. Each subclass implements specific behaviors associated with its corresponding weather condition.
+
+`Battle::Effects::Weather` is found in [scripts/5 Battle/06 Effects/06 Weather Effects/001 WeatherBase.rb](https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/scripts/5%20Battle/06%20Effects/06%20Weather%20Effects/001%20WeatherBase.rb?ref_type=heads).
+
+## Class Attributes
+
+`Weather` has an attribute reader&nbsp;`@db_symbol`&nbsp;which stores the database symbol of the weather effect.
+
+```ruby
+attr_reader :db_symbol
+@registered_weathers = {}
+```
+
+## Methods
+
+`initialize` : The constructor (`initialize`) takes a&nbsp;`logic`&nbsp;parameter (an instance of&nbsp;`Battle::Logic`) and a&nbsp;`db_symbol`&nbsp;parameter (a symbol representing the weather effect).
+
+```ruby
+# Create a new weather effect
+# @param logic [Battle::Logic]
+# @param db_symbol [Symbol] db_symbol of the weather
+def initialize(logic, db_symbol)
+  super(logic)
+  @db_symbol = db_symbol
+end
+```
+
+`register` : allows registering new weather effects by associating a&nbsp;`db_symbol`&nbsp;with a class (`klass`) that represents the weather effect.
+
+```ruby
+class << self
+  # Register a new weather
+  # @param db_symbol [Symbol] db_symbol of the weather
+  # @param klass [Class<Weather>] class of the weather effect
+  def register(db_symbol, klass)
+    @registered_weathers[db_symbol] = klass
+  end
+```
+
+**Instantiation** : Another class method&nbsp;`new`&nbsp;creates instances of registered weather effects based on the provided&nbsp;`db_symbol`.
+
+```ruby
+# Create a new Weather effect
+# @param logic [Battle::Logic]
+# @param db_symbol [Symbol] db_symbol of the weather
+# @return [Weather]
+def new(logic, db_symbol)
+  klass = @registered_weathers[db_symbol] || Weather
+  object = klass.allocate
+  object.send(:initialize, logic, db_symbol)
+  return object
+end
+```
+
+## Sub-classes
+
+Each subclass of&nbsp;`Weather`&nbsp;overrides methods to implement unique behaviors:
+
+### Fog
+
+Inherits from `Weather` implements&nbsp;`on_end_turn_event`&nbsp;to decrease weather duration and change the weather to none if certain conditions are met.
+
+{% row columns="1/1" bottom_margin="margin-xl" %}
+{% column %}
+{% cta href="https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/scripts/5%20Battle/06%20Effects/06%20Weather%20Effects/100%20Fog.rb?ref_type=heads" %}See the Fog subclass on the Pokémon SDK code repository{% /cta %}
+
+{% /column %}
+{% /row %}
+
+### Hail
+
+Inherits from `Weather`. Similar to Fog but also checks for hail damage immunity and applies damage to non-immune battlers. It defines constants for abilities and items that block hail damage.
+
+{% row columns="1/1" bottom_margin="margin-xl" %}
+{% column %}
+{% cta href="https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/scripts/5%20Battle/06%20Effects/06%20Weather%20Effects/100%20Hail.rb?ref_type=heads" %}See the Hail subclass on the Pokémon SDK code repository{% /cta %}
+
+{% /column %}
+{% /row %}
+
+### Hardrain
+
+Inherits from `Weather`. Overrides&nbsp;`on_end_turn_event`_,_ `on_move_prevention_target`, `on_weather_prevention` and `mod1_multiplier`&nbsp;to affect moves and prevent certain weather changes.
+
+{% row columns="1/1" bottom_margin="margin-xl" %}
+{% column %}
+{% cta href="https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/scripts/5%20Battle/06%20Effects/06%20Weather%20Effects/100%20Hardrain.rb?ref_type=heads" %}See the Hardrain subclass on the Pokémon SDK code repository{% /cta %}
+
+{% /column %}
+{% /row %}
+
+### Hardsun
+
+Inherits from `Weather`. Similar to `Hardrain` but affects fire and water-type moves differently.
+
+{% row columns="1/1" bottom_margin="margin-xl" %}
+{% column %}
+{% cta href="https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/scripts/5%20Battle/06%20Effects/06%20Weather%20Effects/100%20Hardsun.rb?ref_type=heads" %}See the Hardsun subclass on the Pokémon SDK code repository{% /cta %}
+
+{% /column %}
+{% /row %}
+
+### Rain
+
+Inherits from `Weather`. Decreases weather duration and modifies move multipliers for fire and water-type moves.
+
+{% row columns="1/1" bottom_margin="margin-xl" %}
+{% column %}
+{% cta href="https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/scripts/5%20Battle/06%20Effects/06%20Weather%20Effects/100%20Rain.rb?ref_type=heads" %}See the Rain subclass on the Pokémon SDK code repository{% /cta %}
+
+{% /column %}
+{% /row %}
+
+### Sandstorm
+
+Inherits from `Weather`. Checks for sandstorm damage immunity and applies damage to non-immune battlers. Also modifies special defense multipliers.
+
+{% row columns="1/1" bottom_margin="margin-xl" %}
+{% column %}
+{% cta href="https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/scripts/5%20Battle/06%20Effects/06%20Weather%20Effects/100%20Sandstorm.rb?ref_type=heads" %}See the Sandstorm subclass on the Pokémon SDK code repository{% /cta %}
+
+{% /column %}
+{% /row %}
+
+### Snow
+
+Inherits from `Weather`. Similar to Sandstorm but specifically for snowy conditions.
+
+{% row columns="1/1" bottom_margin="margin-xl" %}
+{% column %}
+{% cta href="https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/scripts/5%20Battle/06%20Effects/06%20Weather%20Effects/100%20Snow.rb?ref_type=heads" %}See the Snow subclass on the Pokémon SDK code repository{% /cta %}
+
+{% /column %}
+{% /row %}
+
+### StrongWinds
+
+Inherits from `Weather`. Affects flying-type Pokémon and modifies type effectiveness under certain conditions.
+
+{% row columns="1/1" bottom_margin="margin-xl" %}
+{% column %}
+{% cta href="https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/scripts/5%20Battle/06%20Effects/06%20Weather%20Effects/100%20StrongWinds.rb?ref_type=heads" %}See the StrongWinds subclass on the Pokémon SDK code repository{% /cta %}
+
+{% /column %}
+{% /row %}
+
+### Sunny
+
+Inherits from `Weather`. Decreases weather duration and modifies move multipliers for fire and water-type moves.
+
+{% row columns="1/1" bottom_margin="margin-xl" %}
+{% column %}
+{% cta href="https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/scripts/5%20Battle/06%20Effects/06%20Weather%20Effects/100%20Sunny.rb?ref_type=heads" %}See the Sunny subclass on the Pokémon SDK code repository{% /cta %}
+
+{% /column %}
+{% /row %}
+
+## Creating a Custom Battle Weather Effect
+
+Create a monkey patch that extends Battle::Effects::Weather. The custom weather condition class must inherit from `Weather` .
+
+Example: Dragon Fog (created in`00100_DragonFog.rb`)
+
+```ruby
+module Battle
+  module Effects
+    class Weather
+      class DragonFog < Weather
+        # Function called at the end of a turn
+        # @param logic [Battle::Logic] logic of the battle
+        # @param scene [Battle::Scene] battle scene
+        # @param battlers [Array<PFM::PokemonBattler>] all alive battlers
+        def on_end_turn_event(logic, scene, battlers)
+          if $env.decrease_weather_duration
+            # Displays The Dragon Fog has lifted!
+            scene.display_message_and_wait(parse_text(69, 07)) 
+            logic.weather_change_handler.weather_change(:none, 0)
+          else
+            # Displays "The air is filled with thick Dragon Fog!"
+            scene.display_message_and_wait(parse_text(69, 06))
+          end
+        end
+
+        # Give the move mod1 mutiplier (before the +2 in the formula)
+        # @param user [PFM::PokemonBattler] user of the move
+        # @param target [PFM::PokemonBattler] target of the move
+        # @param move [Battle::Move] move
+        # @return [Float, Integer] multiplier
+        def mod1_multiplier(user, target, move)
+          return 0.5 if move.type_fairy?
+          return 1.5 if move.type_dragon?
+
+          return 1
+        end
+      end
+      register(:dragon_fog, DragonFog)
+    end
+  end
+end
+```
+

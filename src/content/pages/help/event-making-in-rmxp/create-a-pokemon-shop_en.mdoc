@@ -1,0 +1,108 @@
+---
+title: Create a Pokemon shop
+seoDescription: How to create a shop of Pokémon in RPG Maker XP
+publishDate: '2022-09-02 18:55:00'
+order: 0
+---
+
+![Shop UI](https://image.communityscriptproject.com/psdkwiki/img/pokemon_shop_ui_en.png)
+
+For starters, it's important to note that, as the Shop, the Pokemon Shop will not accept selling Pokemon with a price inferior or equal to 0. Moreover, there are also two types of Pokemon Shop which can be opened.
+
+## Open an unlimited shop
+
+There is only a way to open an unlimited shop which you have to respect otherwise your shop won't be able to work :
+
+### Using a script command
+
+This method requires that you use the `pokemon_shop_open` script command, in order to open a Shop whose the prices are declared at the beginning (Pokemon don't have prices in the database, therefore you MUST give them one). This commands requires three mandatory and an optional parameter (which can disable the background) which we will detail later.
+
+ 
+
+The first parameter initializes the Pokemon list of the Shop, which can be an array of ID or a Symbol (we are going to see it later, with limited Pokemon Shops). The second parameter is an Array or a Hash, to define or redefine Pokemon price. The third parameter can only be an Array and gives all specific information about selled Pokemon. To top it all, the fourth parameter has to be called in the method and must be a Boolean(true or false), in order to turn on or off the animated background of the interface of the shop.
+
+ 
+
+Here's an example we'll analyze together :
+
+```text
+pokemon_shop_open([4, 17, 22, 50], [2500, 5000, 10000, 0], [5, 50, 30, {level: 100, shiny: true}], show_background: true)
+```
+
+The first parameter is `[4, 17, 22, 50]`. It tells the shop it will sell : Charmander, Pidgeotto, Fearow and Diglett.
+
+The second parameter is `[2500, 5000, 10000, 0]`. It tells the shop the Pokemon prices. In this case, Charmander costs 2500 Pokedollars, Pidgeotto costs 5000 P$, Fearow costs 10000 P$ and Diglett won't be selled since its price is set to 0. If you remove this price, Diglett won't have price and won't be selled too, it has the same effect. Keep this in mind : A Pokemon = a price.
+
+The third parameter corresponds to `[5, 50, 30, {level: 100, shiny: true}]` and is NECESSARY (you have to add one parameter per Pokemon added in the Shop). It tells the shop the necessary datas to create Pokemon. There are two cases : first case, you put only a number =\> it'll correspond to the Pokemon level; second case, you give a Hash which gives precise information about the Pokemon. Here, the shop will sell Level 5 Charmanders, level 50 Pidgeottos,level 30 Fearows, and level 100 Digletts, necessarily shinies (unless the price is set to 0, which is the case here :b)
+
+The fourth parameter is `show_background: true` and is optional. Its default value is true. As such, we could as well not have mentioned it in the command. It tells the shop it should use an animated background. True to enable, false to disable.
+
+The syntax really is important. The first three parameters are incased in [], and the fourth is "show\_background: " followed by its boolean value.
+
+## Open a limited shop
+
+### Creation of the stock of the shop
+
+To open a limited shop, you'll first need to create a shop with the list of available Pokemon and their quantities. You'll need to that end the script command `add_new_pokemon_shop`. It takes four mandatory parameters and two optional ones. Let's analyze this with an example.
+
+```text
+add_new_pokemon_shop(:pkm_shop_celadon, [1, 2, 3], [1250, 2500, 5000], [5, 16, {level: 36, shiny: true}], [3, 2, 1], shop_rewrite: false)
+```
+
+I admit, this command is scary. It will be less scary after analyzing it. The first parameter is `:pkm_shop_celadon` and is required. It gives a "name" to your shop, which will serve later as an id for another command.
+
+The three following parameters exactly correspond to previous parameters evoqued in the unlimited shop part. Hence, using 2, 3 et 4 parameters, we get this piece of information : the shop will sell Lv. 5 Bulbasaurs costing 1250 P$, Lv.16 Ivysaur costing 2500 P$, and Lv.36 Shiny Venusaur costing 5000 P$.
+
+Concerning the fifth parameter, it is optional. It concerns this command part : `[3, 2, 1]` and tells to the shop that it can sell 3 Bulbasaur, 2 Ivysaur and a Venusaur. If the Array doesn't include enough entries or if there isn't Array, the shop will have, by default, only one Pokemon of each Pokemon that were sent as a parameter.
+
+The sixth one corresponds to `shop_rewrite: false` and is optional. It tells if the command has to replace the existing shop or not when you are creating the shop. Thus, if `:pkm_shop_celadon` already exists, a true value will erase the old one by the new one, a false value will add Pokemon to the existing shop.
+
+### Replenish the stock of Pokemon in a shop
+
+As said earlier, you could use the `add_new_pokemon_shop` script command to add Pokemon to your shop. Or you could use the ad hoc command, `add_pokemon_to_shop`. This command has the exact same first five parameters as `add_new_pokemon_shop` and a sixth one `pkm_rewrite: false`. This parameter is associated to a particularity of the method which we'll explain just now.
+
+Let's admit that the shop we want to restock already has Pokemon and we want to add Pokemon in it. In this shop, there are Meowth and Alolan Meowth selled (since it's possible to have different forms from an identical Pokemon in a shop). There are two cases :
+
+- pkm\_rewrite: false -\> We add the Pokemon number given in parameter, without using parameter about Pokemon information.
+- pkm\_rewrite: true -\> We will rewrite species information about this Pokemon. Remember that the system thinks that Pokemon forms are totally different, and if you didn't give the Pokemon form in your parameters, the system will automatically target the one for which the form is equal to 0.
+
+Hence, it's impossible to have several instances of a same Meowth in the same shop, it can only have one instance of form 0 Meowth, one instance of form 1 Meowth (Alolan) etc. Keep this in mind.
+
+### Deplete the stock of a Pokemon / remove a Pokemon from a shop
+
+To reduce the available Pokemon of an item or to remove that Pokemon entirely, only one command : `remove_pokemon_from_shop`.
+
+ 
+
+This command has the same parameters as the stock adding one with two or three exceptions : you don't have to put a price parameter, and parameters about Pokemon infos and quantity to remove are optional. If there isn't any piece of information, the Pokemon form 0 will be automatically chosen, and if the quantity isn't defined, the shop will remove all Pokemon according to the parameters. If it is, it'll remove the Pokemon amount in the Array.
+
+ 
+
+Example :
+
+```text
+remove_pokemon_from_shop(:pkm_shop_celadon, [1, 2, 3], [{ form: 0 }, {form : 0}, {form: 1}], [1, 3, 10])
+```
+
+This command will remove 1 form 0 Bulbasaur, 3 form 0 Ivysaur, 10 form 1 Venusaur (if they exist). Note that if the quantity parameter isn't given, the Pokemon will be totally removed from the shop.
+
+### Open the limited shop
+
+Now that the stock of the shop has been created, it's time to open it. And you only need to use the aforementioned `pokemon_shop_open` script command but you have to change parameters.
+
+ 
+
+Remember, i said previously that it was possible to put a Symbol as first parameter and a Hash as second parameter: you just have to give your Shop Symbol as first parameter, un Hash as second parameter (a Hash for prices will be written as : { Pokemon\_ID =\> new\_price }) if you want to launch a sale on a specific Pokemon. And concerning the third parameter, it's not necessary. Moreover, it's not used when the first parameter is a Symbol. Here is an example of Limited Pokemon Shop.
+
+```text
+pokemon_shop_open(:pkm_shop_celadon, { 1 => 500, 4 => 800, 7 => 9000 }, show_background: true)
+```
+
+Hence, this command opens a named Pokemon Shop :pkm\_shop\_celadon, changes prices for Bulbasaur, Charmander and Squirtle (if they exist in the shop) and show the animated shop background.
+
+### Custom messages when leaving the shop
+
+This point is exactly the same as the traditional item shop, I invite you to read it if you didn't already.
+
+![Shop Scenario](https://image.communityscriptproject.com/psdkwiki/img/shop_scenario_en.png)
+

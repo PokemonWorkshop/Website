@@ -1,0 +1,63 @@
+---
+title: Comment faire échouer une attaque ?
+seoDescription: Un tutoriel rapide expliquant comment faire échouer une attaque avec
+  PSDK !
+order: 0
+---
+
+## Quelles sont les façons de faire échouer une attaque ?
+
+Un échec d'attaque résulte de divers facteurs. Si une raison spécifique entraîne l'échec de l'attaque, les fonctions concernées devraient renvoyer false plutôt que true. Au sein de ce false retourné, la raison de l'échec devrait être clairement indiquée par un message.
+
+### Depuis le code de l'attaque en lui-même
+
+Certaines attaques peuvent échouer à cause de leur fonctionnement. Par exemple, utiliser **Gravité** sur un terrain déjà sous **Gravité** provoquera un échec de l'attaque. Pour ce faire, il existe une méthode dans les attaques : `move_usable_by_user` qui devra retourner false si le terrain est déjà sous l'effet de **Gravité**.
+
+#### Exemple avec "Gravité"
+
+![Code Gravité](./images/gravite.png)
+
+Note : Si vous souhaitez en apprendre plus sur `move_usable_by_user`, rendez vous dans la section [Comprendre la fonction move\_usable\_by\_user](#heading_function-move-usable-by-user "Comprendre la fonction move\_usable\_by\_user") à la fin de l'article.
+
+### Depuis le code d'un effet
+
+Les effets exposent une fonction permettant de renvoyer false lorsque `move_usable_by_user` est invoqué. Cette méthode se nomme `on_move_prevention_user`. Le fonctionnement est similaire à `move_usable_by_user`, si vous retournez false, alors l'attaque sera un échec. Ceci est pratique pour créer des effets (talent, objet, météos, terrains, etc...) qui feront échouer certaines attaques.
+
+#### Exemple avec l'effet de l'attaque "Éxécu-Son"
+
+![Code de l'effet d'Éxécu-Son](./images/execuson.png)
+
+## Comprendre la fonction <code>move_usable_by_user</code> {% id="function-move-usable-by-user" %}
+
+![Code de move_usable_by_user](./images/fonction.png)
+
+Ce qui nous intéresse particulièrement dans cette fonction :
+
+- `exec_hooks(Move, :move_prevention_user, binding)`
+
+`exec_hooks` : C'est une méthode qui est appelée pour exécuter une série de **Hooks**. Les **Hooks** sont des fonctions ou des procédures qui sont déclenchées en réponse à certains événements ou conditions dans le programme. Ils permettent de modifier le comportement standard d'une fonction ou d'ajouter des fonctionnalités supplémentaires sans changer le code original de la fonction.
+
+`Move` : Ce premier argument spécifie le contexte ou le domaine d'application des **Hooks** à exécuter. Ici, **Move** indique que les **Hooks** concernent les capacités des Pokémon. Move représente la classe qui regroupe les **Hooks** relatifs aux capacités.
+
+`:move_prevention_target` : Le deuxième argument est un symbole qui identifie spécifiquement les **Hooks** à exécuter. Dans ce cas, `:move_prevention_user` réfère à un ensemble de **Hooks** destinés à vérifier si le Pokémon utilisateur peut effectuer une certaine capacité. Ces **Hooks** peuvent inclure des vérifications pour des conditions comme les effets de statut, les effets de terrain, les météos, etc., qui pourraient faire échouer l'attaque.
+
+`binding` : Le troisième argument, **binding** , est un peu plus complexe. En Ruby, un **binding** est un objet qui encapsule le contexte d'exécution d'un bout de code, y compris les variables locales, les méthodes disponibles, la valeur de **self** , etc. Passer **binding** à `exec_hooks` permet donc aux **Hooks** d'accéder au contexte dans lequel `exec_hooks` a été appelé. Cela signifie qu'ils peuvent lire et modifier les variables locales, appeler des méthodes, et ainsi de suite, comme s'ils faisaient partie du code original de la méthode `move_usable_by_user`.
+
+### Comprendre la procédure de la fonction <code>move_usable_by_user</code>
+
+**Appel de Hook**
+
+Lorsque `exec_hooks(Move, :move_prevention_user, binding)` est exécuté, il va chercher et exécuter tous les Hooks associés à l'événement ou à la condition `:move_prevention_user` dans le contexte des capacités ( **Move** ).
+
+**Gestion de la valeur retournée par le Hook**
+
+Si aucun des Hooks exécutés ne lève une exception `Hooks::ForceReturn`, la fonction `move_usable_by_user` continue son exécution normalement et atteint le `return true` à la fin, indiquant que l'attaque n'échouera pas.
+
+Cependant, si un Hook décide que la capacité doit échouer et renvoie false (directement ou via une exception comme `Hooks::ForceReturn` avec `e.data` égal à false), le flux d'exécution de `move_usable_by_user` est interrompu, et il renvoie false à son appelant.
+
+**Conséquences d'un retour false**
+
+Le retour de false signifie que quelque chose a empêché l'utilisation de l'attaque. Cela peut être dû à diverses raisons spécifiques au jeu, comme des effets de statut, un effet de terrain, des effets de talents, etc.
+
+La fonction ou méthode appelante qui a invoqué `move_usable_by_user` doit alors gérer ce false pour décider de la suite des actions. Par exemple, cela peut entraîner l'affichage d'un message à l'utilisateur indiquant que l'attaque a échoué.
+

@@ -1,13 +1,27 @@
 ---
 interface Props {
   href: string;
+  align?: 'left' | 'right' | 'center';
 }
 ---
 
-<a class="light-cta" href={Astro.props.href}><slot /></a>
+{
+  Astro.props.align ? (
+    <div class={`cta-${Astro.props.align}`}>
+      <a class="cta" href={Astro.props.href}>
+        <slot />
+      </a>
+    </div>
+  ) : (
+    <a class="cta" href={Astro.props.href}>
+      <slot />
+    </a>
+  )
+}
 
 <style>
-  .light-cta {
+  a.cta {
+    text-decoration: none;
     background: #000;
     color: #fff;
     display: inline-flex;
@@ -17,7 +31,7 @@ interface Props {
     border-radius: 0.5rem;
   }
 
-  .light-cta:hover {
+  a.cta:hover {
     background: none;
     color: #000;
     outline: 2px solid #000;
@@ -26,7 +40,21 @@ interface Props {
     transition-duration: 0.2s;
   }
 
-  a.light-cta {
-    text-decoration: none;
+  div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  div.cta-left {
+    justify-content: flex-start;
+  }
+
+  div.cta-right {
+    justify-content: flex-end;
+  }
+
+  div.cta-center {
+    justify-content: center;
   }
 </style>

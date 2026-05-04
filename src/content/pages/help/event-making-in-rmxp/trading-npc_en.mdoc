@@ -1,0 +1,66 @@
+---
+title: Trading NPC
+seoDescription: How to start a trade with NPC using events in RPG Maker XP
+publishDate: '2022-09-02 21:10:00'
+order: 0
+---
+
+On this page we will show you how to create a trading NPC for your game.
+
+ 
+
+The version .24.76 added the following command: [npc\_trade\_sequence](https://psdk.pokemonworkshop.fr/yard/Interpreter.html#npc_trade_sequence-instance_method). This command is responsive of showing the whole trade animation, including evolution due to trading Pokémon.
+
+## How to make the Trading NPC
+
+PSDK doesn't do everything for you, since you'll need specific criteria, you have to create the event yourself and call all the specific command. Here's a screenshot of the trading example:
+
+![TradingNPCEvent](https://image.communityscriptproject.com/psdkwiki/img/trading_npc.png)
+
+The first thing to do is asking the player if he wants to trade a specific Pokemon. Once he choose yes, we will call the party menu in order to let him choose which Pokémon to trade using the following script command:
+
+```text
+call_party_menu
+@pokemon = $actors[gv[Yuki::Var::Party_Menu_Sel]]
+```
+
+If the player choosed a Pokemon, we'll test that the Pokemon is correct. You may see that we stored the Pokemon in an instance variable so we can call the properties of it. And in this case, we'll check if the instance variable contains something (if your UI is buggy the game won't crash) and then if the Pokemon is actually what the NPC wants by using the DB Symbol. You can find the list of DB Symbols for Pokemon [here](https://psdk.pokemonworkshop.com/db/db_pokemon.html), note that you can also update the DB symbol of your FakeMon using `game --util=update_db_symbol`.
+
+Here's the script command for the condition:
+
+```text
+@pokemon && @pokemon.db_symbol == :pikachu
+```
+
+Now that the condition is check, we need to generate a Pokémon we'll trade with the trainer before starting the sequence. To do so, we well generate the option hash for `PFM::Pokemon.new` before calling the `PFM::Pokemon.new` function. You can see the list of option you can use on [PFM::Pokemon.new Documentation](https://psdk.pokemonworkshop.fr/yard/PFM/Pokemon.html#initialize-instance_method).
+
+ 
+
+Once the pokemon is generated, we can call the `npc_trade_sequence` function, it takes two arguments:
+
+- The index of the Pokemon the player trade in its party
+- The Pokemon the player will receive
+
+Here's the whole script command used in the example:
+
+```text
+opts = {
+  trainer_id: 123456,
+  trainer_name: 'H4ck3r',
+  item: :potion,
+  given_name: 'M3w'
+}
+pokemon = PFM::Pokemon.new(151, 50, false, false, -1, opts)
+npc_trade_sequence(gv[Yuki::Var::Party_Menu_Sel], pokemon)
+```
+
+Once the trade is done, switch the local switch A to true and create a new page on that require this local switch.
+
+## Help PSDK to get better
+
+This is not part of the tutorial but as you may have noticied, PSDK has no animation for trading :(
+
+Nuri Yuri tried to find something but people has not ripped the trade animation a lot and in the recent games it's in 3D... If you have some assets that can help to make the trade animation, we will accept it into PSDK :)
+
+Thanks for your help!
+

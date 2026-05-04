@@ -1,0 +1,119 @@
+---
+title: Commencer
+seoDescription: Commencer la création de projet Pokémon avec Pokémon Studio
+cover:
+- "./images/image_2022-09-18_162730743.png"
+publishDate: '2022-09-18 16:15:00'
+order: 0
+---
+
+Dans cette page, nous allons vous présenter les informations de base à propos de la création d'un projet avec Pokémon Studio. Si vous préférez les tutoriels vidéo, vous pouvez vous référer à [cette vidéo](https://www.youtube.com/watch?v=hkxUMJ5okrQ).
+
+## Télécharger Pokémon Studio {% id="download" %}
+
+Premièrement, vous avez besoin de télécharger la dernière version de Pokémon Studio. Si vous ne l'avez pas fait, vous pouvez le trouver sur la page suivante : [Releases of Pokémon Studio](https://github.com/PokemonWorkshop/PokemonStudio/releases).
+
+Vous devez choisir le fichier supporté par votre système d'exploitation dans la section **Assets** :
+
+![Section assets sur github](./images/capture-d-ecran-2025-02-17-151753.png)
+
+Pour rappel :
+
+- Pour Windows, téléchargez le fichier `Pokemon-Studio-Setup-X.X.X.exe`
+- Pour Linux RPM, téléchargez le fichier `pokemon-studio-X.X.X-1.x86_64.rpm`
+- Pour Linux utilisant `dpkg`, téléchargez le fichier `pokemon-studio-X.X.X_amd64.deb`
+- Pour MacOS, téléchargez l'archive `Pokemon.Studio-darwing-arm64-X.X.X.zip`
+
+Une fois téléchargé, cliquez dessus. Cela installera et lancera Pokémon Studio.
+
+### Erreurs sur MacOS
+
+⚠️Sur MacOS, si vous rencontrez des erreurs à l'installation, avec le message `"Pokémon Studio" is damaged and can't be opened` , suivez la procédure suivante.
+
+- Copier `Pokemon Studio.app` dans vos `Applications`
+- Ouvrez un terminal et entrez la commande suivante : `cd /Applications`
+- Entrez la commande suivante : `sudo xattr -cr "Pokemon Studio.app"`
+
+Si vous rencontrer encore des problèmes, vous pouvez cliquer sur le bouton ci-dessous pour obtenir davantage d'informations.
+
+{% cta href="https://github.com/PokemonWorkshop/PokemonStudio/issues/456" align="center" %}Réparer Pokémon Studio sur MacOS{% /cta %}
+
+## Créer un nouveau projet {% id="new-project" %}
+
+Quand vous démarrez Pokémon Studio, vous êtes accueilli avec un écran simple vous permettant d'ouvrir ou créer un projet.
+
+Cliquez sur le bouton **Nouveau Projet**.
+
+![Ecran d'accueil](./images/image_2022-09-18_163249925.png)
+
+D'ici, un dialogue s'ouvre et vous demande les informations de votre projet. Vous pourrez toujours changer le nom et l'îcone plus tard.
+
+![Formulaire de nouveau projet](./images/image_2022-09-18_163356710.png)
+
+Quand vous cliquerez sur **Créer mon projet** , Pokémon Studio vous demandera de choisir un dossier. Choisissez un dossier complètement vide. **Pokémon Studio refusera de créer un projet dans un dossier qui contient des dossiers ou des fichiers.**
+
+Tout est bon, vous pouvez explorer et vous amuser avec Pokémon Studio !
+
+## Que contient votre nouveau Projet? {% id="new-project-content" %}
+
+Tous les nouveaux projets créés contiennent [la démo de PSDK](https://pokemonworkshop.com/fr/articles/the-new-pokemonsdk-technical-demo), qui a son propre article dédié. Si vous n'avez jamais utilisé PSDK, **jouez-y**! C'est le moyen idéal pour découvrir tout ce que le moteur a à offrir, et elle contient de nombreux exemples commentés d'événements et de systèmes que vous souhaiterez peut-être utiliser dans votre propre projet.
+
+Cela signifie aussi que **vous ne démarrez pas avec un projet vierge**.
+
+## Dois-je supprimer les cartes et la base de données de la démo pour repartir de zéro ?
+
+Il n'est _pas_ conseillé de supprimer les données de la démo lorsque vous démarrez votre propre projet, à la fois parce que vous pouvez et devez les utiliser comme référence, et parce que vous risquez de supprimer des données clés avant de savoir ce que vous faites. Bien sûr, vous pouvez toujours les supprimer _plus tard_ et conserver une version de la démo séparée comme référence.
+
+Bien que vous puissiez le faire, **supprimer les données de la démo n'est pas nécessaire**  **pour créer un jeu entièrement original.** Si vous n'avez pas de téléportation vers les cartes de la démo, vos joueurs ne les verront jamais, et vous pouvez créer votre propre Pokédex entièrement personnalisé sans supprimer aucun monstre de la base de données puisqu'il s'agit de listes distinctes.
+
+## Les fichiers de votre nouveau Projet
+
+![Project file structure](./images/folder_structure.png)
+
+Dans votre explorateur de fichiers, dans le dossier de votre nouveau projet, vous trouverez un fichier `README.md`. Veuillez le lire attentivement pour commencer.
+
+Ne modifiez jamais l'architecture des dossiers de votre projet.
+
+Pour ignorer le menu principal et tester rapidement votre jeu, exécutez `debug_fast.bat`. Pour éviter les problèmes de fenêtre trop étroite lors du codage dans RMXP, exécutez `extendtext.exe`.
+
+Les scripts personnalisés et les plugins PSDK doivent être placés dans le dossier `scripts` (ne touchez pas à `plugins`). Notez que **les plugins Essentials ne sont pas compatibles avec PSDK** , PSDK a son propre système de plugins et sa propre bibliothèque.
+
+`graphics` contient les ressources graphiques de votre jeu, à l'exception des tilesets et des cartes, qui se trouvent sous `Data/Tiled/` depuis Pokémon Studio 2.0. Assurez-vous également de lire le fichier `README_TILED.md` dans ce dossier.
+
+## Les cartes Opening Cutscene et Start
+
+Si vous accédez à l'onglet Monde de Pokemon Studio, vous trouverez deux cartes apparemment vierges appelées Opening Cutscene et Start. Ces cartes ne sont pas vierges, elles contiennent en fait des événements importants.
+
+Vous êtes libre de modifier ces cartes en changeant les événements dans RMXP.
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+![A screenshot of PSDK's default opening cutscene.](./images/openingcutscene.png)
+
+La carte **Opening Cutscene** joue une animation au lancement du jeu, avant l'écran titre.
+
+Si vous ne souhaitez pas utiliser cette carte, vous pouvez désactiver ce comportement dans Pokemon Studio sous `Paramètres du projet/Configuration` ou modifier le paramètre vers un nouvel ID de carte valide.
+
+{% /column %}
+{% column %}
+![The Player's Starting Position flag in RMXP](./images/starting-position.png)
+
+La carte **Start** contient le flag de position de départ du joueur(_Player's Starting Position_) de RMXP et est utilisée pour la configuration (introduction pour définir l'apparence du joueur, la croissance des baies, etc.).
+
+Si vous ne souhaitez pas utiliser cette carte, définissez la position de départ du joueur ailleurs et assurez-vous que tous les événements qui doivent être initialisés le sont toujours sur la carte de la nouvelle position de départ.
+
+Si vous oubliez la configuration des événements, votre joueur restera invisible.
+
+{% /column %}
+{% /row %}
+
+## Tutoriels
+
+Le meilleur et le plus fiable des tutoriels est la **démo**. Il s'agit du tutoriel le plus complet, le plus à jour pour utiliser PSDK. Le fichier `README.md` de la démo contient également des informations et des liens utiles.
+
+Vous pouvez trouver des ressources et des exemples sur le site Web de Pokemon Workshop dans notre section [Aide](https://pokemonworkshop.com/fr/help), y compris de l'aide pour utiliser Pokémon Studio.
+
+Le membre de la communauté Invatorzen a une playlist Youtube complète sur [la création de fangame Pokémon avec PSDK (en anglais uniquement)](https://youtu.be/hkxUMJ5okrQ?list=PLBCQaB3tnyNxqvm48pSC1jEESpgqw0RSe). Pokemon Workshop a également [sa propre chaîne YouTube](https://www.youtube.com/@pokemonworkshop). N'hésitez pas à consulter [notre article répertoriant les tutoriels pour PSDK](https://pokemonworkshop.com/fr/help/pokemon-sdk/are-there-tutorials-for-psdk) ([la version anglaise contient des resources additionelles](https://pokemonworkshop.com/en/help/pokemon-sdk/are-there-tutorials-for-psdk)).
+
+Il est également fortement recommandé de [rejoindre notre discord](https://discord.com/invite/0noB0gBDd91B8pMk). Si vous rencontrez un problème, assurez-vous de **rechercher votre réponse avant de poser la question** , au cas où elle aurait déjà été répondue auparavant. Le discord distribue également des ressources et des plugins.
+

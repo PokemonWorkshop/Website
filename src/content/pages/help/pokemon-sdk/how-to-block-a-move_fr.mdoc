@@ -1,0 +1,59 @@
+---
+title: Comment bloquer une attaque ?
+seoDescription: Apprendre à bloquer une attaque avec PSDK !
+order: 0
+---
+
+## Quelles sont les façons de bloquer une attaque ?
+
+Bloquer une attaque est un processus qui dépend des caractéristiques de la cible. Si une raison empêche la cible d'effectuer une attaque, les fonctions liées au blocage doivent retourner `true` au lieu de `false` et fournir un message indiquant la raison du blocage avant de retourner `true`.
+
+### Depuis le code de l'attaque en lui même
+
+Certaines attaques peuvent échouer en raison de leurs mécaniques. Par exemple, utiliser `Etreinte` sur une cible déjà sous l'effet de cette même attaque devrait échouer. Pour gérer cela, il existe une méthode dans les attaques appelée `move_blocked_by_target?`, qui doit retourner `true` si la cible est déjà sous l'effet `d'Etreinte` .
+
+#### Exemple avec "Octoprise" :
+
+![Code d'Octoprise](./images/octoprise.png)
+
+Note : Pour en savoir plus sur la fonction `move_blocked_by_target?`, veuillez vous référer à la section [**Comprendre la fonction move\_blocked\_by\_target?**](#heading_function-move-blocked "Comprendre la fonction move\_blocked\_by\_target?") à la fin de l'article.
+
+### Depuis le code d'un effet
+
+Les effets fournissent une fonction qui retourne `true` lorsque `move_blocked_by_target?` est invoquée. Cette méthode s'appelle `on_move_prevention_target`. Son fonctionnement est similaire à `move_blocked_by_target?` ; si elle retourne `true`, le mouvement sera esquivé. Cela est utile pour créer des effets (capacités, objets, météo, terrains, etc.) qui confèrent à un Pokémon une immunité contre certaines attaques.
+
+#### Exemple avec le talent "Corps en Or" :
+
+![Code de Corps en Or](./images/corpsenor.png)
+
+## Comprendre la fonction <code>move_blocked_by_target?</code> {% id="function-move-blocked" %}
+
+![Code de move_blocked_by_target](./images/fonction.png)
+
+Ce qui nous intéresse particulièrement dans cette fonction :
+
+- `exec_hooks(Move, :move_prevention_target, binding)`
+
+**exec\_hooks** : Cette méthode est appelée pour exécuter une série de `Hooks`. Les `Hooks` sont des fonctions ou procédures déclenchées par des événements ou conditions spécifiques dans le programme. Ils permettent de modifier le comportement standard d'une fonction ou d'ajouter des fonctionnalités supplémentaires sans altérer le code original de cette fonction.
+
+**Move** : Le premier argument spécifie le contexte ou le domaine des `Hooks` à exécuter. Ici, `Move` indique que les `Hooks` sont liés aux attaques des Pokémon, représentant la classe qui regroupe les `Hooks` associés aux attaques.
+
+Le deuxième argument est un symbole qui identifie les `Hooks` spécifiques à exécuter. Dans ce cas, fait référence aux `Hooks` qui déterminent si un Pokémon peut effectuer une attaque spécifique. Ces `Hooks` peuvent inclure des vérifications de conditions telles que les effets de statut, le terrain, la météo ou d'autres facteurs susceptibles de bloquer l'attaque.
+
+**binding** : Le troisième argument, `binding`, encapsule le contexte d'exécution du code en Ruby, incluant les variables locales, les méthodes et la valeur de `self`. Passer `binding` à `exec_hooks` permet aux `Hooks` d'accéder et de modifier le contexte dans lequel `exec_hooks` a été appelé, leur permettant ainsi d’interagir de manière fluide avec le code original de la méthode `move_blocked_by_target?`.
+
+### Comprendre la procédure de la fonction <code>move_blocked_by_target?</code>
+
+**Appel des Hooks**  
+Lorsqu'`exec_hooks(Move, :move_prevention_target, binding)` est exécuté, il identifie et exécute tous les `Hooks` associés à l'événement ou à la condition dans le contexte des attaques ( **Move** ). Ces `Hooks` sont déclenchés pour évaluer si l'attaque peut être effectué dans les conditions actuelles.
+
+**Gestion de la valeur retournée par le Hook**  
+Si aucun des `Hooks` exécutés ne lève une exception `Hooks::ForceReturn`, la fonction `move_blocked_by_target?` poursuit son exécution normale et atteint finalement l'instruction `return false` à la fin. Cela indique que l'attaque n'est pas bloqué.
+
+Cependant, si un `Hook` détermine que l'attaque ne doit pas être exécuté et retourne `true` — soit directement, soit en levant une exception comme `Hooks::ForceReturn` avec `e.data` défini à `true` — l'exécution de `move_blocked_by_target?` est interrompue. Dans ce cas, la fonction retourne immédiatement `true` à son appelant.
+
+**Conséquences du retour de** `true`  
+Retourner `true` signifie que l'attaque a été empêché en raison de conditions spécifiques. Cela peut être causé par divers facteurs dans le jeu, tels que les effets de terrain, les talents, les effets de statut ou d'autres mécanismes.
+
+La fonction ou méthode appelante qui a invoqué `move_blocked_by_target?` doit ensuite gérer cette valeur de retour `true` pour déterminer les prochaines étapes. Par exemple, elle pourrait afficher un message au joueur expliquant pourquoi l'attaque a été bloqué ou appliquer des effets supplémentaires résultant de cette prévention.
+

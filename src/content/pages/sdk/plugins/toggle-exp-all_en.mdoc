@@ -1,0 +1,49 @@
+---
+title: Toggle Exp All
+seoDescription: Make the player to turn on or off the Exp Share for all party members
+publishDate: '2023-07-23 19:02:00'
+order: 20230723
+---
+
+I've felt pretty strong about how overpowered the current Exp. Share is in Pokémon games and wanted to make a bit of a reversion. This allows you to turn on/off the Exp. All while keeping the function of the Exp. Share!
+
+## What's the problem?​
+
+By default in PSDK there's two ways for global exp to trigger - having switch 40 turned off or by having the Exp. Share in your bag. The Exp. Share can be given to a Pokémon to work similar to the older generations, but if it isn't held it works like an Exp. All.
+
+## What does this plugin do?​
+
+This plugin will change that by adding a new key item - the Exp. All, while leaving the Exp. Share as well! The new Exp. All can be interacted with in your bag and will turn this check on/off.
+
+It assures that:
+
+- While Hard EXP is **ON** the experience handler checks each individual Pokémon to give experience to. This version of experience will work like older generations where it was harder to level up. (Meaning experience is divided between the number of participants and scales off levels.) **If Exp. All is turned on** the active Pokémon receives full experience while everyone else receives their share.
+- While Hard EXP is **OFF** the experience handler will reward the active Pokémon with 100% experience and everyone else with 50%.
+- If someone is holding an Exp. Share and Exp. All is on OR they participated in battle they will receive full experience.
+
+## Installation
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+1.) Download the psdkplugin file   
+ 2.) Place the plugin in your scripts folder   
+ 3.) Go to your common events, and on whatever common event you'd like that's unused set up a conditional branch checking if switch 127 is on   
+ 4.) If the switch is on, turn off the switch. In the else, turn it off
+
+{% /column %}
+{% column %}
+{% cta href="https://www.mediafire.com/file/jxfxlq8fpvzbz57/Toggle_Exp_All.psdkplug/file" align="center" %}Download Plugin{% /cta %}
+
+{% /column %}
+{% /row %}
+
+![Image showing how the common event is supposed to be setup](./images/image_2023-07-21_221819668.png)
+
+5.) Open studio and go to the items tab, search for the Exp Share and modify it to your liking, but I'd recommend these settings
+
+![Image showing how the Exp Share item should be setup in Studio](./images/image_2023-07-22_132731466.png)
+
+6.) Now create a new item and call it whatever you want, but I'd recommend the Exp. All. Make sure the category is event.  
+7.) Modify the item socket data to "Key Items" and parameters to "Map" and assign your common event  
+8.) Launch the game, give yourself the Exp. Share or Exp. All and have fun :)
+

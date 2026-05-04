@@ -1,0 +1,61 @@
+---
+title: Système des baies
+seoDescription: Comment configurer les arbres à baies dans PSDK
+order: 0
+---
+
+## Système des baies
+
+![](./images/output_crop-video_com__adobeexpress.gif)
+
+#### <p><strong>Introduction :</strong></p>
+
+Le système de baies est une excellente fonctionnalité à ajouter à votre jeu. Dans ce guide, nous allons vous montrer comment ajouter des baies sur vos maps.
+
+#### Étape 1 : Placer les événements de baies sur les cartes
+
+1. Créez un nouvel événement à l'endroit où vous voulez qu'une baie soit disponible.
+
+2. Dans l'événement, insérez un appel à l'événement commun 18 "Berry Tree".
+
+![](./images/berrytreecommonevent.png)
+
+#### Étape 2 : Initialiser les baies
+
+1. Dans l'événement d'introduction de votre jeu, ajoutez un appel de script en utilisant le code fourni ci-dessous :
+
+```ruby
+# Route A
+Yuki::Berries.init_berry(ID_DE_LA_MAP, ID_DE_LEVENEMENT, :db_symbol_de_la_baie)
+Yuki::Berries.init_berry(ID_DE_LA_MAP, ID_DE_LEVENEMENT, :db_symbol_de_la_baie)
+# Route B
+Yuki::Berries.init_berry(ID_DE_LA_MAP, ID_DE_LEVENEMENT, :db_symbol_de_la_baie)
+Yuki::Berries.init_berry(ID_DE_LA_MAP, ID_DE_LEVENEMENT, :db_symbol_de_la_baie)
+```
+
+Placez les ID et les symboles :db\_symbol appropriés. Renommez également les noms des endroits pour plus de clarté.
+
+![](./images/idmapevent.png)
+
+![](./images/dbsymb.png)
+
+#### Étape 3 : Initialiser une baie à un stade de croissance spécifique (optionnel)
+
+Si vous désirez que certaines baies aient un stade de croissance spécifique dès le début, vous pouvez utilisez le script suivant :
+
+```ruby
+Yuki::Berries.init_berry(ID_DE_LA_MAP, ID_DE_LEVENEMENT, :db_symbol_de_la_baie, STADE)
+```
+
+Remplacez "STADE" par un chiffre (0, 1, 2, 3, 4) indiquant le stade de croissance souhaité. Sa valeur par défaut est 0.
+
+![](./images/stade.png)
+
+#### Options et triggers :
+
+![](./images/optionsandtrigger.png)
+
+#### Conclusion :
+
+Félicitations ! Vous avez maintenant intégré un système de baies automatisé à votre jeu. Une fois que vous avez suivi les étapes ci-dessus, le système est entièrement opérationnel. Vous n'auriez rien d'autre à faire. Lorsque les joueurs interagiront avec les événements de baies, le système gérera automatiquement la plantation des baies. Les baies pousseront avec le temps et les joueurs pourront les cueillir lorsqu'elles seront mûres.
+

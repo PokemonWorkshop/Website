@@ -1,0 +1,117 @@
+---
+title: Time system
+seoDescription: How to set the time and tint on the screen in RPG Maker XP
+publishDate: '2022-09-02 21:05:00'
+order: 0
+---
+
+PSDK has a time system that can work in two different ways:
+
+- Using a **Real Clock** : Like in the official games, time goes according your console time (in this case, your computers)
+- Using a **Virtual Clock** : Times are shorter (unless you change it) and goes according your internals game clock. This usually allows the player to play in different times of the day in the same game session and time gets resumed when you load your save file.
+
+The Time System is enabled by default and used by berries. The default in-game clock is the Virtual Clock, but you can switch to Real Clock using this switch:
+
+![Setting Real Time](https://i.imgur.com/6OQlyoP.png)
+
+If you want to go back to Virtual Clock just turn off the switch again.
+
+## In-Game Times
+
+The current in-game day works like this:
+
+<table style="width: 100%; border: 0px; overflow-x: auto; border-spacing: 0px;"><thead><tr><th style="border-width: 1px 1px 2px; border-style: solid; border-color: rgb(229, 229, 229) rgb(229, 229, 229) rgb(204, 204, 204); border-image: initial; padding: 0.75rem; background-color: rgb(250, 250, 250);">Morning</th><th style="border-width: 1px 1px 2px; border-style: solid; border-color: rgb(229, 229, 229) rgb(229, 229, 229) rgb(204, 204, 204); border-image: initial; padding: 0.75rem; background-color: rgb(250, 250, 250);">Day</th><th style="border-width: 1px 1px 2px; border-style: solid; border-color: rgb(229, 229, 229) rgb(229, 229, 229) rgb(204, 204, 204); border-image: initial; padding: 0.75rem; background-color: rgb(250, 250, 250);">Evening</th><th style="border-width: 1px 1px 2px; border-style: solid; border-color: rgb(229, 229, 229) rgb(229, 229, 229) rgb(204, 204, 204); border-image: initial; padding: 0.75rem; background-color: rgb(250, 250, 250);">Night</th></tr></thead><tbody><tr><td style="border: 1px solid rgb(229, 229, 229); padding: 0.75rem; text-align: center;">07:00am - 10:59am</td><td style="border: 1px solid rgb(229, 229, 229); padding: 0.75rem; text-align: center;">11:00am - 18:59pm</td><td style="border: 1px solid rgb(229, 229, 229); padding: 0.75rem; text-align: center;">19:00pm - 21:59pm</td><td style="border: 1px solid rgb(229, 229, 229); padding: 0.75rem; text-align: center;">22:00pm - 06:59am</td></tr></tbody></table>
+
+To change the default one you can use: `Yuki::TJN::TIME_SETS[:default].clear.concat([21, 18, 11, 4])`
+
+Or you can add your custom one: `Yuki::TJN::TIME_SETS[:jaizu_dn] = [21, 18, 11, 4]`
+
+## Tint System
+
+The Tint System gets enabled by default in the intro script. If you used a custom one or removed that part you can enable or disable it using the Switch 0010: Tint system enabled. To make the game update your changes without warping or refreshing the screen call a script with `Yuki::TJN.force_update_tone` inside.
+
+ 
+
+The default Tint System uses 5 different tones, like this:
+
+```text
+TONE_SETS = {
+      default: [
+        Tone.new(-85, -85, -20, 0), # Night
+        Tone.new(-17, -51, -34, 0), # Evening
+        Tone.new(-75, -75, -10, 0), # Midnight
+        NEUTRAL_TONE, # Day
+        Tone.new(17, -17, -34, 0) # Dawn
+      ],
+```
+
+It's also possible to define 24 tones (one / hour) that will be calculated each minutes for smoothness : `$pokemon_party.tint_time_set = :winter`
+
+ 
+
+The tones aren't correct, they are there for purpose tests only, you can make your owns using:
+
+```text
+Yuki::TJN::TONE_SETS[:jaizu_dn] = [
+        Tone.new(-75, -75, -10, 0), # 0
+        Tone.new(-80, -80, -10, 0), # 1
+        Tone.new(-85, -85, -10, 0), # 2
+        Tone.new(-80, -80, -12, 0), # 3
+        Tone.new(-75, -75, -15, 0), # 4
+        Tone.new(-65, -65, -18, 0), # 5
+        Tone.new(-55, -55, -20, 0), # 6
+        Tone.new(-25, -35, -22, 0), # 7
+        Tone.new(-20, -25, -25, 0), # 8
+        Tone.new(-15, -20, -30, 0), # 9
+        Tone.new(-10, -17, -34, 0), # 10
+        Tone.new(5, -8, -15, 0), # 11
+        Tone.new(0, 0, -5, 0), # 12
+        Tone.new(0, 0, 0, 0), # 13
+        Tone.new(0, 0, 0, 0), # 14
+        Tone.new(-10, -25, -10, 0), # 15
+        Tone.new(-17, -51, -34, 0), # 16
+        Tone.new(-20, -43, -30, 0), # 17
+        Tone.new(-35, -35, -25, 0), # 18
+        Tone.new(-45, -45, -20, 0), # 19
+        Tone.new(-55, -55, -15, 0), # 20
+        Tone.new(-60, -60, -14, 0), # 21
+        Tone.new(-65, -65, -13, 0), # 22
+        Tone.new(-70, -70, -10, 0), # 23
+      ]
+```
+
+Remember that the Tint System and the In-Game times are tied, so if you add a custom one they must have the same name. You can also use a simplier tone system like this:
+
+```text
+Yuki::TJN::TONE_SETS[:jaizu_dn] = [
+  night = Tone.new(-85, -85, -20, 0), # Night
+  Tone.new(-17, -51, -34, 0), # Evening
+  night, # Midnight
+  Yuki::TJN::NEUTRAL_TONE, # Day
+  Tone.new(17, -17, -34, 0) #Morning
+]
+```
+
+## Manipulating the Time
+
+PSDK saves time values in variables. To manipulate the time in-game just change the value of this variables:
+
+- 0010: Hour (from 0 to 23)
+- 0011: Min (from 0 to 59)
+- 0013: Week day (from 0 to 6)
+- 0014: Week (from 0 to X)
+- 0015: Month (from 0 to 11)
+- 0016: Day (from 0 to 364)
+
+To refresh your screen to change to the tone of the desired time run a script with `Yuki::TJN.force_update_tone`
+
+## Events based on the current time
+
+PSDK has switches to make things easier
+
+![alt text](https://i.imgur.com/qsQmyoS.png)
+
+With those you can easily make events that only occur at certain times of the day.
+
+![alt text](https://i.imgur.com/IcTaSSG.png)
+

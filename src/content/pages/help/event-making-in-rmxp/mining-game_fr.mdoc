@@ -1,0 +1,116 @@
+---
+title: Mining Game
+seoDescription: Comment lancer le jeu du Minage pour déterrer des objets comme les
+  pierres évolutive
+order: 0
+---
+
+Ce tutoriel vous donnera tout le nécessaire pour lancer et configurer correctement le système du Mining Game. Il inclura le moyen de lancer le mini-jeu, configurer le nombre OU la liste des items à trouver, et bien entendu comment ajouter des items au système. Vous pourrez aussi customiser assez facilement la musique jouée pendant le mini-jeu. Pour finir, ce tutoriel vous parlera de toutes les petites fonctionnalités secondaires et utiles pour vous.
+
+## Lancer le Mining Game
+
+Pour lancer le Mining Game, vous n'aurez besoin que d'une commande. Il vous suffira juste d'appeler la commande `mining_game` dans votre event, et PSDK s'occupera du reste (votre joueur devra cependant possséder l'Explorakit pour que le Mining Game puisse débuter). Il est d'ailleurs possible de fournir des paramètres à cette commande. Deux façons existent : la première est de donner un nombre en paramètre, et le second un array contenant les items voulus. Les chapitres suivants vous montreront comment c'est fait.
+
+### Première façon : Dire le nombre d'items à déterrer
+
+Voyons un exemple de comment écrire cette commande :
+
+```ruby
+mining_game(4, 'audio/bgm/alternate_music', delete_after: false)
+```
+
+Ici, on a donné deux paramètres :
+
+- Le premier est un nombre compris entre 2 et 5 inclus. Il sert à dire au système le nombre spécifique d'items à randomiser. Si vous mettez un nombre inférieur à 2 ou supérieur à 5, le système s'assurera de borner ce nombre entre l'intervalle décrit plus tôt. Assurez-vous de mettre le bon nombre si vous ne voulez pas des surprises.
+- Le second correspond à la musique que vous voulez jouer. Par défaut, le fichier`audio/bgm/mining_game.ogg`est celui qui est joué si aucun paramètre n'est fourni. Ce paramètre est optionnel, donc pour la clarté de votre événement ne remplissez ce paramètre que si vous avez besoin de changer la musique.
+- Le troisième est optionnel aussi. Il indique au système si l'event doit être supprimé définitivement après l'avoir miné. Si false donné en paramètre, vous devrez faire en sorte qu'il soit supprimé d'une manière ou d'une autre. (Sa valeur par défaut est true)
+
+### Deuxième façon : Dire les items que vous voulez
+
+Cette façon spécifique est pratique dans certains cas : par exemple, vous pouvez créer certains types d'events dans lequel votre joueur doit récupérer un item spécial dans le Mining Game. Vous pouvez ensuite vérifier que le joueur a bien trouvé l'item puis supprimer l'événement correspondant. Voyons comment dire au système ce que l'on veut exactement :
+
+```ruby
+mining_game([:fire_stone, :claw_fossil, :yellow_shard])
+```
+
+Ici, on a qu'un seul paramètre :
+
+- `[:fire_stone, :claw_fossil, :yellow_shard]`veut dire que vous envoyez un array contenant les items que vous souhaitez voir dans cette instance du Mining Game. Ici, vous dites au système que vous voulez une Pierre Feu, un Fossile Griffe et un Tesson Jaune. En utilisant cette façon, vous êtes limités entre 1 et 5 items. Pour écrire ce paramètre correctement, vous devez écrire le db\_symbol entre des`[]`et les séparer par des virgules (uniquement si vous en mettez plus d'un db\_symbol).
+- Notez qu'ici, le deuxième ET le troisième paramètre ne sont pas passés au système. Comme nous avons pu en parler plus tôt, ces paramètres sont optionnels et servent à changer la musique pour CETTE instance uniquement et à indiquer si oui ou non l'event doit être supprimé définitivement (dans le cas présent, la musique de base sera jouée et l'event sera supprimé définitivement à la fin de la partie).
+
+Donc, par exemple, si vous voulez lancer une partie avec les 4 premières pierres évolutives, vous devrez écrire ceci : `mining_game([:fire_stone, :water_stone, :leaf_stone, :thunder_stone])`
+
+## Changer les textes "Voulez-vous miner ceci"
+
+Le système possède deux types de textes différent pour les textes "Voulez vous miner ceci ?". Par défaut, le système partira du principe que votre event est un mur (dans D/P/Pl vous minez dans des murs) donc le message affiché concernera le minage dans un mur. Mais il est possible, en changeant le nom de l'event, de changer le texte affiché. Pour ce faire, vous avez juste à renommer votre event `miningrock`. C'est aussi simple que ça.
+
+## Ajouter de nouveaux items au Mining Game
+
+Dans cette section, on parlera de comment ajouter vos propres items à la BDD du Mining Game. D'abord, nous parlerons de comment votre ressource doit être, puis de comment le scripter dans la BDD (vous verrez, c'est très simple).
+
+### Créer la ressource pour l'item
+
+Tout d'abord, avant de créer la ressource, vous devez savoir certaines choses : le système utilise des ressources basées sur une grille en 16x16 et le système en lui-même ne détecte PAS si l'image est placée correctement sur la grille ou non. Ce sera votre travail de bien le faire. Maintenant, voyons un exemple :
+
+![PlaceItemInGrid](https://image.communityscriptproject.com/psdkwiki/img/event_making/PlaceItemInGrid.png)
+
+Comme vous pouvez le constater, l'image est bien placée à l'intérieur de la grille de carrés en 16x16. La longueur et la largeur de l'image doivent en conséquence être divisible par 16. Faites en sorte de respecter ceci.
+
+Quand vous aurez fini de la créer, nommez la d'après le db\_symbol de l'item et enregistrez la dans graphics/interface/mining\_game/items. Exemple, l'image pour la Pierre Eau s'appelle water\_stone.png (d'après son db\_symbol qui est son nom anglais).
+
+### Créer une entrée pour un item dans la BDD du Mining Game
+
+Maintenant que nous avons l'image, nous pouvons insérer notre item dans la BDD. Pour ce faire, vous allez devoir créer un nouveau script dans le dossier scripts. Si vous ne savez pas comment faire ceci, je vous invite à lire ce petit tutoriel très concis : [Comment Programmer sous Pokémon Studio (sur Youtube)](https://www.youtube.com/watch?v=E9zYkR_3rbM)
+
+Créez un nouveau script dans votre dossier scripts, nommez le comme vous voulez du moment qu'il suit la norme évoquée dans le tuto donné ci-dessus, puis copiez ceci dedans :
+
+```ruby
+module GameData
+  module MiningGame
+    register_item(:your_item, 20, [[x,x,x],[x,x,x],[x,x,o]], 3)
+  end
+end
+```
+
+Ici, 4 paramètres sont ABSOLUMENT nécessaire, expliquons les :
+
+- `:your_item`est le db\_symbol de votre item. Parfaitement explicite. Changez ceci par le db\_symbol de votre item dans la BDD Item de PSDK.
+- `20`est la probabilité que l'item soit choisi. Ses chances sont le nombre donné en paramètre divisé par le total de chaque nombre probabiliste de chaque item. Vous pouvez vérifier les pourcentages de chaque item dans le script GameData\_MiningGame.
+- `[[x,x,x],[x,x,x],[x,x,o]]`est la disposition de l'item, son pattern. Voici une image pour expliquer plus en détail comment ça fonctionne.
+
+![GoodGrid](https://image.communityscriptproject.com/psdkwiki/img/event_making/GoodGrid.png)
+
+Comme vous pouvez le voir, les cases rouges indiquent où votre item existe dans le pattern (signifié dans le paramètre en tant que `x` ) tandis que les cases vertes indiquent là où votre item ne se trouve pas (signifié dans le paramètre en tant que `o` ). Pour écrire correctement le pattern, éccrivez d'abord le premier [], puis dedans écrivez un nouveau [] par ligne. Dans le cas de cette image, son pattern sera le suivant : `[[o,x,x,x,o],[o,x,x,x,o],[x,x,x,x,x],[o,x,x,x,o]]`
+
+- `3` est le nombre de rotations autorisées. 0 veut dire aucune rotation, 1 veut dire une rotation de 90°, 2 une rotation de 180° et 3 de 270°. Vous n'avez donc pas besoin de créer un pattern pour chaque rotation, le système calcule le nouveau pattern seul.
+
+### Créer une entrée pour un 'fer' (obstacle) dans la BDD du Mining Game
+
+Créer un 'fer' dans la BDD du Mining Game suit la même logique que pour les items, à une exception près. Au lieu de copier le code du chapitre précédent, copiez celui-ci.
+
+```ruby
+module GameData
+  module MiningGame
+    register_iron(:your_iron, 20, [[x,x,x],[x,x,x],[x,x,o]], 3)
+  end
+end
+```
+
+Les arguments sont les mêmes, sauf pour le premier : vous devrez mettre le symbol correspondant au nom de l'image du 'fer'.
+
+## Déverrouiller la dynamite, accéder aux statistiques du Mining Game et activer le Hard mode.
+
+Oui, vous avez bien lu : le Mining Game de PSDK a de la dynamite, des statistiques ET un Hard mode. Quelques commandes vous permettront d'accéder à tout. Voici la liste :
+
+- `$pokemon_party.mining_game.dynamite_unlocked = true` active la dynamite. Remplacer true par false la désactive de nouveau. (La dynamite est verrouillée par défaut.)
+- `$pokemon_party.mining_game.nb_items_dug` retournera le nombre de fois qu'un item a été déterré.
+- `$pokemon_party.mining_game.nb_game_launched` retournera le nombre de fois qu'une partie a été lancée.
+- `$pokemon_party.mining_game.nb_game_success` retournera le nombre de fois qu'une partie a été gagnée
+- `$pokemon_party.mining_game.nb_game_failed` retournera le nombre de fois qu'une partie a été perdue
+- `$pokemon_party.mining_game.nb_pickaxe_hit` retournera le nombre de fois où la pioche a été utilisé
+- `$pokemon_party.mining_game.nb_mace_hit` retournera le nombre de fois où la masse a été utilisé
+- `$pokemon_party.mining_game.nb_dynamite_hit` retournera le nombre de fois où la dynamite a été utilisé
+- `$pokemon_party.mining_game.hard_mode = true` active le Hard mode (change comment les carrés à creuser sont générés). Remplacer true par false le désactivera de nouveau. (Hard mode désactivé par défaut.)
+
+Voilà tout ce que vous aviez besoin de savoir à propos du Mining Game ! Amusez-vous bien avec, et creusez bien !
+

@@ -1,0 +1,41 @@
+---
+title: Modifier les attributs des évènements
+seoDescription: Comment gérer certaines propriétés des évènements telles que leurs
+  ombre, leur élévation etc...
+order: 0
+---
+
+Dans PSDK le nom de l'évènement permet de modifier les attributs de celui-ci. Cette page les détaille tous.
+
+## Afficher un évènement sans ombre
+
+Si vous voulez qu'un évènement n'ait pas d'ombre, commencez son nom par le caractère suivant : `§`
+
+## Afficher un évènement au dessus du héros à couche égale
+
+Si vous voulez qu'un évènement soit affiché à peu près comme un élément de priorité 1, commencez son nom par le caractère suivant : `¤`
+
+## Désactiver les particules sur un évèment
+
+Pour désactiver les particules sur un évènement, utilisez le tag `[particle=off]` dans son nom.
+
+## Désactiver l'affichage total de l'évènement
+
+Pour désactiver l'affichage total d'un évènement (par exemple évènement qui déroule le scénario ou détecteur) ajoutez le tag suivant dans son nom `[sprite=off]`.
+
+## Elever un évènement
+
+Pour faire flotter un évènement (comme un oiseau) utilisez le tag `[offset_y={y}]`. Remplacez `{y}` par le nombre de pixel d'élévation si le jeu fonctionnait avec des tiles de 32x32 (2 = 1px vers le bas, -2 = 1px vers le haut).
+
+## Appliquer l'apparence à toute les pages
+
+Pour n'avoir à configurer l'apparence qu'en page 1 il suffit d'ajouter le caractère suivant dans le nom `$`. Ceci vous permet de gagner du temps en évent making.
+
+## Créer un objet invisible
+
+Pour créer un objet invisible il faut que le nom de l'évènement contienne : `invisible_`.
+
+## Créer un nageur
+
+Pour créer un nageur (évènement qui marche sur l'eau mais pas la terre) il faut que le nom contienne : `surf_`
+

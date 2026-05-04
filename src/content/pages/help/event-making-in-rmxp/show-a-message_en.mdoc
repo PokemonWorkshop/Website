@@ -1,0 +1,142 @@
+---
+title: Show a message
+seoDescription: How to use Message command in Pokémon SDK
+publishDate: '2022-09-02 18:00:00'
+order: 0
+---
+
+Under PSDK, the show message function can do a lot of things without using script commands to display messages.
+
+## Message configuration
+
+Some messages configuration uses switches.
+
+- Game switch`25`" **MSG Saut de ligne Auto**", allows you to enter multiple sentences on the same line and perform the line feed automatically.
+- Game switch`27`" **Pas de retour sur ponctuation**", tells PSDK not to create a line feed after punctuation symbols. (Line will continue). It's important to use these switches your events.
+
+## Display a simple message
+
+![ListeCommande](https://image.communityscriptproject.com/psdkwiki/img/Msg1.png)
+
+To display a simple message, you edit an event, insert a Show Message command. A window should display a textarea, enter your message inside and press OK.
+
+The command list should show a Message command.
+
+Note that under PSDK, messages are shown like in DPPt or HGSS, if you put various line on the same message command, the message scrolls up after the second line. If you enter two different Message command, there's no scroll up.
+
+## Add colors
+
+It works like RMXP use `\c[$]` where `$` is one of the following color code :
+
+![ListeCouleur](https://image.communityscriptproject.com/psdkwiki/img/Msg3.png)
+
+- 0 = Normal
+- 1 = Blue
+- 2 = Red
+- 3 = Green
+- 4 = Cyan
+- 5 = Magenta
+- 6 = Yellow
+- 7 = Gray
+- 8 = White
+
+Add ten to get the color for a black background.
+
+## Show the player name or a Hero name (RMXP Database)
+
+To show the player name use the code `\n[$]` where `$` is the id of the Hero in the database (1 = player).
+
+## Show the name of a Creature in the Party
+
+To show the name of a creature in the party, use the code `\p[$]` where `$` is the position of the creature in the party. (1, 2, 3, 4, 5, 6).
+
+## Show the key name
+
+PSDK allows to bind any key to its virtual key thanks to the LiteRGSS. The virtual key are : A, B, X, Y, L, R, L2, R2, Select, Start, L3, R3, Down, Left, Right, Up Generally, the virtual key A is bind to C, the virtual key B is bind to X, the virtual key X is bind to V, the virtual key Y is bind to W.
+
+ 
+
+To show the real key used by the player use the following code `\k[$]` where `$` is the name of the virtual key.
+
+## Show the value of a game variable
+
+To show the value of a game variable use the code `\v[$]` where `$` is the id of the variable.
+
+## Add a e after words if the player plays a girl character
+
+Use the code `\E` at the end of a word.
+
+## Show different words according to the player character gender
+
+Use the special code `\f[GirlWord§BoiWord]`. If the player plays a girl character, it'll show GirlWord, otherwise it'll show BoiWord.
+
+## Show a text from the RH Text database
+
+Use the code `\t[x, y]` where `x` is the id of the text file and `y` is the id of the text. It allows automatic conversion.
+
+## Show a text from a Data/Text/Dialogs/ csv file
+
+To show a text from a csv dialog file, just start the message by `x, y` where `x` is the id of the csv file and `y` the line number minus two. Note : The rest of the message is ignored. Note 2 : The dialog files allow easy translation for your game.
+
+## Display dynamic text
+
+To display dynamic text, you can use a script command to save replacement :
+
+```text
+PFM::Text.set_variable("[Replacement Tag]", "Replacement text")
+```
+
+If the following message command include `[Replacement Tag]`, you'll see Replacement text instead.
+
+ 
+
+Example, display time :
+
+![Message heure](https://image.communityscriptproject.com/psdkwiki/img/Msg4.png)
+
+At the end of the event, execute the script command `PFM::Text.reset_variables` to clear text replacement. Note that `PFM::Text.set_variable` always takes two strings. Convert your values (integers, floats etc...) using the `.to_s` function.
+
+## Wait a short amount of time
+
+If you want your message to wait a short amount of time before displaying the rest, use `[WAIT $]` where `$` is the number of ingame frame to wait (60FPS).
+
+## Show the name of the speaking character
+
+To show the name of the speaking character during the message use the following special tag `:[name=Name of the character]:`
+
+ 
+
+You can only use one special tag in the message but it can contain various commands.
+
+## Show the battler of a speaking character
+
+It's possible to display the battler of a trainer during a message. You only need to use the face= selector in your message : `:[face=x_position,name_in_battlers,opacity]:`
+
+ 
+
+Remember that you can use various `face=` with one `name=` in the special tag, you only need to separate all the selector with a semicolon.
+
+ 
+
+Example :
+
+![Exemple](https://image.communityscriptproject.com/psdkwiki/img/Psdk_message_tag_spe.png)
+
+## Show the city plan and temporarily change the windowskin
+
+It's possible to show a picture from Graphics/Pictures as a city plan. When the picture is shown the text is shifted to the right to prevent it from covering the picture. Use the tag `:[city=picture_name]:` in your message. To temporarily change the windowskin use the code `$scene.message_window.windowskin_overwrite = 'name in graphics/windowskins'` before the message. It'll be only applied to the next message.
+
+ 
+
+Example :
+
+![Example](https://image.communityscriptproject.com/psdkwiki/img/Psdk_message_city.png)
+
+## Make the player turn toward the talking event or to another event
+
+It's possible to make the player to toward the talking event or another event of your choice. To do that, you just have to write `:[lookto=X]:` in your message. X must be replaced with 0 if you want to target the talking event or by the event ID to which the player should turn to.
+
+![Exemple](https://image.communityscriptproject.com/psdkwiki/img/Psdk_message_lookto_another_event.png)
+
+![Exemple](https://image.communityscriptproject.com/psdkwiki/img/Psdk_message_lookto_talking_event.png)
+

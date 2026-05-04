@@ -1,0 +1,35 @@
+---
+title: This project is from an old version of RPG Maker and cannot be loaded
+seoDescription: Comment corriger le problème d'ouverture de projet avec RPG Maker
+  XP à cause de la version du projet
+order: 0
+---
+
+Quand vous ouvrez votre projet avec RPG Maker XP, vous voyez surement ce message :
+
+![Message d'erreur lors de l'ouverture du projet](./images/image_2022-08-29_204011769.png)
+
+Pas d'inquiétude, c'est rien de grave et ça peut être facilement corriger.
+
+Vous devez tout d'abord trouver la version d'RPG Maker XP que vous utilisez. Pour ce faire, ouvrir RPG Maker XP sans projet, vous devriez voir cet écran :
+
+![Fenêtre de RPG Maker XP sans projet](./images/image_2022-08-29_204224288.png)
+
+Vous devrez cliquer sur **Help** puis **About...**
+
+Ceci affichera une fenêtre contenant "RPGXP Version **X.0Yz**"
+
+![Fenêtre à propos (about) de RPG Maker XP](./images/image_2022-08-29_204406217.png)
+
+Dans cet exemple, ça dit que l'on utilise **RPGXP 1.05a**. Avec cette information nous pouvons corriger le fichier de projet.
+
+Ouvrez le Bloc Note puis ouvrez le fichier **Game.rxproj** se trouvant dans le dossier de votre projet. Vous devriez voir un texte relativement simple :
+
+![Fichier de projet ouvert avec le bloc note](./images/image_2022-08-29_204658742.png)
+
+Dans ce texte, vous désirez que le numéro affiché corresponde à celui de la fenêtre About de RPG Maker XP. Dans ce fichier c'est écrit **1.06** et RPG Maker XP est en version **1.05a**. Vous allez donc changer **1.06** en **1.05**
+
+![Fichier de projet avec la bonne version](./images/image_2022-08-29_204836932.png)
+
+Une fois fait, sauvegardez le fichier et ouvrez votre projet avec RPG Maker XP. Cela devrait fonctionner !
+

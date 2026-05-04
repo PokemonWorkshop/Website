@@ -1,0 +1,34 @@
+---
+title: Afficher un choix
+seoDescription: Comment utiliser la commande de choix de RMXP dans Pokémon SDK
+order: 0
+---
+
+Sous PSDK il existe deux méthodes pour afficher un choix. La méthode classique, qui doit toujours être utilisée lorsque vous avez entre 2 et 4 options et la méthode script qui doit être utilisé si vous avez plus que 4 options.
+
+ 
+
+Bien entendu, les choix ont des configurations et des codes spécifiques.
+
+## Configurer les choix
+
+L'interrupteur `26` " **Choix en haut**" affiche le choix en haut à gauche à la manière des distributeurs de boisson.
+
+## Afficher un choix simple
+
+Pour afficher un choix simple, utilisez la commande de message pour expliquer le choix et ensuite la commande d'affichage de choix pour effectuer le choix.
+
+Cette commande de choix permet d'autoriser l'annulation. L'annulation du point de vue du joueur consiste à appuyer sur la touche retour. Selon les paramètres que vous avez choisi, cela peut prendre un choix spécifique ou réaliser une action spécifique. Si vous n'autorisez pas l'annulation, le joueur sera contraint de choisir.
+
+## Afficher des couleurs dans les choix
+
+Chaque option peut avoir sa propre couleur, il vous suffit pour cela d'entrer le même code que pour les messages `\c[x]` où `x` correspond au code couleur.
+
+## Utiliser un texte dynamique (Pokémon Studio &amp; CSV)
+
+Les textes dynamique fonctionnent de la même manière que dans les [Messages](https://psdk.pokemonworkshop.fr/wiki/fr/event_making/messages.html#cat_10 "Afficher un message provenant du fichier Texte de Ruby Host")
+
+## Afficher un choix avec plus de 4 options
+
+Pour afficher un choix ayant plus de 4 options vous devez utiliser la commande de script `choice` et ensuite utiliser la commande d'affichage de message qui décrit le choix. Une fois le choix exécuté, utilisez les commandes de condition pour inspecter la variable qui contient le résultat du choix (selon les paramètres de votre commande).
+

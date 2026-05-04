@@ -1,0 +1,71 @@
+---
+title: Substitube's Balls
+seoDescription: Add more ball effect to your fangame
+publishDate: '2023-07-23 15:32:00'
+order: 20230723
+---
+
+If you don't know who [Substitube](https://www.youtube.com/watch?v=n4VLVbA61L0&t=92s) is, they're a YouTuber who gives out ideas in video format. They released a video about [50 different unique Pokéball ideas](https://www.youtube.com/watch?v=n4VLVbA61L0) , and I want to slowly do them all! This plugin currently adds the functions/modifiers for most of the first batch of balls:
+
+- Dex Ball - Completes dex entry, even if fail to catch.
+- Cycle Ball - Returns the ball if the target was inactive. Didn't attack or is asleep/fully paralyzed.Not in yet
+- Dawn Ball -Similar to Dusk Ball, better during day or inside.
+- Luck Ball - Catch rate is random between 0-255.
+- Stat Ball - Increased catch rate if target has lowered stats.
+- Evo Ball - Increased catch rate on target who have evolved.
+- Seeker Ball - Can catch Pokémon that are semi-invulnerable.
+- Shiny Ball - Increased catch rate on shiny Pokémon.
+- Value Ball - Guaranteed 3 max IVs.Not in yet
+- Shrink Ball - Increased catch rate on lighter or Minimized Pokémon.
+- Nuzlocke Ball - Only catches first encounter of Routes.Not in yet
+- Trap Ball - Increased catch rate if target is trapped (bind/wrap/fire spin).
+- Rage Ball - Increased catch rate if one of your Pokémon fainted last turn.Not in yet
+- Executive Ball - Allows user to steal Pokémon. (PSDK has this by default, "Rocket Ball")
+- Para Ball - Increased catch rate on target's that are paralyzed or electric-type.
+- Burn Ball - Increased catch rate on target's that are burned or fire-type.
+- Poison Ball - Increased catch rate on target's that are poisoned/badly poisoned or poison-type.
+- Freeze Ball - Increased catch rate on target's that are frozen or ice-type.
+- Dizzy Ball - Increased catch rate on target's that are confused or psychic-type.
+
+Please note that this resource only includes the code for these balls. You will have to make a graphic for them yourself and add the balls you want to your database.
+
+## Installation
+
+{% row columns="3/4 1/4" bottom_margin="margin-m" centered_content=true %}
+{% column %}
+1.) Download the PSDKPlugin and put it in your project's script folder   
+2.) Open your project in Pokémon Studio   
+3.) Create a new item, make sure the category is "Ball" and the identifier matches one of these listed in next section  
+4.) Save and enjoy
+
+{% /column %}
+{% column %}
+{% cta href="https://www.mediafire.com/file/tqdxkn6mcdazvks/SubstitubesBalls_FirstBatch.psdkplug/file" align="center" %}Download Plugin{% /cta %}
+
+{% /column %}
+{% /row %}
+
+## Ball Identifiers
+
+If it isn't obvious, the identifier is gonna be how the game knows which code to give the ball. It's important to note that if you want the " **Executive Ball**" that you give it the " **rocket\_ball**" identifer! It's the only unique one.
+
+- Dex Ball - `dex_ball`
+- Cycle Ball - `cycle_ball` **(Not in yet)**
+- Dawn Ball - `dawn_ball`
+- Luck Ball - `luck_ball`
+- Stat Ball - `stat_ball`
+- Evo Ball - `evo_ball`
+- Seeker Ball - `seeker_ball`
+- Shiny Ball - `shiny_ball`
+- Value Ball - `value_ball` **(Not in yet)**
+- Shrink Ball - `shrink_ball`
+- Nuzlocke Ball - `nuzlocke_ball` **(Not in yet)**
+- Trap Ball - `trap_ball`
+- Rage Ball - `rage_ball` **(Not in yet)**
+- Executive Ball - `rocket_ball`
+- Para Ball - `para_ball`
+- Burn Ball - `burn_ball`
+- Poison Ball - `poison_ball`
+- Freeze Ball - `freeze_ball`
+- Dizzy Ball - `dizzy_ball`
+

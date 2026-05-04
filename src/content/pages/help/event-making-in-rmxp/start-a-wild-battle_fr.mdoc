@@ -1,0 +1,78 @@
+---
+title: Démarrer un combat de Pokémon
+seoDescription: Comment créer des combats de Pokémon Sauvage en évent dans RPG Maker
+  XP
+order: 0
+---
+
+## Démarrer un combat simple contre un Pokémon sauvage
+
+Pour démarrer un combat simple contre un Pokémon sauvage, il vous suffit d'exécuter la commande `call_battle_wild(id_pokemon, level)`
+
+ 
+
+Exemple :
+
+```text
+call_battle_wild(:pikachu, 5)
+```
+
+(référez vous à la [Liste des Pokémon](https://psdk.pokemonworkshop.com/db/db_pokemon.html) pour les ID de Pokémon)
+
+## Démarrer un combat contre plusieurs Pokémon sauvages
+
+Il est possible de déclencher un combat double contre des sauvages, il suffit d'utiliser la commande suivante : `call_battle_wild(id_pokemon1, level1, id_pokemon2, level2)`
+
+ 
+
+Exemple :
+
+```text
+call_battle_wild(:pikachu, 5, :meowth, 5)
+```
+
+## Démarrer un combat contre un Pokémon paramétré
+
+Vous pouvez générer les Pokémon avant de lancer le combat en utilisant la commande :
+
+```text
+pokemon = PFM::Pokemon.generate_from_hash(id: id_pokemon, level: level_pokemon)
+```
+
+Les divers paramètres de cette commande (en dehors de id et level) sont :
+
+- `item`: ID numérique de l'objet porté
+- `stats`: Tableaux des IV [hp, atk, dfe, spd, ats, dfs]
+- `moves`: Tableaux des ID attaques (numériques)
+- `gender`: Sexe du Pokémon (0 = asexué, 1 = mâle, 2 = femelle)
+- `shiny`: Si le Pokémon est forcément shiny
+- `no_shiny`: Si le Pokémon ne peut absolument pas être shiny
+- `form`: Numéro de la forme du Pokémon
+- `rareness`: Taux de capture du Pokémon (numérique)
+- `trainer_name`: Nom du dresseur d'origine du Pokémon
+- `trainer_id`: ID secret du dresseur d'origine du Pokémon
+- `given_name`: Surnom du Pokémon
+- `loyalty`: Bonheur du Pokémon
+- `ball`: ID de la balle utilisée pour capturer le Pokémon
+- `bonus`: EV du Pokémon [hp, atk, dfe, spd, ats, dfs]
+- `nature`: Nature du Pokémon
+
+Exemple d'utilisation :
+
+ 
+
+1v1 contre un Pikachu cosplayer :
+
+```text
+pokemon = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 2, gender: 2)
+call_battle_wild(pokemon, nil)
+```
+
+2v2 contre deux Pikachu cosplayer :
+
+```text
+pokemon1 = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 2, gender: 2)
+pokemon2 = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 5, gender: 2)
+call_battle_wild(pokemon1, nil, pokemon2)
+```
+

@@ -1,0 +1,77 @@
+---
+title: Enable the Pokedex
+seoDescription: How to enable the Pokédex in RMXP for Pokémon SDK
+publishDate: '2022-09-02 18:30:00'
+order: 0
+---
+
+## Enable the Pokedex
+
+Using event command: Enable switch `100`.  
+Using script:
+
+```text
+$pokedex.enable
+```
+
+## Disable the Pokedex
+
+Using event command: Disable switch `100`.  
+Using script:
+
+```text
+$pokedex.disable
+```
+
+## Knowing the activation state of the Pokedex
+
+Using event command: Read switch `100`.  
+Using script:
+
+```text
+$pokedex.enabled?
+```
+
+## Define the national or regional state of the Pokedex
+
+Using event command: Edit switch `99`. Enabled = national, disabled = regional. Using script:
+
+```text
+$pokedex.set_national(is_national)
+```
+
+Parameters :
+
+- `is_national`:`true`if the dex should be national,`false`otherwise.
+
+## Detect if the Pokedex is in national mode
+
+Using event command: Read switch `99`.  
+Using script:
+
+```text
+$pokedex.national?
+```
+
+## Knowing how many Pokémon the player has seen
+
+Using event command: Read variable `2`.  
+Using script:
+
+```text
+$pokedex.pokemon_seen
+```
+
+## Knowing how many Pokemon have been caught
+
+Using event command: Read variable `3`.  
+Using script:
+
+```text
+$pokedex.pokemon_captured
+```
+
+## Other informations
+
+You can know a lot of things by accessing the $pokedex variable. Everything is documented here : [PFM::Pokedex](https://psdk.pokemonworkshop.fr/yard/PFM/Pokedex.html)
+

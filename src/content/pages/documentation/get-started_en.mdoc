@@ -1,0 +1,123 @@
+---
+title: Get Started
+seoDescription: Get started with creating a Project under Pokémon Studio
+cover:
+- "./images/image_2022-09-18_162730743.png"
+publishDate: '2022-09-18 16:15:00'
+order: 0
+---
+
+In this page, we'll show you the basic information about how to start a project with Pokémon Studio. If you prefer video tutorials, don't hesitate to check out [this video](https://www.youtube.com/watch?v=hkxUMJ5okrQ).
+
+## Download Pokémon Studio {% id="download" %}
+
+First of all, you need to download the **latest version** of Pokémon Studio if you haven't already. You can find it on the following page: [Releases of Pokémon Studio](https://github.com/PokemonWorkshop/PokemonStudio/releases).
+
+You'll want to choose the file supported by your operating system in the **Assets** section:
+
+![Assets section on github](./images/capture-d-ecran-2025-02-17-151753.png)
+
+As a reminder:
+
+- For Windows, download the `Pokemon-Studio-Setup-X.X.X.exe` file
+- For Linux RPM, download the `pokemon-studio-X.X.X-1.x86_64.rpm` file
+- For Linux using `dpkg`, download the `pokemon-studio-X.X.X_amd64.deb` file
+- For MacOS, download the `Pokemon.Studio-darwing-arm64-X.X.X.zip` archive file
+
+Once downloaded, you can simply click on it and it will install and start Pokémon Studio.
+
+### MacOS errors
+
+⚠️On MacOS, if you get errors during the installation, with the message `"Pokémon Studio" is damaged and can't be opened`, follow these steps.
+
+It's not working because it was downloaded outside of the appstore so MacOS adds a bunch of xattr.
+
+- Copy `Pokemon Studio.app` in `Applications`
+- Open a terminal and run the following command: `cd /Applications`
+- Run the following command: `sudo xattr -cr "Pokemon Studio.app"`
+
+If you are still experiencing issues, you can click on the button below for more information.
+
+{% cta href="https://github.com/PokemonWorkshop/PokemonStudio/issues/456" align="center" %}Repair Pokémon Studio on MacOS{% /cta %}
+
+## Create a new Project {% id="new-project" %}
+
+When you start Pokémon Studio, you are welcomed with a simple screen allowing you to open or create a new project.
+
+Click on the **New Project** button.
+
+![Welcome screen of Pokémon Studio](./images/image_2022-09-18_162306584.png)
+
+From there, a drawer opens and asks you for informations. Enter them and click on **Create my Project**. You can modify the project's icon and name later on.
+
+![New project form](./images/image_2022-09-18_162522323.png)
+
+You'll have to choose a folder. Pick an empty folder so the project creation will work. **Pokémon Studio will refuse to create a project in a folder that contains folder or files**.
+
+You're now all settled, you can start messing around!
+
+## What does your new Project contain? {% id="new-project-content" %}
+
+All new projects are created containing the [demo of PSDK](https://pokemonworkshop.com/en/articles/the-new-pokemonsdk-technical-demo "article about the PSDK demo"), which you can learn more about in its own dedicated article. If you have never used PSDK, **play it**! It is the perfect way to catch a glimpse of everything the engine has to offer, and contains numerous commented examples of events and systems you may want to use in your own project.
+
+This does mean **you do not start with a blank project**.
+
+### Should I delete the Demo's maps and database to start from a clean slate? {% id="clean-slate" %}
+
+It is _not_ advised to delete the demo's data when starting your own project, both because you can and should use it as reference, and because you may delete key data before you know what you are doing. Of course, you can always delete it _later_, and keep a separate demo project for reference.
+
+While you are able to do so, **deleting all the Demo's data is unnecessary even to make a fully original game.** If you have no teleports to the Demo's maps, your players will never see them, and you can create your own fully custom pokedex without deleting any monsters in the database since they are separate lists.
+
+### New Project files breakdown {% id="new-project-files-breakdown" %}
+
+![Project file structure](./images/folder_structure.png)
+
+In your files explorer, when you open your new project's folder, you will find a `README.md` file. Please read it thoroughly to get started.
+
+Do not change the folder architecture of your project.
+
+To skip the main menu and quickly test your game, run `debug_fast.bat`. To avoid narrow window issues while coding in RMXP, run `extendtext.exe`.
+
+Custom scripts and PSDK plugins should go in the `scripts` folder (Do not touch `plugins`). Do note **Essentials plugins are not compatible with PSDK** , PSDK has its own plugin system and library.
+
+`graphics` contain the graphic resources of your game except tilesets and maps, which are under `Data/Tiled/` as of Pokemon Studio 2.0. Make sure to read the `README_TILED.md` in that folder as well.
+
+### Opening Cutscene and Start maps {% id="openingcutscene-start" %}
+
+If you navigate to the world tab on Pokemon Studio, you will find two seemingly blank maps called Opening Cutscene and Start. These maps are not blank, they actually contain important events.
+
+ 
+
+You are free to modify these maps by changing the events in RMXP.
+
+{% row columns="1/2" bottom_margin="margin-m" %}
+{% column %}
+![A screenshot of PSDK's default opening cutscene.](./images/openingcutscene.png)
+
+The **Opening Cutscene** map plays an animation when launching the game, before the title screen.
+
+If you don't want to use this map, you can disable this behavior in Pokemon Studio under `Project Parameters/Configuration` or change the setting to a new valid map ID.
+
+{% /column %}
+{% column %}
+![The Player's Starting Position flag in RMXP](./images/starting-position.png)
+
+The **Start** map contains RMXP's _Player's Starting Position_ flag and is used for setup (introduction to set the player's appearance, berry growth, etc.).
+
+If you don't want to use this Start map, set _Player's Starting Position_ somewhere else and ensure all events that need to be initialized are still being set up on the new starting position's map.
+
+If you forget the events setup, your player will remain invisible.
+
+{% /column %}
+{% /row %}
+
+## Tutorials {% id="tutorials" %}
+
+Your best and most reliable tutorial is the **Demo project**. It is the most comprehensive, up-to-date, and self-contained tutorial to use PSDK. The `README.md` file in the Demo project also contains useful information and links.
+
+You can find resources and examples on the Pokemon Workshop website in our [Help section](https://pokemonworkshop.com/en/help "Help"), including help for using Pokemon Studio.
+
+Community member Invatorzen has a thorough Youtube playlist on [how to make a Pokemon Fangame with PSDK](https://youtu.be/hkxUMJ5okrQ?list=PLBCQaB3tnyNxqvm48pSC1jEESpgqw0RSe). Pokemon Workshop also has [its own youtube channel](https://www.youtube.com/@pokemonworkshop). Feel free to consult our [article listing tutorials for PSDK](https://pokemonworkshop.com/en/help/pokemon-sdk/are-there-tutorials-for-psdk) for navigation.
+
+It is also highly recommended to [join our discord](https://discord.com/invite/0noB0gBDd91B8pMk "Pokemon Workshop Discord"). If you have an issue, make sure to **look up your answer before asking** , in case it has already been answered before. The discord also distributes resources and plugins.
+

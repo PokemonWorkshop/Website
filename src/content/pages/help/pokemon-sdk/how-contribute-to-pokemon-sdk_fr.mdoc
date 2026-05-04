@@ -1,0 +1,98 @@
+---
+title: Comment contribuer à Pokémon SDK ?
+seoDescription: Comment contribuer à Pokémon SDK
+order: 0
+---
+
+## Fork PSDK
+
+- Se rendre sur le [Repo de PSDK](https://gitlab.com/pokemonsdk/pokemonsdk)
+- Cliquer sur le bouton fork
+- Dans votre fork
+  - Cliquer sur Settings -\> Repository button
+  - Se rendre dans la section `Mirroring repositories`
+  - Placer cette URL dans Git Repository URL : `https://gitlab.com/pokemonsdk/pokemonsdk.git`
+  - Régler Mirror Direction à `Pull`
+  - Cocher la case `Only mirror protected branches`
+
+## Mettre en place votre repository local
+
+Dans votre dossier Pokémon SDK, ouvrez `cmd.bat` et écrivez les commandes suivantes :
+
+- `cd pokemonsdk`
+- `git remote set-url origin yoursshurl`
+  - Vous pouvez récupérer l'URL en cliquant sur `clone` dans les détails de votre Fork de PSDK. Prenez l'URL SSH sinon ce sera compliqué de Push.
+
+- `git pull`
+
+## Lors de la création d'une nouvelle fonctionnalité ou de la correction d'un bug
+
+Vous devez suivre le nommage des branches :
+
+- Les branches des fonctionnalités sont nommées de cette façon : `feature/us-ID-name`
+- Les branches des corrections de bug sont nommées de cette façon : `bugfix/us-ID-name`
+
+Pour créer une nouvelle branche, entrez les commandes suivantes à partir de votre fossier pokemonsdk:
+
+- `git checkout development`
+- `git pull`
+- `git checkout -b name_of_the_branch`
+
+Vous pourrez désormais travailler sur ce que vous devez travailler.
+
+**Note** : Vous ne devez jamais commit sur `development` directement. Si vous le faites, vous casserez votre fork et le mirroring ne fonctionnera plus.
+
+## Quand vous créez un commit sur votre branche
+
+Si votre branche a pour but de corriger un bug, assurez-vous que le dernier commit contient le texte suivant dans le message de commit : `fix #idofthe_issue`
+
+Lorsque vous fusionnerez avec la branche de développement officielle, le problème sera clos.
+
+## Avant d'envoyer vos changements dans la branche development
+
+Première chose à savoir. Vous **ne devez pas** fusionner votre modification avec la branche `development` directement. Vous devez **créer une Merge Request** depuis votre branche feature/bugfix vers le repository officiel et la branche `development` de `pokemonsdk/pokemonsdk`.
+
+Deuxième chose : **Vous devez tester votre fonctionnalité ou votre correction de bug.**
+
+- Le projet PSDK devrait pouvoir démarrer.
+- Toutes les fonctionnalités du PSDK doivent fonctionner comme avant (sauf celle que vous avez corrigée évidemment).
+- Votre fonctionnalité/réparation de bug ne doit pas introduire de nouveau bug (nous ne nous fâcherons pas si vous ne voyez pas de nouveaux bugs).
+
+Troisièmement, il faut être à jour.
+
+- Vous devez fusionner la branche `development` dans votre branche de fonctionnalité/bugfix afin d'être à jour.
+- Vous devez résoudre les conflits.
+
+## Quand vous créez votre Merge Request
+
+- Dans `Source branch`
+  - Sélectionnez votre projet
+  - Sélectionnez la branche que vous voulez fusionner avec la branche `development`
+
+- Dans `Target branch`
+  - Sélectionnez le projet `pokemonsdk/pokemonsdk`
+  - Sélectionnez la branche `development`
+
+- Cliquez sur le bouton `Compare branches and continue`
+
+Vous verrez l'interface `New Merge Request`
+
+- Dans Titre, entrez un titre plus explicite que le nom de la branche
+- Dans Description
+  - Décrivez le but de la Merge Request
+  - Faites référence aux issues ou tâches ClickUp si nécessaire
+  - Dites-nous si vous avez ajouté des fichiers qui ne sont pas censés être dans le dossier `pokemonsdk` (graphics par exemple)
+    - Vous pouvez mettre un lien vers une archive 7z qui ajoute toutes les nouvelles ressources en l'extrayant simplement dans la racine du projet.
+
+- Assignez la Merge Request à un Maintainer de PSDK.
+- Ajoutez des étiquettes qui peuvent rendre la fusion plus évidente sur le champ d'application.
+- Cochez `Delete source branch when merge request is accepted`
+- Cochez `Squash commits when merge request is accepted`
+- Cliquez sur le bouton `Submit merge request`
+
+Si votre demande de fusion n'a reçu aucun commentaire ou n'a pas été fusionnée après **une semaine** contactez un maintainer de PSDK via le [Discord de Pokémon Workshop](https://discord.com/invite/0noB0gBDd91B8pMk "Lien vers le Discord de Pokémon Workshop"). Nous avons un webhook qui indique toutes les actions sur le repo principal de `Gitlab`, donc un maintainer devrait la voir, mais nous pouvons également être occupés et personne n'est parfait.
+
+## Règles de programmation
+
+Vous pouvez trouver plus d'informations sur les [règles de programmation](https://gitlab.com/pokemonsdk/pokemonsdk/-/blob/development/CONTRIBUTING.md "Règles de programmation de PSDK") sur le repository GitLab.
+
