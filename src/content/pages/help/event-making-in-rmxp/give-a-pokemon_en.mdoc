@@ -11,7 +11,7 @@ order: 0
 
 To give a Pokemon to the player, enter the following script command :
 
-```text
+```ruby
 pokemon = add_pokemon(id, level, shiny)
 ```
 
@@ -25,7 +25,7 @@ The parameters are :
 
 Here are two examples where I give a level 5 Pikachu :
 
-```text
+```ruby
 add_pokemon(:pikachu, 5)
 add_pokemon(25, 5)
 ```
@@ -36,7 +36,7 @@ add_pokemon(25, 5)
 
 The command to give a Pokemon and rename it is the following :
 
-```text
+```ruby
 pokemon = add_rename_pokemon(id, level, shiny, num_char)
 ```
 
@@ -51,7 +51,7 @@ The parameters are :
 
 Here's an example where I give a level 5 Pikachu that can be renamed with 8 characters:
 
-```text
+```ruby
 add_rename_pokemon(:pikachu, 5, false, 8)
 ```
 
@@ -61,7 +61,7 @@ add_rename_pokemon(:pikachu, 5, false, 8)
 
 To give a specific Pokemon, you can use the following command :
 
-```text
+```ruby
 pokemon = add_specific_pokemon(hash)
 ```
 
@@ -71,7 +71,7 @@ This method is based on the [PFM::Pokemon.generate\_from\_hash](https://psdk.pok
 
 Adding an Alolan Meowth :
 
-```text
+```ruby
 ajouter_pokemon_param(id: :meowth, level: 5, form: 1)
 ```
 
@@ -81,7 +81,7 @@ ajouter_pokemon_param(id: :meowth, level: 5, form: 1)
 
 You can rename a Pokemon using a command. As you may have seen, I wrote "pokemon = " before the add commands. It's because those commands return the added Pokemon if they were successfully executed. You can then parse it as first paramter of the following function (or use its index in the party) :
 
-```text
+```ruby
 rename_pokemon(poke_or_index, num_char)
 ```
 
@@ -94,14 +94,14 @@ The parameters are :
 
 Rename the Alolan Meowth :
 
-```text
+```ruby
 meowth = add_specific_pokemon(id: :meowth, level: 5, form: 1)
 rename_pokemon(meowth, 10) if meowth
 ```
 
 Rename the second Pokemon in the Party :
 
-```text
+```ruby
 renommer_pokemon(1)
 ```
 
@@ -111,7 +111,7 @@ renommer_pokemon(1)
 
 The command to add an egg to the party is :
 
-```text
+```ruby
 add_egg(info)
 ```
 
@@ -125,19 +125,19 @@ The info parameter can be :
 
 Add a Pichu egg :
 
-```text
+```ruby
 add_egg(172)
 ```
 
 or
 
-```text
+```ruby
 add_egg(:pichu)
 ```
 
 or
 
-```text
+```ruby
 add_egg(id: :pichu, level: 1, form: 1)
 ```
 
@@ -147,7 +147,7 @@ add_egg(id: :pichu, level: 1, form: 1)
 
 To store a Pokemon directly in the PC, the following command can be used :
 
-```text
+```ruby
 pokemon = store_pokemon(id, level, shiny)
 ```
 

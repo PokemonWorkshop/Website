@@ -85,7 +85,7 @@ Régler le déclenchement de la première page en processus parallèle en utilis
 
 Assurez-vous que la page 2 contient le "Self Switch A" comme actif (ou celui que vous avez activé) et réglez son déclenchement sur "Autorun". Si vous voulez que le dresseur s'approche du joueur, ouvrez "extendtext.exe" dans le dossier racine de votre projet, et au début de la page 2, placez l'un de ces scripts avant d'appeler le combat :
 
-```text
+```ruby
 # Le dresseur s'approchera de vous et vous dira "Hello!".
 trainer_eye_sequence('Hello!')
 
@@ -132,7 +132,7 @@ Cette méthode est essentiellement la même que la première. Elle est simple, i
 - Ouvrez un événement dans RPG Maker XP et cliquez sur "Script..." à la page 3 des "Event Commands"
 - Placez ceci dans votre script et remplacez la valeur par l'identifiant de votre dresseur
 
-```text
+```ruby
 # Changer 286 par l'identifiant de votre dresseur 
 start_trainer_battle(286)
 
@@ -142,7 +142,7 @@ $game_temp.battle_can_lose = true
 
 **REMARQUE** : Vous pouvez également changer le BGM (musique), ou même configurer des combats doubles et des combats doubles avec un allié de cette manière !
 
-```text
+```ruby
 # Pour définir un BGM spécifique :
 start_trainer_battle(286, bgm: 'pkmrb-battle3')
 

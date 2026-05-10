@@ -39,7 +39,7 @@ RandomHelper provides several helper classes allowing to select an option random
 
 The default helper is RandomHelper and accepts any kind of values. Example:
 
-```text
+```ruby
 helper = RandomHelper.new
 helper.add(50, "SomeString")
 helper.add(25, 6)
@@ -50,7 +50,7 @@ value = helper.get # => 50% "SomeString"; 25% 6; 25% :some_symbol
 
 You can use a RandomHelper for items:
 
-```text
+```ruby
 helper = ItemRandomHelper.new
 helper.add(60, :potion) 
 helper.add(30, :antidote)
@@ -60,7 +60,7 @@ give_item(helper.get, 1) # => 60% chance getting potion; 30% getting antidote; 1
 
 You can use a RandomHelper for Creatures:
 
-```text
+```ruby
 helper = PokemonRandomHelper.new
 helper.add(50, :pikachu)
 helper.add(50, :meowth)
@@ -77,7 +77,7 @@ Utility classes allowing you to defined Aliases for Switches or Variables.
 
 In a script, you can add the following code:
 
-```text
+```ruby
 $gs = SwitchesAlias.new({
   alias1: 36,
   alias2: 58
@@ -92,7 +92,7 @@ Of course, you can also assign Switch state, example: `$gs[:alias1] = true`
 
 In a script, you can add the following code:
 
-```text
+```ruby
 $gv = VariablesAlias.new({
   aliasForSomething: 899,
   elite4BeatCount: 556

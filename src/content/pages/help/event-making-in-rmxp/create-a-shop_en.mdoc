@@ -23,7 +23,7 @@ The `open_shop` script command obviously needs as first parameter a list of item
 
 Here's an example we'll analyze together :
 
-```text
+```ruby
 open_shop([:poke_ball, :potion, :antidote, :paralyze_heal], {poke_ball: 150, potion: 300, paralyze_heal: 400}, show_background: true)
 ```
 
@@ -41,7 +41,7 @@ The syntax really is important. The first parameter is incased in [], the second
 
 To open a limited shop, you'll first need to create a shop with the list of available items and quantities. You'll need to that end the script command `add_items_to_limited_shop`. It takes two mandatory parameters and two optional ones. Let's analyze this with an example.
 
-```text
+```ruby
 add_limited_shop(:shop_argenta, [:poke_ball, :potion, :antidote, :paralyze_heal], [5, 3, 2, 1], shop_rewrite: false)
 ```
 
@@ -69,7 +69,7 @@ This command accepts the same parameters as the command to add stock, except tha
 
 Example :
 
-```text
+```ruby
 remove_items_from_limited_shop(:shop_argenta, [:poke_ball, :potion, :antidote, :paralyze_heal], [10, 15, 20])
 ```
 

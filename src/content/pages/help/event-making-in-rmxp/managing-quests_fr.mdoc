@@ -18,7 +18,7 @@ Pour démarrer une ou plusieurs quêtes vous allez appeler un certain nombre de 
 
 Une fois que vous avez appelé `$quests.start(id)` il faut indiquer au système de quête qu'il faut effectivement démarrer les quêtes :
 
-```text
+```ruby
 $quests.check_up_signal
 ```
 
@@ -37,7 +37,7 @@ Les autres objectifs sont validés automatiquement par PSDK.
 
 Il est possible de cacher les objectifs d'une quête, Ruby Host n'est juste pas capable de permettre de les cacher. Cela dit, si vous trouvez le moyen de définir les objectifs cachés, pour les afficher il faut utiliser la méthode suivante :
 
-```text
+```ruby
 $quests.show_goal(quest_id, goal_index)
 ```
 
@@ -54,7 +54,7 @@ Pour terminer les quêtes il y a deux choses à faire, vérifier si elle est ter
 
 Pour vérifier si tous les objectifs ont été réalisés, rien de plus simple, appelez la commande suivante dans une condition :
 
-```text
+```ruby
 $quests.finished?(quest_id)
 ```
 
@@ -62,13 +62,13 @@ $quests.finished?(quest_id)
 
 Pour vérifier si les gains ont été distribués, il faut écrire la commande suivante dans une condition :
 
-```text
+```ruby
 $quests.earnings_got?(quest_id)
 ```
 
 Si les gains n'ont pas été distribués, distribuez les ainsi :
 
-```text
+```ruby
 $quests.get_earnings(quest_id)
 ```
 

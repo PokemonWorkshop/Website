@@ -25,7 +25,7 @@ The first parameter initializes the Pokemon list of the Shop, which can be an ar
 
 Here's an example we'll analyze together :
 
-```text
+```ruby
 pokemon_shop_open([4, 17, 22, 50], [2500, 5000, 10000, 0], [5, 50, 30, {level: 100, shiny: true}], show_background: true)
 ```
 
@@ -45,7 +45,7 @@ The syntax really is important. The first three parameters are incased in [], an
 
 To open a limited shop, you'll first need to create a shop with the list of available Pokemon and their quantities. You'll need to that end the script command `add_new_pokemon_shop`. It takes four mandatory parameters and two optional ones. Let's analyze this with an example.
 
-```text
+```ruby
 add_new_pokemon_shop(:pkm_shop_celadon, [1, 2, 3], [1250, 2500, 5000], [5, 16, {level: 36, shiny: true}], [3, 2, 1], shop_rewrite: false)
 ```
 
@@ -80,7 +80,7 @@ This command has the same parameters as the stock adding one with two or three e
 
 Example :
 
-```text
+```ruby
 remove_pokemon_from_shop(:pkm_shop_celadon, [1, 2, 3], [{ form: 0 }, {form : 0}, {form: 1}], [1, 3, 10])
 ```
 
@@ -94,7 +94,7 @@ Now that the stock of the shop has been created, it's time to open it. And you o
 
 Remember, i said previously that it was possible to put a Symbol as first parameter and a Hash as second parameter: you just have to give your Shop Symbol as first parameter, un Hash as second parameter (a Hash for prices will be written as : { Pokemon\_ID =\> new\_price }) if you want to launch a sale on a specific Pokemon. And concerning the third parameter, it's not necessary. Moreover, it's not used when the first parameter is a Symbol. Here is an example of Limited Pokemon Shop.
 
-```text
+```ruby
 pokemon_shop_open(:pkm_shop_celadon, { 1 => 500, 4 => 800, 7 => 9000 }, show_background: true)
 ```
 

@@ -37,7 +37,7 @@ RandomHelper fourni divers classes permettant de selectionner une option avec de
 
 L'utilitaire par défaut est `RandomHelper` et accepte n'importe quel type de valeur. Exemple:
 
-```text
+```ruby
 helper = RandomHelper.new
 helper.add(50, "SomeString")
 helper.add(25, 6)
@@ -48,7 +48,7 @@ value = helper.get # => 50% "SomeString"; 25% 6; 25% :some_symbol
 
 Vous pouvez utiliser un RandomHelper pour les objets:
 
-```text
+```ruby
 helper = ItemRandomHelper.new
 helper.add(60, :potion) 
 helper.add(30, :antidote)
@@ -58,7 +58,7 @@ give_item(helper.get, 1) # => 60% chance getting potion; 30% getting antidote; 1
 
 Vous pouvez utiliser un RandomHelper pour les Pokémon:
 
-```text
+```ruby
 helper = PokemonRandomHelper.new
 helper.add(50, :pikachu)
 helper.add(50, :meowth)
@@ -75,7 +75,7 @@ Classe utilitaire vous permettant de définir les Alias pour vos interrupteur ou
 
 Dans un script, vous pouvez ajouter le code suivant:
 
-```text
+```ruby
 $gs = SwitchesAlias.new({
   alias1: 36,
   alias2: 58
@@ -90,7 +90,7 @@ Bien sûr, vous pouvez assigner l'étant d'un interrupteur, exemple: `$gs[:alias
 
 Dans un script, vous pouvez ajouter le code suivant:
 
-```text
+```ruby
 $gv = VariablesAlias.new({
   aliasForSomething: 899,
   elite4BeatCount: 556

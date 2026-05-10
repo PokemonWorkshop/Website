@@ -13,7 +13,7 @@ Pour démarrer un combat simple contre un Pokémon sauvage, il vous suffit d'ex�
 
 Exemple :
 
-```text
+```ruby
 call_battle_wild(:pikachu, 5)
 ```
 
@@ -27,7 +27,7 @@ Il est possible de déclencher un combat double contre des sauvages, il suffit d
 
 Exemple :
 
-```text
+```ruby
 call_battle_wild(:pikachu, 5, :meowth, 5)
 ```
 
@@ -35,7 +35,7 @@ call_battle_wild(:pikachu, 5, :meowth, 5)
 
 Vous pouvez générer les Pokémon avant de lancer le combat en utilisant la commande :
 
-```text
+```ruby
 pokemon = PFM::Pokemon.generate_from_hash(id: id_pokemon, level: level_pokemon)
 ```
 
@@ -63,14 +63,14 @@ Exemple d'utilisation :
 
 1v1 contre un Pikachu cosplayer :
 
-```text
+```ruby
 pokemon = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 2, gender: 2)
 call_battle_wild(pokemon, nil)
 ```
 
 2v2 contre deux Pikachu cosplayer :
 
-```text
+```ruby
 pokemon1 = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 2, gender: 2)
 pokemon2 = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 5, gender: 2)
 call_battle_wild(pokemon1, nil, pokemon2)

@@ -10,7 +10,7 @@ order: 0
 
 Pour donner un objet depuis un évènement vous pouvez utiliser la commande générale:
 
-```text
+```ruby
 add_item(id, no_delete)
 ```
 
@@ -25,7 +25,7 @@ Cependant, il existe également des commandes plus spécifiques à certains type
 
 Pour ramasser des objets au sol :
 
-```text
+```ruby
 pick_item(item_id, count, no_delete)
 ```
 
@@ -37,7 +37,7 @@ Les paramètres sont :
 
 Pour donner un objet via un PNJ :
 
-```text
+```ruby
 give_item(item_id, count)
 ```
 
@@ -50,25 +50,25 @@ Les paramètres sont :
 
 Objet au sol qui donne une potion :
 
-```text
+```ruby
 pick_item(:potion)
 ```
 
 ou
 
-```text
+```ruby
 pick_item(17)
 ```
 
 Personnage qui donne une CT : (Qui ne doit donc pas être supprimé)
 
-```text
+```ruby
 give_item(:tm01, true)
 ```
 
 ou
 
-```text
+```ruby
 give_item(328, true)
 ```
 
@@ -78,7 +78,7 @@ give_item(328, true)
 
 Il est possible d'ajouter un objet dans le sac de manière silencieuse :
 
-```text
+```ruby
 $bag.add_item(id, quantity)
 ```
 
@@ -91,13 +91,13 @@ Les paramètres sont :
 
 Ajouter 5 potions :
 
-```text
+```ruby
 $bag.add_item(:potion, 5)
 ```
 
 ou
 
-```text
+```ruby
 $bag.add_item(17, 5)
 ```
 
@@ -107,7 +107,7 @@ $bag.add_item(17, 5)
 
 Pour retirer un objet, il suffit d'utiliser la commande :
 
-```text
+```ruby
 $bag.drop_item(id, quantity)
 ```
 
@@ -120,13 +120,13 @@ Les paramètres sont :
 
 Retirer une potion :
 
-```text
+```ruby
 $bag.drop_item(:potion, 1)
 ```
 
 ou
 
-```text
+```ruby
 $bag.drop_item(17, 1)
 ```
 
@@ -134,7 +134,7 @@ $bag.drop_item(17, 1)
 
 Pour savoir si le joueur possède un objet en particulier dans son sac, utilisez la commande :
 
-```text
+```ruby
 $bag.has_item?(id)
 ```
 
@@ -144,7 +144,7 @@ Le paramètre `id` est l'ID de l'objet qui doit être présent dans le sac.
 
 Pour connaître la quantité exacte d'un objet dans le sac utilisez la commande suivante :
 
-```text
+```ruby
 quantite = $bag.item_quantity(id)
 ```
 

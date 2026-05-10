@@ -19,7 +19,7 @@ Open the file `renderer.log`, which is directly highlighted.
 
 Using the **research tool** (CTRL + F), search for `ZodError`. This will help you understand why your data is not compliant. Go back in the log to find out which file is not compliant.
 
-```text
+```json
 ZodError: [
   {
     "validation": "regex",
@@ -55,7 +55,7 @@ If your game is already distributed to players, continue with the **Fixing playe
 
 In order to fix the players' saves, you will need to fix the dbSymbol of the Pokémon & moves in them. To do this, create a new Ruby script called `99999 PSDK DbSymbol Fix.rb` in your scripts folder. Insert the following code inside it:
 
-```text
+```ruby
 module Scheduler
   # A proc to fix the Pokémon dbSymbol and their moves
   add_proc(:on_scene_switch, GamePlay::Load, 'Fix of the dbSymbol', 1000) do

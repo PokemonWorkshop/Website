@@ -19,7 +19,7 @@ PSDK doesn't do everything for you, since you'll need specific criteria, you hav
 
 The first thing to do is asking the player if he wants to trade a specific Pokemon. Once he choose yes, we will call the party menu in order to let him choose which Pokémon to trade using the following script command:
 
-```text
+```ruby
 call_party_menu
 @pokemon = $actors[gv[Yuki::Var::Party_Menu_Sel]]
 ```
@@ -28,7 +28,7 @@ If the player choosed a Pokemon, we'll test that the Pokemon is correct. You may
 
 Here's the script command for the condition:
 
-```text
+```ruby
 @pokemon && @pokemon.db_symbol == :pikachu
 ```
 
@@ -43,7 +43,7 @@ Once the pokemon is generated, we can call the `npc_trade_sequence` function, it
 
 Here's the whole script command used in the example:
 
-```text
+```ruby
 opts = {
   trainer_id: 123456,
   trainer_name: 'H4ck3r',

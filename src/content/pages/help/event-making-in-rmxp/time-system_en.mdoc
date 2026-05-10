@@ -20,7 +20,9 @@ If you want to go back to Virtual Clock just turn off the switch again.
 
 The current in-game day works like this:
 
-<table style="width: 100%; border: 0px; overflow-x: auto; border-spacing: 0px;"><thead><tr><th style="border-width: 1px 1px 2px; border-style: solid; border-color: rgb(229, 229, 229) rgb(229, 229, 229) rgb(204, 204, 204); border-image: initial; padding: 0.75rem; background-color: rgb(250, 250, 250);">Morning</th><th style="border-width: 1px 1px 2px; border-style: solid; border-color: rgb(229, 229, 229) rgb(229, 229, 229) rgb(204, 204, 204); border-image: initial; padding: 0.75rem; background-color: rgb(250, 250, 250);">Day</th><th style="border-width: 1px 1px 2px; border-style: solid; border-color: rgb(229, 229, 229) rgb(229, 229, 229) rgb(204, 204, 204); border-image: initial; padding: 0.75rem; background-color: rgb(250, 250, 250);">Evening</th><th style="border-width: 1px 1px 2px; border-style: solid; border-color: rgb(229, 229, 229) rgb(229, 229, 229) rgb(204, 204, 204); border-image: initial; padding: 0.75rem; background-color: rgb(250, 250, 250);">Night</th></tr></thead><tbody><tr><td style="border: 1px solid rgb(229, 229, 229); padding: 0.75rem; text-align: center;">07:00am - 10:59am</td><td style="border: 1px solid rgb(229, 229, 229); padding: 0.75rem; text-align: center;">11:00am - 18:59pm</td><td style="border: 1px solid rgb(229, 229, 229); padding: 0.75rem; text-align: center;">19:00pm - 21:59pm</td><td style="border: 1px solid rgb(229, 229, 229); padding: 0.75rem; text-align: center;">22:00pm - 06:59am</td></tr></tbody></table>
+| Morning           | Day               | Evening           | Night             |
+|:-----------------:|:-----------------:|:-----------------:|:-----------------:|
+| 07:00am - 10:59am | 11:00am - 18:59pm | 19:00pm - 21:59pm | 22:00pm - 06:59am |
 
 To change the default one you can use: `Yuki::TJN::TIME_SETS[:default].clear.concat([21, 18, 11, 4])`
 
@@ -34,7 +36,7 @@ The Tint System gets enabled by default in the intro script. If you used a custo
 
 The default Tint System uses 5 different tones, like this:
 
-```text
+```ruby
 TONE_SETS = {
       default: [
         Tone.new(-85, -85, -20, 0), # Night
@@ -51,7 +53,7 @@ It's also possible to define 24 tones (one / hour) that will be calculated each 
 
 The tones aren't correct, they are there for purpose tests only, you can make your owns using:
 
-```text
+```ruby
 Yuki::TJN::TONE_SETS[:jaizu_dn] = [
         Tone.new(-75, -75, -10, 0), # 0
         Tone.new(-80, -80, -10, 0), # 1
@@ -82,7 +84,7 @@ Yuki::TJN::TONE_SETS[:jaizu_dn] = [
 
 Remember that the Tint System and the In-Game times are tied, so if you add a custom one they must have the same name. You can also use a simplier tone system like this:
 
-```text
+```ruby
 Yuki::TJN::TONE_SETS[:jaizu_dn] = [
   night = Tone.new(-85, -85, -20, 0), # Night
   Tone.new(-17, -51, -34, 0), # Evening

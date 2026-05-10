@@ -27,7 +27,7 @@ Effects expose a function that allows returning false when `move_usable_by_user`
 
 ![Code de l'effet d'Éxécu-Son](./images/execuson.png)
 
-## Understanding the <code>move_usable_by_user</code> {% id="function-move-usable-by-user" %}
+## Understanding the `move_usable_by_user` {% id="function-move-usable-by-user" %}
 
 ![Code de move_usable_by_user](./images/fonction.png)
 
@@ -43,7 +43,7 @@ What particularly interests us in this function :
 
 `binding` : The third argument, **binding** , is a bit more complex. In Ruby, a **binding** is an object that encapsulates the execution context of a piece of code, including local variables, available methods, the value of **self** , etc. Passing **binding** to `exec_hooks` thus allows the **Hooks** to access the context in which `exec_hooks` was called. This means they can read and modify local variables, call methods, and so on, as if they were part of the original code of the method `move_prevention_user`.
 
-### Understanding the procedure of the function <code>move_prevention_user</code>
+### Understanding the procedure of the function `move_prevention_user`
 
 **Hook Call**
 

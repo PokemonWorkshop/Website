@@ -22,7 +22,7 @@ La commande open\_shop nécessite donc un premier paramètre pour initialiser la
 
 Voici un exemple que nous allons décortiquer ensemble :
 
-```text
+```ruby
 open_shop([:poke_ball, :potion, :antidote, :paralyze_heal], {poke_ball: 150, potion: 300, paralyze_heal: 400}, show_background: true)
 ```
 
@@ -40,7 +40,7 @@ Il est nécessaire de respecter la façon d'écrire cette méthode. Le premier p
 
 Pour ouvrir un magasin limité, il faut d'abord créer un magasin qui contiendra les objets et le nombre disponible pour chacun d'eux. Pour cela, il faudra utiliser la commande `add_items_to_limited_shop`. Cette commande prend 2 paramètres obligatoires, et deux paramètres facultatifs. Détaillons ensemble ces paramètres avec un exemple.
 
-```text
+```ruby
 add_limited_shop(:shop_argenta, [:poke_ball, :potion, :antidote, :paralyze_heal], [5, 3, 2, 1], shop_rewrite: false)
 ```
 
@@ -68,7 +68,7 @@ Cette commande prend les mêmes paramètres que celle pour ajouter du stock, à 
 
 Exemple :
 
-```text
+```ruby
 remove_items_from_limited_shop(:shop_argenta, [:poke_ball, :potion, :antidote, :paralyze_heal], [10, 15, 20])
 ```
 

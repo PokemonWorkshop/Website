@@ -13,7 +13,7 @@ To start a wild battle, just call the command : `call_battle_wild(id_pokemon, le
 
 Example :
 
-```text
+```ruby
 call_battle_wild(:pikachu, 5)
 ```
 
@@ -27,7 +27,7 @@ It's possible to start a 2v2 wild battle using the following command : `call_bat
 
 Example :
 
-```text
+```ruby
 call_battle_wild(:pikachu, 5, :meowth, 5)
 ```
 
@@ -35,7 +35,7 @@ call_battle_wild(:pikachu, 5, :meowth, 5)
 
 You can generate a Pokemon using the following command :
 
-```text
+```ruby
 pokemon = PFM::Pokemon.generate_from_hash(id: id_pokemon, level: level_pokemon)
 ```
 
@@ -63,14 +63,14 @@ Use case :
 
 1v1 against Cosplayer Pikachu :
 
-```text
+```ruby
 pokemon = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 2, gender: 2)
 call_battle_wild(pokemon, nil)
 ```
 
 2v2 against two Cosplayer Pikachu :
 
-```text
+```ruby
 pokemon1 = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 2, gender: 2)
 pokemon2 = PFM::Pokemon.generate_from_hash(id: 25, level: 5, form: 5, gender: 2)
 call_battle_wild(pokemon1, nil, pokemon2)

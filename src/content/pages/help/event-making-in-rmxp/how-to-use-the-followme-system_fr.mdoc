@@ -31,7 +31,7 @@ Ceci est utilisé pour Surf par exemple.
 
 Note : Si vous voulez éviter la réactivation lorsque le joueur est à vélo, utilisez plutôt la commande suivante :
 
-```text
+```ruby
 Yuki::FollowMe.smart_enable unless $game_switches[::Yuki::Sw::EV_Bicycle] || $game_switches[::Yuki::Sw::EV_AccroBike]
 ```
 
@@ -55,7 +55,7 @@ Pour des raisons de scénarisation, il est possible de déplacer les Follower. P
 
 Pour que les glitches graphiques avec les ponts soient minimaux, il est conseillé d'affecter la propriété z du héros et de ses follower au travers d'un évènement caché dans un escalier. Pour faire ceci utilisez la commande :
 
-```text
+```ruby
 $game_player.change_z_with_follower(z)
 ```
 
@@ -69,13 +69,13 @@ Tous les objets de type [`Game_Character`](https://psdk.pokemonworkshop.fr/yard/
 
 Par exemple, pour que l'évènement d'id 001 suive l'évènement d'id 002 :
 
-```text
+```ruby
 get_character(2).set_follower(get_character(1))
 ```
 
 Pour que l'évènement d'id 005 suive le héros (il se placera avant le Pokémon) :
 
-```text
+```ruby
 $game_player.set_follower(get_character(5))
 ```
 
@@ -83,7 +83,7 @@ $game_player.set_follower(get_character(5))
 
 Pour que les évènements arrêtent de suivre le héros, exécutez la commande suivante :
 
-```text
+```ruby
 $game_player.reset_follower
 ```
 

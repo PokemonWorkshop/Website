@@ -15,7 +15,7 @@ To start a quest, call `$quests.start(id)` where `id` is the id of the quest in 
 
 Once `$quests.start(id)` is called you need to tell the System to check for your started quests with:
 
-```text
+```ruby
 $quests.check_up_signal
 ```
 
@@ -45,7 +45,7 @@ To prevent any confusion, let's show a specific example of how to validate these
 
 To show a hidden goal call:
 
-```text
+```ruby
 $quests.show_goal(quest_id, goal_index)
 ```
 
@@ -62,7 +62,7 @@ To finish a quest you have two things to do, check if all the goals are complete
 
 To check if all the goals are done, write the following line in a condition:
 
-```text
+```ruby
 $quests.finished?(quest_id)
 ```
 
@@ -70,7 +70,7 @@ $quests.finished?(quest_id)
 
 You can use `$quests.finished?(quest_id)` to decide whether a player should fail a quest, but realistically you can make a player fail a quest whenever you want by using the following line:
 
-```text
+```ruby
 $quests.fail_quest(quest_id)
 ```
 
@@ -78,13 +78,13 @@ $quests.fail_quest(quest_id)
 
 To check if the rewards have already been distributed write this line in a condition:
 
-```text
+```ruby
 $quests.earnings_got?(quest_id)
 ```
 
 To distribute rewards use the following command:
 
-```text
+```ruby
 $quests.get_earnings(quest_id)
 ```
 

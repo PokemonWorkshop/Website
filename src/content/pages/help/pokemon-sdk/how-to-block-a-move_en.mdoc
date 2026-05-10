@@ -30,7 +30,7 @@ Effects provide a function that returns `true` when `move_blocked_by_target?` is
 
 ![Code de Corps en Or](./images/corpsenor.png)
 
-## Understanding the function <code>move_blocked_by_target?</code> {% id="function-move-blocked" %}
+## Understanding the function `move_blocked_by_target?` {% id="function-move-blocked" %}
 
 ![Code de move_blocked_by_target](./images/fonction.png)
 
@@ -46,7 +46,7 @@ What particularly interests us in this function:
 
 **binding:** The third argument **,** `binding`, encapsulates the execution context of the code in Ruby, including local variables, methods, and the value of `self`. Passing `binding` to `exec_hooks` enables the `Hooks` to access and modify the context in which `exec_hooks` was called, allowing them to interact seamlessly with the original code of the `move_blocked_by_target?` method.
 
-### Understanding the procedure of the function <code>move_blocked_by_target?</code>
+### Understanding the procedure of the function `move_blocked_by_target?`
 
 **Hook Call**  
 When `exec_hooks(Move, :move_prevention_target, binding)` is executed, it identifies and runs all Hooks associated with the event or condition `:move_prevention_target` in the context of moves (`Move`). These Hooks are triggered to evaluate whether the move can be performed under the current conditions.

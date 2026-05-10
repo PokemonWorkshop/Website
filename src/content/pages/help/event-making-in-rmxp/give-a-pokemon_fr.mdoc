@@ -12,7 +12,7 @@ RPG Maker XP n'est pas fait pour réaliser des jeux Pokémon, de ce fait le seul
 
 Pour donner un Pokémon au joueur entrez la commande de script suivante :
 
-```text
+```ruby
 pokemon = ajouter_pokemon(id, level, shiny)
 ```
 
@@ -26,7 +26,7 @@ Les paramètres sont :
 
 Voici un exemple où je donne un Pikachu niveau 5 de deux façons différente :
 
-```text
+```ruby
 ajouter_pokemon(:pikachu, 5)
 ajouter_pokemon(25, 5)
 ```
@@ -37,7 +37,7 @@ ajouter_pokemon(25, 5)
 
 La commande pour donner un Pokémon qui sera renommé dans la foulée est la suivante :
 
-```text
+```ruby
 pokemon = ajouter_renommer_pokemon(id, level, shiny, num_char)
 ```
 
@@ -52,7 +52,7 @@ Les paramètres sont :
 
 Voici un exemple où je donne un Pikachu niveau 5 qui sera renommé avec maximum 8 caractères :
 
-```text
+```ruby
 ajouter_renommer_pokemon(:pikachu, 5, false, 8)
 ```
 
@@ -62,7 +62,7 @@ ajouter_renommer_pokemon(:pikachu, 5, false, 8)
 
 Pour donner un Pokémon paramétré utilisez la commande suivante :
 
-```text
+```ruby
 pokemon = ajouter_pokemon_param(hash)
 ```
 
@@ -72,7 +72,7 @@ Cette méthode se base sur la commande [PFM::Pokemon.generate\_from\_hash](https
 
 Ajouter un Miaouss d'Alola :
 
-```text
+```ruby
 ajouter_pokemon_param(id: :meowth, level: 5, form: 1)
 ```
 
@@ -82,7 +82,7 @@ ajouter_pokemon_param(id: :meowth, level: 5, form: 1)
 
 Il existe une commande qui vous permet de renommer un Pokémon après coup. Comme vous l'avez vu dans la définition des commandes plus haut, j'ai mis "pokemon = " devant les commandes, c'est parce qu'en cas de succès elle retourne le Pokémon ajouté. Vous pouvez ensuite passer ce Pokémon en premier paramètre de la fonction suivante (ou simplement utiliser l'index dans l'équipe) :
 
-```text
+```ruby
 renommer_pokemon(poke_or_index, num_char)
 ```
 
@@ -95,14 +95,14 @@ Les paramètres sont :
 
 Renommer le miaouss d'Alola :
 
-```text
+```ruby
 miaouss = ajouter_pokemon_param(id: :meowth, level: 5, form: 1)
 renommer_pokemon(miaouss, 10) if miaouss
 ```
 
 Renommer le 2ème Pokémon de l'équipe :
 
-```text
+```ruby
 renommer_pokemon(1)
 ```
 
@@ -112,7 +112,7 @@ renommer_pokemon(1)
 
 La commande pour ajouter un œuf à l'équipe est la suivante :
 
-```text
+```ruby
 ajouter_oeuf(info)
 ```
 
@@ -126,19 +126,19 @@ Le paramètre peut être :
 
 Ajout d'un œuf de Pichu :
 
-```text
+```ruby
 ajouter_oeuf(:pichu)
 ```
 
 ou
 
-```text
+```ruby
 ajouter_oeuf(:pichu)
 ```
 
 ou
 
-```text
+```ruby
 ajouter_oeuf(id: :pichu, level: 1, form: 1)
 ```
 
@@ -148,7 +148,7 @@ ajouter_oeuf(id: :pichu, level: 1, form: 1)
 
 Pour envoyer un Pokémon directement dans le PC la commande suivante peut servir :
 
-```text
+```ruby
 pokemon = stocker_pokemon(id, level, shiny)
 ```
 

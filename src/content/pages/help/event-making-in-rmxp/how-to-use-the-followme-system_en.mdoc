@@ -29,7 +29,7 @@ If for any reason (like surf) you need to temporarilly disable the Following Sys
 
 Note : If you don't want the following System to re-enable when the player is on by, use this :
 
-```text
+```ruby
 Yuki::FollowMe.smart_enable unless $game_switches[::Yuki::Sw::EV_Bicycle] || $game_switches[::Yuki::Sw::EV_AccroBike]
 ```
 
@@ -53,7 +53,7 @@ If for any reason you need to move a follower, change the variable `21` " **Foll
 
 To prevent graphic glitches with the bridges, it's recommanded to hide the `z` property change (4 \<-\> 0) in a event in strairs using this command :
 
-```text
+```ruby
 $game_player.change_z_with_follower(z)
 ```
 
@@ -67,13 +67,13 @@ All [`Game_Character`](https://psdk.pokemonworkshop.fr/yard/Game_Character.html)
 
 Example, Event 001 following Event 002 :
 
-```text
+```ruby
 get_character(2).set_follower(get_character(1))
 ```
 
 Example, Event 005 following the player (player's Pokémon will follow the event) :
 
-```text
+```ruby
 $game_player.set_follower(get_character(5))
 ```
 
@@ -81,7 +81,7 @@ $game_player.set_follower(get_character(5))
 
 To make event stops following the player, use the following command:
 
-```text
+```ruby
 $game_player.reset_follower
 ```
 

@@ -75,7 +75,7 @@ array_of_symbol2 = %i[
 
 En général, les séquence ou énumérateurs ont une méthode `to_a` qui permet de la convertir en tableau. Voici quelques exemples:
 
-```text
+```ruby
 array_of_1_upto_5_included = (1..5).to_a
 # Result: [1, 2, 3, 4, 5]
 
@@ -170,7 +170,7 @@ Si vous avez besoin de la plus petite ou plus grande valeur d'un tableau, il exi
 
 Voici des exemples:
 
-```text
+```ruby
 array_of_number = [5, -3, 2, 66, 4]
 highest_number = array_of_number.max
 # Result: 66
@@ -204,7 +204,7 @@ size_of_array = array_of_numbers.size
 
 Pour calculer la somme de tous les éléments d'un tableau il suffit simplement d'appeler la méthode `sum`. Cette méthode peut également utiliser un block pour donner du sens à ce que vous sommez:
 
-```text
+```ruby
 array_of_numbers = [1, 2, 3]
 sum_of_numbers = array_of_numbers.sum
 # Result: 6
@@ -218,7 +218,7 @@ sum_of_sizes = array_of_string.sum(&:size)
 
 Comme en SQL, la méthode `count` sert à ça. Vous pouvez lui donner les critères en block et elle vous renverra le nombre d'élément qui valident ces critères:
 
-```text
+```ruby
 array_of_numbers = [1, 2, 3, 4, 5]
 count_of_odd_numbers = array_of_numbers.count(&:odd?)
 # Result: 3
@@ -230,7 +230,7 @@ Parfois, vous avez besoin de transformer un tableau en une tout autre valeur. La
 
 Voici un exemple de conversion de tableau:
 
-```text
+```ruby
 array_of_sentence_badly_combined = ['My first', 'sentence', 'My second ', 'sentence.']
 paragraph = array_of_sentence_badly_combined.reduce('') do |prev, curr|
   sentence = prev.rstrip
@@ -251,7 +251,7 @@ Notez que si vous connaissez la valeur que vous voulez tester, vous pouvez simpl
 
 Voici des exemples:
 
-```text
+```ruby
 array_of_number = [1, 2, 3, 4]
 array_contains_even_number = array_of_number.any?(&:even?)
 # Result: true
@@ -264,7 +264,7 @@ Bonus pour vous. Si vous ne donnez aucun block à `any?`, vous pourrez plus ou m
 
 Ceci peut être utile pour éviter d'écrire `unless array.empty?` si vous êtes certain que votre tableau doit contenir des valeurs valides.
 
-```text
+```ruby
 empty_array = []
 array_is_not_containing_value = empty_array.any?
 # Result: false
@@ -284,7 +284,7 @@ Comme pour `any?`, les tableaux ont la méthode `none?` et `all?` qui permettent
 
 Exemple:
 
-```text
+```ruby
 array_of_odd_numbers = [1, 3, 5]
 all_odd = array_of_odd_numbers.all?(&:odd?)
 # Result: true
@@ -304,7 +304,7 @@ Il peut vous arriver que votre tableau finisse avec des valeurs nil. Heureusemen
 
 Voici un exemple:
 
-```text
+```ruby
 array_with_nils = [1, nil, 2, 3, nil]
 array_without_nils = array_with_nils.compact
 # Result: [1, 2, 3]
@@ -317,7 +317,7 @@ Ruby défini deux méthodes pour filtrer les valeurs d'un tableau
 - `select` to garder toute les valeurs qui correspondent au critère
 - `reject` to supprimer toute les valeurs qui correspond au critère
 
-```text
+```ruby
 array_of_number = [0, 1, 2, 3, 4]
 array_of_odd_numbers = array_of_number.select(&:odd?)
 # Result: [1, 3]
@@ -331,7 +331,7 @@ Parfois, vous avez besoin de convertir le contenu du tableau, pour cela vous ave
 
 Exemple:
 
-```text
+```ruby
 array_of_number = [1, 2, 3]
 array_of_twice_the_number = array_of_number.map { |n| n * 2 }
 # Result: [2, 4, 6]
@@ -343,7 +343,7 @@ Si vous avez utilisé un DSP une fois dans votre vie, vous avez à quel point ç
 
 Voici quelques exemples:
 
-```text
+```ruby
 my_array = [1, 2, 3, 4]
 my_array_rotated_to_left = my_array.rotate(1)
 # Result: [2, 3, 4, 1]
@@ -355,7 +355,7 @@ my_array_rotated_to_right = my_array.rotate(-1)
 
 Si vous avez besoin de mélanger un tableau, utilisez la méthode `shuffle`. Exemple:
 
-```text
+```ruby
 my_array = [1, 2, 3, 4]
 my_array_in_random_order = my_array.shuffle
 # Example result: [2, 3, 4, 1]

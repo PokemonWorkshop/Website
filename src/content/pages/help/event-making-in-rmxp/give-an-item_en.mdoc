@@ -11,7 +11,7 @@ order: 0
 
 To give an item from an event you can use the following command :
 
-```text
+```ruby
 add_item(id, no_delete)
 ```
 
@@ -26,7 +26,7 @@ Hovewer, there are also more specific commands for some actions :
 
 To pick items from the ground :
 
-```text
+```ruby
 pick_item(item_id, count, no_delete)
 ```
 
@@ -38,7 +38,7 @@ Parameters are:
 
 To give an item thanks to a NPC :
 
-```text
+```ruby
 give_item(item_id, count)
 ```
 
@@ -51,25 +51,25 @@ Parameters are:
 
 Item on the ground giving a Potion:
 
-```text
+```ruby
 pick_item(:potion)
 ```
 
 or
 
-```text
+```ruby
 pick_item(17)
 ```
 
 NPC giving a TM (and that should not be removed):
 
-```text
+```ruby
 give_item(:tm01, true)
 ```
 
 or
 
-```text
+```ruby
 give_item(328, true)
 ```
 
@@ -79,7 +79,7 @@ give_item(328, true)
 
 You can add an item to the bag without notification using the following command:
 
-```text
+```ruby
 $bag.add_item(id, quantity)
 ```
 
@@ -92,13 +92,13 @@ The parameters are :
 
 Add 5 potions:
 
-```text
+```ruby
 $bag.add_item(:potion, 5)
 ```
 
 or
 
-```text
+```ruby
 $bag.add_item(17, 5)
 ```
 
@@ -108,7 +108,7 @@ $bag.add_item(17, 5)
 
 To drop an item, use the following command:
 
-```text
+```ruby
 $bag.drop_item(id, quantity)
 ```
 
@@ -121,13 +121,13 @@ Parameters are:
 
 Drop a potion :
 
-```text
+```ruby
 $bag.drop_item(:potion, 1)
 ```
 
 or
 
-```text
+```ruby
 $bag.drop_item(17, 1)
 ```
 
@@ -135,7 +135,7 @@ $bag.drop_item(17, 1)
 
 To know if the Player has a particular item in his bag, use the Command:
 
-```text
+```ruby
 $bag.has_item?(id)
 ```
 
@@ -145,7 +145,7 @@ The `id` parameter is the item ID which should be in the bag.
 
 To check if the player has an item in the bag, you can use the command:
 
-```text
+```ruby
 quantite = $bag.item_quantity(id)
 ```
 

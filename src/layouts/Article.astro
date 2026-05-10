@@ -1,5 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
+import { getFormats } from '../getFormats';
 
 interface Props {
 	title: string;
@@ -26,7 +27,7 @@ const cover = Astro.props.cover?.[0]
 		<meta name="generator" content={Astro.generator} />
 	</head>
 	<body>
-		{cover && <Picture src={cover} alt="" formats={['avif', 'webp']} widths={[640, 320]} layout="constrained" sizes="(min-width: 481px) 640px, (max-width: 480px) 320px" width={640} height={360} class="cover" />}
+		{cover && <Picture src={cover} alt="" formats={getFormats(cover)} widths={[640, 320]} layout="constrained" sizes="(min-width: 481px) 640px, (max-width: 480px) 320px" width={640} height={360} class="cover" />}
     <main>
       <h1>{title}</h1>
 		  <slot />
@@ -65,5 +66,24 @@ const cover = Astro.props.cover?.[0]
 		display: flex;
 		margin: 0.5rem 0;
 		justify-content: center;
+	}
+
+	table {
+		width: 100%;
+	}
+
+	tr:has(th) {
+		background-color: #f6f6f6;
+	}
+
+	td, th {
+		padding: 0.5rem;
+	}
+
+	pre {
+		display: block;
+		max-width: 100%;
+		overflow-x: auto;
+		padding: 0.5rem 1rem;
 	}
 </style>

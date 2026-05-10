@@ -24,7 +24,7 @@ Le premier paramètre sert à initialiser la liste des Pokémon du magasin, qui 
 
 Voici un exemple que nous allons décortiquer ensemble :
 
-```text
+```ruby
 pokemon_shop_open([4, 17, 22, 50], [2500, 5000, 10000, 0], [5, 50, 30, {level: 100, shiny: true}], show_background: true)
 ```
 
@@ -44,7 +44,7 @@ Il est nécessaire de respecter la façon d'écrire cette méthode. Les trois pr
 
 Pour ouvrir un magasin Pokémon limité, il faut d'abord créer un magasin qui contiendra les Pokémon et le nombre disponible pour chacun d'eux. Pour cela, il faudra utiliser la commande `add_new_pokemon_shop`. Cette commande prend 4 paramètres obligatoires, et 2 paramètres facultatifs. Détaillons ensemble ces paramètres avec un exemple.
 
-```text
+```ruby
 add_new_pokemon_shop(:pkm_shop_celadon, [1, 2, 3], [1250, 2500, 5000], [5, 16, {level: 36, shiny: true}], [3, 2, 1], shop_rewrite: false)
 ```
 
@@ -81,7 +81,7 @@ Cette commande prend les mêmes paramètres que celle pour ajouter du stock, à 
 
 Exemple :
 
-```text
+```ruby
 remove_pokemon_from_shop(:pkm_shop_celadon, [1, 2, 3], [{ form: 0 }, {form : 0}, {form: 1}], [1, 3, 10])
 ```
 
@@ -95,7 +95,7 @@ Maintenant que nous avons créé le stock du magasin, il faut l'ouvrir. Pour cel
 
 Souvenez-vous, il a été dit plus haut qu'il était possible de mettre un Symbol en premier paramètre et un Hash en deuxième paramètre: il vous suffit simplement de renseigner le Symbol de votre magasin dans le premier paramètre, un Hash en deuxième paramètre (un Hash pour les prix s'écrit ainsi : { ID\_du\_Pokemon =\> nouveau\_prix }) si vous souhaitez faire une promotion sur un/plusieurs Pokemon. Et en ce qui concerne le troisième paramètre, il n'est pas nécessaire. Mieux, il n'est pas utilisé lorsque le premier paramètre est un Symbol. Voici donc un exemple de magasin Pokémon limité.
 
-```text
+```ruby
 pokemon_shop_open(:pkm_shop_celadon, { 1 => 500, 4 => 800, 7 => 9000 }, show_background: true)
 ```
 

@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import { getEntry } from 'astro:content';
+import { getFormats } from '../getFormats';
 
 interface Props {
   id: string;
@@ -21,7 +22,7 @@ const pageUrl = `/${localeFragment}/${fullSlug}`; // TODO: figure out a fix for 
 <aside class="note-excerpt">
   <a href={pageUrl}>
     <header>
-      {cover && <Picture formats={['avif', 'webp']} layout="constrained" alt={`${title} cover image`} src={cover} />}
+      {cover && <Picture formats={getFormats(cover)} layout="constrained" alt={`${title} cover image`} src={cover} />}
       <h3 class="note-excerpt-title">{title}{!cover && <small> ➔</small>}</h3>
     </header>
     {description && <p class="note-excerpt-text">{description}</p>}

@@ -55,7 +55,7 @@ Si votre jeu est déjà distribué à des joueurs, continuez avec la rubrique **
 
 Pour corriger les sauvegardes des joueurs, vous allez devoir corriger les identifiants (dbSymbol) des Pokémon qui s'y trouvent. Pour cela, créez un nouveau script Ruby appelé `99999 PSDK DbSymbol Fix.rb` dans votre dossier scripts. Insérez le code suivant à l'intérieur :
 
-```text
+```ruby
 module Scheduler
   # A proc to fix the Pokémon dbSymbol and their moves
   add_proc(:on_scene_switch, GamePlay::Load, 'Fix of the dbSymbol', 1000) do

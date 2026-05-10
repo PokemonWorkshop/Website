@@ -10,7 +10,7 @@ order: 0
 
 Pour donner un badge au joueur vous pouvez utiliser la commande suivante :
 
-```text
+```ruby
 $trainer.set_badge(badge_num, region_num, obtenu_ou_non)
 ```
 
@@ -24,19 +24,19 @@ Les paramètres sont :
 
 Donner le 5ème badge :
 
-```text
+```ruby
 $trainer.set_badge(5)
 ```
 
 Retirer le 5ème badge :
 
-```text
+```ruby
 $trainer.set_badge(5, 1, false)
 ```
 
 Donner le 5ème badge de la 3ème région de votre jeu :
 
-```text
+```ruby
 $trainer.set_badge(5, 3)
 ```
 
@@ -44,7 +44,7 @@ $trainer.set_badge(5, 3)
 
 Pour connaître le nombre exact de badge que le joueur possède, utilisez la commande :
 
-```text
+```ruby
 $trainer.badge_counter
 ```
 
@@ -54,7 +54,7 @@ $trainer.badge_counter
 
 Pour détecter la possession d'un badge vous pouvez utiliser la commande de condition :
 
-```text
+```ruby
 $trainer.badge_obtained?(badge_num, region_num)
 ```
 
@@ -62,13 +62,13 @@ $trainer.badge_obtained?(badge_num, region_num)
 
 Détecter si le joueur possède le 5ème badge :
 
-```text
+```ruby
 $trainer.badge_obtained?(5)
 ```
 
 Détecter si le joueur possède le 5ème badge de la 3ème région :
 
-```text
+```ruby
 $trainer.badge_obtained?(5, 3)
 ```
 

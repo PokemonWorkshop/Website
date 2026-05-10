@@ -15,7 +15,7 @@ Definition of a new proc needs to be added as a custom script in the /scripts fo
 
 Here's an example :
 
-```text
+```ruby
 PFM::Wild_RoamingInfo::RoamingProcs[proc_id] = proc do |infos|
     # The Pokemon will be in Grass
     infos.zone_type = 1
@@ -37,7 +37,7 @@ The condition in this proc is split in two parts :
 
 This condition can be customized, for example :
 
-```text
+```ruby
 if infos.map_id != $game_map.map_id || infos.spotted || infos.map_id == -1
     infos.map_id = (maps - [infos.map_id]).sample
     infos.spotted = false
@@ -50,7 +50,7 @@ Will allow the roaming Pokémon to change map if the player isn't in the same ma
 
 Write the following command in an event to release a roaming Pokémon :
 
-```text
+```ruby
 $wild_battle.add_roaming_pokemon(chance, proc_id, pokemon_hash)
 ```
 
@@ -62,7 +62,7 @@ The paramaters are :
 
 Example :
 
-```text
+```ruby
 $wild_battle.add_roaming_pokemon(5, 0, id: 151, level: 20)
 ```
 

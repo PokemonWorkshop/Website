@@ -17,7 +17,7 @@ To start you'll need to make an account on the [GTS by Hills Tech](http://gts.ka
 
 Now we'll need to make a small monkey-patch to the base GTS code so that it loads our game's ID. This is fairly easy!
 
-```text
+```ruby
 module GTS
   module Settings  
     remove_const :GAMEID

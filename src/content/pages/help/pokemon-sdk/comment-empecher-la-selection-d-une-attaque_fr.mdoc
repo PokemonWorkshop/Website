@@ -65,7 +65,7 @@ La fonction ou méthode appelante qui a invoqué `move_disabled_check` doit alor
 
 Cette fonction et son **Hook** associé permettent d'empêcher l'exécution d'une attaque. Cependant, il est possible que certains effets, tels que **Métronome** , évitent cette fonction. Il est donc indispensable de gérer cette situation dans un `move_usable_by_user` ou son **Hook** associé, notamment lorsque vous intervenez dans un effet, comme illustré dans les exemples précédents.
 
-### Qu'est-ce qu'un <code>proc</code> ?
+### Qu'est-ce qu'un `proc` ?
 
 Un `Proc` en Ruby est un objet encapsulant un bloc de code, qui peut être stocké dans une variable, passé comme argument ou appelé à un moment ultérieur. Cela permet de définir des actions à éxécuter plus tard, facilitant ainsi la gestion des callbacks et des opérations conditionnelles. Les `Procs` sont particulièrement utiles pour organiser et manipuler des blocs de code qui doivent être exécutés de manière répétitive ou en réponse à certaines conditions.
 

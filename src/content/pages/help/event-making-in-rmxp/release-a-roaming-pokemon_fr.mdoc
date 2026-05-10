@@ -14,7 +14,7 @@ La définition d'un nouveau Proc doit être ajoutée en tant que custom script d
 
 Voici un example de définition :
 
-```text
+```ruby
 PFM::Wild_RoamingInfo::RoamingProcs[proc_id] = proc do |infos|
     # Pokémon défini pour les hautes herbes
     infos.zone_type = 1
@@ -36,7 +36,7 @@ La condition est découpée en deux parties :
 
 Cette condition peut être customisée, par exemple :
 
-```text
+```ruby
 if infos.map_id != $game_map.map_id || infos.spotted || infos.map_id == -1
     infos.map_id = (maps - [infos.map_id]).sample
     infos.spotted = false
@@ -49,7 +49,7 @@ Fera changer le fuyard de map s'il n'est pas sur la map où je joueur se trouve 
 
 Dans une évènement vous entrerez la commande suivante pour lâcher le Pokémon Fuyard :
 
-```text
+```ruby
 $wild_battle.add_roaming_pokemon(chance, proc_id, pokemon_hash)
 ```
 
@@ -61,7 +61,7 @@ Les paramètres de cette commande sont :
 
 Exemple :
 
-```text
+```ruby
 $wild_battle.add_roaming_pokemon(5, 0, id: 151, level: 20)
 ```
 
