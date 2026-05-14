@@ -20,4 +20,9 @@ const tags = defineCollection({
   schema: z.object({ en: z.string(), fr: z.string() }),
 });
 
-export const collections = { pages, tags };
+const i18n = defineCollection({
+  loader: file('./src/content/i18n.json'),
+  schema: z.object({ en: z.string(), fr: z.string() }),
+});
+
+export const collections = { pages, tags, i18n };

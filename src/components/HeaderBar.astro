@@ -1,0 +1,86 @@
+---
+import { Picture } from 'astro:assets';
+import { validLocale } from '../i18n';
+import Twitter from '../assets/twitter.svg';
+import Discord from '../assets/discord.svg';
+import Insta from '../assets/insta.svg';
+import Logo from '../assets/logo.png';
+import { getPageEntry } from '../getPageEntry';
+
+const currentLocale = validLocale(Astro.currentLocale);
+const gamesEntry = await getPageEntry('games', currentLocale, true);
+const articlesEntry = await getPageEntry('articles', currentLocale, true);
+const learningEntry = await getPageEntry('learn', currentLocale, true);
+const helpEntry = await getPageEntry('help', currentLocale, true);
+const documentationEntry = await getPageEntry('documentation', currentLocale, true);
+---
+
+<header>
+  <nav>
+    <ul>
+      <li class="home">
+        <a href=`/${currentLocale}/`><Picture src={Logo} formats={['avif', 'webp']} width="50" height="50" alt="logo" /> Pokémon Workshop</a>
+      </li>
+      <li>
+        <a href=`/${currentLocale}/games`>{gamesEntry.entry.data.title}</a>
+      </li>
+      <li>
+        <a href=`/${currentLocale}/articles`>{articlesEntry.entry.data.title}</a>
+      </li>
+      <li>
+        <a href=`/${currentLocale}/learn`>{learningEntry.entry.data.title}</a>
+      </li>
+      <li>
+        <a href=`/${currentLocale}/help`>{helpEntry.entry.data.title}</a>
+      </li>
+      <li>
+        <a href=`/${currentLocale}/documentation`>{documentationEntry.entry.data.title}</a>
+      </li>
+    </ul>
+  </nav>
+  <ul>
+    <li><a href="https://x.com/pokemonworkshop"><Twitter /></a></li>
+    <li><a href="https://discord.gg/0noB0gBDd91B8pMk"><Discord /></a></li>
+    <li><a href="https://instagram.com/pokemon.workshop/"><Insta /></a></li>
+  </ul>
+</header>
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #27272b;
+    color: white;
+  }
+
+  ul {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 1rem;
+  }
+
+  li.home {
+    padding: 0.25rem 1rem;
+    font-size: 1.5rem;
+  }
+
+  a,
+  a:active,
+  a:visited {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    text-decoration: none;
+  }
+</style>
