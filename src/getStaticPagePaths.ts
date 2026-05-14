@@ -19,7 +19,7 @@ export const getStaticPagePath = (locale: keyof typeof LOCALE_CONFIG) => {
       .concat(pages.filter((e) => e.id === rootIndex).map((e) => e.id.replace(rootIndex, '')));
 
     const tags = await getCollection('tags');
-    const indexWithTagsPaths = tags.flatMap((t) => indexPages.map((e) => ({ params: { page: `${e}_${t.id}` } })));
+    const indexWithTagsPaths = tags.flatMap((t) => indexPages.filter(e => !!e).map((e) => ({ params: { page: `${e}_${t.id}` } })));
     const indexPaths = indexPages.map((e) => ({ params: { page: e } }));
     const nonIndexPaths = nonIndexPages.map((e) => ({ params: { page: e } }));
 
