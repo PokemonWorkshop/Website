@@ -1,12 +1,18 @@
 ---
 import { Picture } from 'astro:assets';
 import { getFormats } from '../getFormats';
+import Twitter from '../assets/twitter.svg'
+import Discord from '../assets/discord.svg'
+import Insta from '../assets/insta.svg'
+import Logo from '../assets/logo.png'
+import Breadcrumb from '../components/Breadcrumb.astro';
 
 interface Props {
 	title: string;
 	seoDescription: string;
 	cover: ImageMetadata[] | undefined | null;
 	tags: string[] | undefined | null;
+	page: string;
 }
 const { title, seoDescription } = Astro.props;
 
@@ -27,6 +33,36 @@ const cover = Astro.props.cover?.[0]
 		<meta name="generator" content={Astro.generator} />
 	</head>
 	<body>
+		<header>
+			<nav>
+				<ul>
+					<li class="home">
+						<a href=`/${currentLocale}/`><Picture src={Logo} formats={['avif', 'webp']} width="50" height="50" alt="logo" /> Pokémon Workshop</a>
+					</li>
+					<li>
+						<a href=`/${currentLocale}/games`>Games</a>
+					</li>
+					<li>
+						<a href=`/${currentLocale}/articles`>Articles</a>
+					</li>
+					<li>
+						<a href=`/${currentLocale}/learn`>Learning</a>
+					</li>
+					<li>
+						<a href=`/${currentLocale}/help`>Help</a>
+					</li>
+					<li>
+						<a href=`/${currentLocale}/documentation`>Documentation</a>
+					</li>
+				</ul>
+			</nav>
+			<ul>
+				<li><a href="https://x.com/pokemonworkshop"><Twitter /></a></li>
+				<li><a href="https://discord.gg/0noB0gBDd91B8pMk"><Discord /></a></li>
+				<li><a href="https://instagram.com/pokemon.workshop/"><Insta /></a></li>
+			</ul>
+		</header>
+		<Breadcrumb page={Astro.props.page} />
 		{cover && <Picture src={cover} alt="" formats={getFormats(cover)} widths={[640, 320]} layout="constrained" sizes="(min-width: 481px) 640px, (max-width: 480px) 320px" width={640} height={360} class="cover" />}
     <main>
       <h1>{title}</h1>
@@ -34,14 +70,52 @@ const cover = Astro.props.cover?.[0]
     </main>
 	</body>
 </html>
+<style>
+	header {
+		display: flex;
+		justify-content: space-between;
+		background-color: #27272b;
+		color: white;
+	}
+
+	ul {
+		display: flex;
+		gap: 0.25rem;
+		padding: 0;
+		margin: 0;
+	}
+
+	li {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		list-style: none;
+		margin: 0;
+		padding: 1rem;
+	}
+
+	li.home {
+		padding: 0.25rem 1rem;
+		font-size: 1.5rem;
+	}
+
+	a, a:active, a:visited {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: white;
+		text-decoration: none;
+	}
+</style>
 <style is:global>
 	html {
 		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 		background-color: #f6f6f6;
+		margin: 0;
 	}
-  body {
-    padding: 2rem; /* TODO: remove */
-  }
+	body {
+		margin: 0;
+	}
 	code {
 		font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 	}

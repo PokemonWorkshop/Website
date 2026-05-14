@@ -1,0 +1,72 @@
+---
+import { getPageEntry } from '../getPageEntry';
+
+interface Props {
+  page: string;
+}
+
+const currentLocale = Astro.currentLocale == 'en' ? 'en' : 'fr';
+const paths = Astro.props.page.split('/').map((_, i, a) => a.slice(0, i + 1).join('/'));
+const pages = await Promise.all(paths.map((path) => getPageEntry(path, currentLocale, true).then((p) => ({ path, page: p }))));
+---
+
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <ol>
+    {
+      pages.map((page) => (
+        <li>
+          <a href={`/${currentLocale}/${page.path}`} aria-current={page.path === Astro.props.page ? 'page' : undefined}>
+            {page.page.entry.data.title}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  nav {
+    margin: 1rem 1rem 0 1rem;
+  }
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 1rem 0;
+    padding: 0;
+  }
+
+  li {
+    list-style: none;
+    padding: 0.25rem 0;
+  }
+
+  li:not(:last-child)::after {
+    content: '»';
+    padding-right: 0.5rem;
+    padding-left: 0.25rem;
+    color: #aaa;
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  a[aria-current] {
+    text-decoration: underline;
+  }
+
+  @media screen and (min-width: 60rem) {
+    nav {
+      margin: 1rem auto 0 auto;
+      box-sizing: content-box; /* Ensures width is not including padding */
+      max-width: 1120px;
+    }
+
+    li {
+      padding: 0;
+    }
+  }
+</style>

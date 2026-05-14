@@ -19,6 +19,6 @@ const { Content } = await render(entry);
 const { data } = entry;
 ---
 
-<Article title={data.title} seoDescription={data.seoDescription} cover={data.cover} tags={data.tags}>
+<Article title={data.title} seoDescription={data.seoDescription} cover={data.cover} tags={data.tags} page={Astro.params.page}>
   <Content frontmatter={data} />
 </Article>
