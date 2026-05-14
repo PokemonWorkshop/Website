@@ -35,7 +35,7 @@ const ldJSON = {
 <meta name="og:site_name" content="Pok&#xE9;mon&#x20;Workshop">
 <meta name="og:title" content={title}>
 <meta name="og:description" content={seoDescription}>
-<meta property="og:url" content=`https://pokemonworkshop.com/${page}` />
+<meta property="og:url" content=`https://pokemonworkshop.com/${page ?? ''}` />
 <meta property="og:locale" content={locale} />
 <meta property="og:locale:alternate" content={alternate} />
 { cover ? <meta name="og:image" content={cover[0].src}> : <></> }
