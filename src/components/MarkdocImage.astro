@@ -6,11 +6,27 @@ interface Props {
   src: ImageMetadata | string;
   alt: string;
 }
-const { src, alt } = Astro.props;
+const { src, alt: mdAlt } = Astro.props;
+const [alt, figCaptionUnprocessed] = mdAlt.split('¤');
+const figCaption = figCaptionUnprocessed?.replaceAll('\\n', '\n')
 ---
 
 {
-  typeof src === 'string' ? (
+  figCaption ? (
+    typeof src === 'string' ? (
+      <figure>
+        <img src={src} alt={alt} />
+        <figcaption>{figCaption}</figcaption>
+      </figure>
+    ) : (
+      <figure>
+        <a href={src.src} aria-label="View original image (optional)">
+          <Picture src={src} alt={alt} formats={getFormats(src)} layout="full-width" />
+        </a>
+        <figcaption>{figCaption}</figcaption>
+      </figure>
+    )
+  ) : typeof src === 'string' ? (
     <img src={src} alt={alt} />
   ) : (
     <a href={src.src} aria-label="View original image (optional)">
@@ -23,5 +39,23 @@ const { src, alt } = Astro.props;
   img {
     max-width: 100%;
     height: auto;
+  }
+
+  figure {
+    margin: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  figure .img {
+    width: 100%;
+  }
+
+  figcaption {
+    padding-top: 0.75rem;
+    color: #aaa;
+    white-space: pre-wrap;
+    line-height: 1.5rem;
   }
 </style>
