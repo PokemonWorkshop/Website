@@ -5,7 +5,7 @@ export default defineMarkdocConfig({
   nodes: {
     image: {
       ...nodes.image, // Apply Markdoc's defaults for other options
-      render: component('./src/components/MarkdocImage.astro'),
+      render: component('./src/components/mdoc/MarkdocImage.astro'),
     },
   },
   tags: {
@@ -38,10 +38,10 @@ export default defineMarkdocConfig({
           matches: ['1/1', '1/2' , '1/3 1/3 1/3' , '1/3 2/3' , '2/3 1/3' , '1/4 1/4 1/4 1/4', '1/4 3/4' , '3/4 1/4']
         }
       },
-      render: component('./src/components/MultiColumnSection.astro')
+      render: component('./src/components/mdoc/MultiColumnSection.astro')
     },
     column: {
-      render: component('./src/components/Column.astro')
+      render: component('./src/components/mdoc/Column.astro')
     },
     cta: {
       attributes: {
@@ -55,7 +55,7 @@ export default defineMarkdocConfig({
           matches: ['left', 'right', 'center']
         }
       },
-      render: component('./src/components/CTA.astro')
+      render: component('./src/components/mdoc/CTA.astro')
     },
     pageRef: {
       attributes: {
@@ -68,10 +68,10 @@ export default defineMarkdocConfig({
           required: false,
         },
       },
-      render: component('./src/components/PageRef.astro')
+      render: component('./src/components/mdoc/PageRef.astro')
     },
     index: {
-      render: component('./src/components/Index.astro')
+      render: component('./src/components/mdoc/Index.astro')
     },
   },
   extends: [
