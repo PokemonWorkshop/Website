@@ -160,4 +160,11 @@ const cover = Astro.props.cover?.[0]
 		overflow-x: auto;
 		padding: 0.5rem 1rem;
 	}
+
+	p:has(a:first-child:last-child > picture) {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		box-sizing: border-box;
+	}
 </style>
