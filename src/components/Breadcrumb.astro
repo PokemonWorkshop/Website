@@ -6,12 +6,14 @@ interface Props {
 }
 
 const currentLocale = Astro.currentLocale == 'en' ? 'en' : 'fr';
-const paths = Astro.props.page.split('/').map((_, i, a) => a.slice(0, i + 1).join('/'));
+const paths = Astro.props.page ? Astro.props.page.split('/').map((_, i, a) => a.slice(0, i + 1).join('/')) : [];
 const pages = await Promise.all(paths.map((path) => getPageEntry(path, currentLocale, true).then((p) => ({ path, page: p }))));
+const homeText = currentLocale === 'en' ? 'Home' : 'Accueil'
 ---
 
 <nav class="breadcrumb" aria-label="breadcrumb">
   <ol>
+    <li><a href={`/${currentLocale}`} aria-current={paths.length === 0 ? 'page' : undefined}>{homeText}</a></li>
     {
       pages.map((page) => (
         <li>
