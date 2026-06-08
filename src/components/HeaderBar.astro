@@ -83,4 +83,28 @@ const documentationEntry = await getPageEntry('documentation', currentLocale, tr
     color: white;
     text-decoration: none;
   }
+
+  @media screen and (max-width: 480px) {
+    li.home {
+      font-size: 1.25rem;
+    }
+
+    header > ul {
+      display: none;
+    }
+
+    nav > ul > li:not(:is(:nth-child(1), :nth-child(2), :nth-child(3))) {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    li.home {
+      font-size: 1.25rem;
+    }
+
+    nav > ul > li:not(:is(:nth-child(1), :nth-child(2), :nth-child(3))) {
+      display: none;
+    }
+  }
 </style>
