@@ -3,15 +3,17 @@ interface Props {
   src: string;
   title?: string;
   caption?: string;
+  width?: number;
+  height?: number;
 }
 
-const { src, title, caption } = Astro.props;
+const { src, title, caption, width, height } = Astro.props;
 const label = title ?? caption;
 const figCaption = caption ?? title;
 ---
 
 <figure class="video-preview">
-  <video controls playsinline preload="metadata" aria-label={label}>
+  <video controls playsinline preload="metadata" aria-label={label} width={width} height={height}>
     <source src={src} type="video/mp4" />
   </video>
   {figCaption && <figcaption>{figCaption}</figcaption>}
