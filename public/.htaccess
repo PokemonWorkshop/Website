@@ -24,6 +24,45 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # 1b. Deprecated documentation pages moved to https://docs.pokemonworkshop.com (refs #7)
+  #     Each old page 301-redirects to its migrated equivalent, per locale.
+  RewriteRule ^en/help/event-making-in-rmxp/give-a-badge/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/give-a-badge/ [R=301,L]
+  RewriteRule ^fr/help/event-making-in-rmxp/give-a-badge/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/donner-un-badge/ [R=301,L]
+  RewriteRule ^en/help/event-making-in-rmxp/give-a-pokemon/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/give-a-pokemon/ [R=301,L]
+  RewriteRule ^fr/help/event-making-in-rmxp/give-a-pokemon/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/donner-un-pokemon/ [R=301,L]
+  RewriteRule ^en/help/event-making-in-rmxp/give-an-item/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/give-an-item/ [R=301,L]
+  RewriteRule ^fr/help/event-making-in-rmxp/give-an-item/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/donner-un-objet/ [R=301,L]
+  RewriteRule ^en/help/event-making-in-rmxp/start-a-wild-battle/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/start-a-wild-battle/ [R=301,L]
+  RewriteRule ^fr/help/event-making-in-rmxp/start-a-wild-battle/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/demarrer-un-combat-sauvage/ [R=301,L]
+  RewriteRule ^en/help/event-making-in-rmxp/create-a-shop/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/create-shops/ [R=301,L]
+  RewriteRule ^fr/help/event-making-in-rmxp/create-a-shop/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/creer-des-boutiques/ [R=301,L]
+  RewriteRule ^en/help/event-making-in-rmxp/create-a-pokemon-shop/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/create-shops/ [R=301,L]
+  RewriteRule ^fr/help/event-making-in-rmxp/create-a-pokemon-shop/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/creer-des-boutiques/ [R=301,L]
+  RewriteRule ^en/help/event-making-in-rmxp/edit-event-attributes/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/event-name-attributes/ [R=301,L]
+  RewriteRule ^fr/help/event-making-in-rmxp/edit-event-attributes/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/attributs-dun-event-via-son-nom/ [R=301,L]
+  RewriteRule ^en/help/event-making-in-rmxp/how-to-use-the-followme-system/?$ https://docs.pokemonworkshop.com/psdk/core-systems/followme/ [R=301,L]
+  RewriteRule ^fr/help/event-making-in-rmxp/how-to-use-the-followme-system/?$ https://docs.pokemonworkshop.com/fr/psdk/core-systems/followme/ [R=301,L]
+  RewriteRule ^en/help/event-making-in-rmxp/release-a-roaming-pokemon/?$ https://docs.pokemonworkshop.com/psdk/battle-scripting/how-to-add-roaming-pokemon/ [R=301,L]
+  RewriteRule ^fr/help/event-making-in-rmxp/release-a-roaming-pokemon/?$ https://docs.pokemonworkshop.com/fr/psdk/battle-scripting/pokemon-fuyards/ [R=301,L]
+  RewriteRule ^en/help/pokemon-sdk/how-to-block-a-move/?$ https://docs.pokemonworkshop.com/psdk/battle-engine/how-to-block-a-move/ [R=301,L]
+  RewriteRule ^fr/help/pokemon-sdk/how-to-block-a-move/?$ https://docs.pokemonworkshop.com/fr/psdk/battle-engine/bloquer-une-attaque/ [R=301,L]
+  RewriteRule ^en/help/pokemon-sdk/comment-faire-un-move-qui-echoue/?$ https://docs.pokemonworkshop.com/psdk/battle-engine/how-to-make-a-move-fail/ [R=301,L]
+  RewriteRule ^fr/help/pokemon-sdk/comment-faire-un-move-qui-echoue/?$ https://docs.pokemonworkshop.com/fr/psdk/battle-engine/echouer-une-attaque/ [R=301,L]
+  RewriteRule ^en/help/pokemon-sdk/comment-empecher-la-selection-d-une-attaque/?$ https://docs.pokemonworkshop.com/psdk/battle-engine/how-to-prevent-move-selection/ [R=301,L]
+  RewriteRule ^fr/help/pokemon-sdk/comment-empecher-la-selection-d-une-attaque/?$ https://docs.pokemonworkshop.com/fr/psdk/battle-engine/empecher-la-selection-dune-attaque/ [R=301,L]
+  RewriteRule ^en/help/pokemon-sdk/custom-environments/?$ https://docs.pokemonworkshop.com/psdk/core-systems/create-a-custom-system-tag/ [R=301,L]
+  RewriteRule ^fr/help/pokemon-sdk/custom-environments/?$ https://docs.pokemonworkshop.com/fr/psdk/core-systems/creer-un-system-tag-personnalise/ [R=301,L]
+  RewriteRule ^en/help/pokemon-sdk/how-contribute-to-pokemon-sdk/?$ https://docs.pokemonworkshop.com/getting-started/using-git-with-psdk/ [R=301,L]
+  RewriteRule ^fr/help/pokemon-sdk/how-contribute-to-pokemon-sdk/?$ https://docs.pokemonworkshop.com/fr/getting-started/utiliser-git-avec-psdk/ [R=301,L]
+  RewriteRule ^en/help/pokemon-sdk/how-edit-map-rxdata-files/?$ https://docs.pokemonworkshop.com/getting-started/work-together-on-a-psdk-project/ [R=301,L]
+  RewriteRule ^fr/help/pokemon-sdk/how-edit-map-rxdata-files/?$ https://docs.pokemonworkshop.com/fr/getting-started/travailler-a-plusieurs-sur-un-projet-psdk/ [R=301,L]
+  RewriteRule ^en/help/pokemon-sdk/how-generate-csv-files-translate-game-messages/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/translate-your-game-with-csv/ [R=301,L]
+  RewriteRule ^fr/help/pokemon-sdk/how-generate-csv-files-translate-game-messages/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/traduire-son-jeu-avec-csv/ [R=301,L]
+  RewriteRule ^en/learn/arrays-in-ruby/?$ https://docs.pokemonworkshop.com/ruby/arrays/ [R=301,L]
+  RewriteRule ^fr/learn/arrays-in-ruby/?$ https://docs.pokemonworkshop.com/fr/ruby/tableaux/ [R=301,L]
+  RewriteRule ^en/documentation/pokemon-sdk-battle-weather-effect-class-overview/?$ https://docs.pokemonworkshop.com/psdk/battle-engine/how-to-create-a-weather/ [R=301,L]
+  RewriteRule ^fr/documentation/pokemon-sdk-battle-weather-effect-class-overview/?$ https://docs.pokemonworkshop.com/fr/psdk/battle-engine/creer-une-meteo-et-ses-effets/ [R=301,L]
+
   # 2. Redirect people coming from the root to their respective language
   RewriteCond %{HTTP:Accept-Language} ^fr [NC]
   RewriteRule ^$ /fr/ [R=307,L]
@@ -35,7 +74,7 @@
   RewriteRule ^([^:]+)/tag:([^:]+)$ $1_$2/index.html [L]
 </IfModule>
 
-<IfModule mod_expires.c>  
+<IfModule mod_expires.c>
   # Turn on the module.
   ExpiresActive on
   # Set the default expiry times.
@@ -46,4 +85,4 @@
   ExpiresByType image/ico "access plus 1 month"
   ExpiresByType image/x-icon "access plus 1 month"
   ExpiresByType text/html "access plus 600 seconds"
-</IfModule>  
+</IfModule>
