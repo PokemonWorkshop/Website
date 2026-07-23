@@ -58,6 +58,8 @@
   RewriteRule ^fr/help/pokemon-sdk/how-edit-map-rxdata-files/?$ https://docs.pokemonworkshop.com/fr/getting-started/travailler-a-plusieurs-sur-un-projet-psdk/ [R=301,L]
   RewriteRule ^en/help/pokemon-sdk/how-generate-csv-files-translate-game-messages/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/translate-your-game-with-csv/ [R=301,L]
   RewriteRule ^fr/help/pokemon-sdk/how-generate-csv-files-translate-game-messages/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/traduire-son-jeu-avec-csv/ [R=301,L]
+  RewriteRule ^en/help/pokemon-sdk/how-compile-my-project/?$ https://docs.pokemonworkshop.com/pokemon-studio/create-a-playable-version/ [R=301,L]
+  RewriteRule ^fr/help/pokemon-sdk/how-compile-my-project/?$ https://docs.pokemonworkshop.com/fr/pokemon-studio/creer-une-version-jouable/ [R=301,L]
   RewriteRule ^en/learn/arrays-in-ruby/?$ https://docs.pokemonworkshop.com/ruby/arrays/ [R=301,L]
   RewriteRule ^fr/learn/arrays-in-ruby/?$ https://docs.pokemonworkshop.com/fr/ruby/tableaux/ [R=301,L]
   RewriteRule ^en/documentation/pokemon-sdk-battle-weather-effect-class-overview/?$ https://docs.pokemonworkshop.com/psdk/battle-engine/how-to-create-a-weather/ [R=301,L]
