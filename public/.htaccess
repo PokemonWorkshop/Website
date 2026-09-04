@@ -64,6 +64,8 @@
   RewriteRule ^fr/learn/arrays-in-ruby/?$ https://docs.pokemonworkshop.com/fr/ruby/tableaux/ [R=301,L]
   RewriteRule ^en/documentation/pokemon-sdk-battle-weather-effect-class-overview/?$ https://docs.pokemonworkshop.com/psdk/battle-engine/how-to-create-a-weather/ [R=301,L]
   RewriteRule ^fr/documentation/pokemon-sdk-battle-weather-effect-class-overview/?$ https://docs.pokemonworkshop.com/fr/psdk/battle-engine/creer-une-meteo-et-ses-effets/ [R=301,L]
+  RewriteRule ^en/help/pokemon-sdk/which-rpg-maker-should-i-use-to-work-on-psdk/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/rpg-maker-xp-basics/ [R=301,L]
+  RewriteRule ^fr/help/pokemon-sdk/which-rpg-maker-should-i-use-to-work-on-psdk/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/bases-de-rpg-maker-xp/ [R=301,L]
 
   # 2. Redirect people coming from the root to their respective language
   RewriteCond %{HTTP:Accept-Language} ^fr [NC]
