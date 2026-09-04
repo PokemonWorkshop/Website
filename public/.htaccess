@@ -32,6 +32,8 @@
   RewriteRule ^fr/help/event-making-in-rmxp/give-a-pokemon/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/donner-un-pokemon/ [R=301,L]
   RewriteRule ^en/help/event-making-in-rmxp/give-an-item/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/give-an-item/ [R=301,L]
   RewriteRule ^fr/help/event-making-in-rmxp/give-an-item/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/donner-un-objet/ [R=301,L]
+  RewriteRule ^en/help/event-making-in-rmxp/enable-the-pokedex/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/manage-the-pokedex/ [R=301,L]
+  RewriteRule ^fr/help/event-making-in-rmxp/enable-the-pokedex/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/gerer-le-pokedex/ [R=301,L]
   RewriteRule ^en/help/event-making-in-rmxp/start-a-wild-battle/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/start-a-wild-battle/ [R=301,L]
   RewriteRule ^fr/help/event-making-in-rmxp/start-a-wild-battle/?$ https://docs.pokemonworkshop.com/fr/rpg-maker-xp/demarrer-un-combat-sauvage/ [R=301,L]
   RewriteRule ^en/help/event-making-in-rmxp/create-a-shop/?$ https://docs.pokemonworkshop.com/rpg-maker-xp/create-shops/ [R=301,L]
