@@ -1,0 +1,85 @@
+---
+title: Notre approche sur l'IA
+seoDescription: Pokémon Workshop est une communauté dédiée au code et à l'art. L'IA impacte ces deux domaines et nous devons expliquer ce qui est autorisé.
+cover:
+- "./images/linus_ai_october_2026.png"
+tags: []
+publishDate: '2026-10-18 00:00:00'
+order: 20261018
+---
+
+Ne vous inquiétez pas, l'image est un piège à clics.
+
+Pokémon Workshop est une communauté centrée sur la création amateur autour de Pokémon. Cela signifie que des artistes et des développeurs cohabitent au sein de la même communauté en partageant une passion commune.  
+L'IA (ou l'IA générative) est devenue particulièrement efficace pour reproduire le travail humain : pour certains, c'est un outil formidable, pour d'autres, c'est un véritable désastre. La raison principale étant que nous nous retrouvons comme à l'époque de l'invention de l'imprimerie : l'IA pratique le plagiat de masse.
+
+Face à cette problématique, nous établissons deux règles : l'une ancrée dans le monde réel, l'autre concernant les personnes et le consentement.
+
+## Quand est-il acceptable d'utiliser l'IA (générative) ? {% id="reality" %}
+
+Les « anti » diraient « jamais », et nous pourrions être d'accord avec eux. Cependant, **nous ne pouvons pas contrôler ce que les gens font pour parvenir à leur fins**. Certains peuvent utiliser des brushes et des macros qui ne sont qu'à quelques pas de l'IA générative. Il est très difficile de déterminer si une production particulièrement réussie a fait appel à l'IA dans son processus de création. Notre règle sera donc la suivante :
+
+{% row columns="1/1" bottom_margin="margin-m" centered_text=true %}
+{% column %}
+**Tout contenu _exclusivement_ généré par IA est interdit.**
+{% /column %}
+{% /row %}
+
+La notion de contenu « exclusivement » généré comporte des nuances, mais la règle générale est la suivante : si un ou plusieurs prompts ont généré l'intégralité du contenu et qu'aucune retouche ou révision n'a été apportée (changer simplement des couleurs ne compte pas comme une révision), alors il s'agit d'un contenu exclusivement généré par IA.
+
+## Dans quel contexte l'IA (générative) peut-elle être utilisée ? {% id="consent" %}
+
+Pour l'art, c'est assez simple : vous n'entraînez pas de modèle sur des œuvres dont les auteurs n'ont pas explicitement accordé la permission de le faire. Pour le code, nous appliquerons également la même règle :
+
+{% row columns="1/1" bottom_margin="margin-m" centered_text=true %}
+{% column %}
+**Si le matériel source n'accorde pas _explicitement_ la permission d'utiliser l'IA dessus, vous n'utilisez pas d'IA dessus.**
+{% /column %}
+{% /row %}
+
+C'est une règle de consentement simple que nous devons expliciter, la raison principale étant la suivante : les licences de code ont été rédigées à une époque où l'IA n'était même pas envisagée comme une possibilité réaliste, elle n'est donc jamais abordée dans ces licences.  
+Vous pourriez faire valoir que des licences comme la MIT autorisent la copie et la modification à volonté ; nous vous répondrons qu'elles ont été conçues pour des humains, et n'accordent donc pas **explicitement** à une IA (générative) le droit de copier et modifier du code à volonté (pour autant qu'elle ait une quelconque volonté).
+
+## Et si un projet de Pokémon Workshop autorise l'IA (générative) dans son flux de travail ?
+
+Le fait que [nos projets](https://github.com/PokemonWorkshop) puissent autoriser l'IA (générative) dans leur flux de travail ne vous donne pas l'autorisation de l'utiliser pour tout ce qui touche de près ou de loin à ces projets. Les règles précédentes continuent de s'appliquer, voici une grille pour vous y retrouver :
+
+{% row columns="1/1" bottom_margin="margin-m" centered_text=true %}
+{% column %}
+| Autorise-t-il l'usage de l'IA ? | Pouvez-vous utiliser l'IA ? |
+|------|:------|
+| Non    | Non |
+| Non spécifié    | Non |
+| Avec des règles | Vous devez suivre les règles |
+| Explicitement oui    | Oui |
+{% /column %}
+{% /row %}
+
+Voici quelques exemples :
+
+{% row columns="1/1" bottom_margin="margin-m" centered_text=true %}
+{% column %}
+| Sujet | Autorise-t-il l'usage de l'IA ? | Pouvez-vous utiliser l'IA ? |
+|------|------|:------|
+| L'œuvre de quelqu'un | Non | Non |
+| L'œuvre de quelqu'un | Non spécifié | Non |
+| L'œuvre de quelqu'un | Explicitement oui | Oui |
+| Le code source de Pokémon SDK | Oui | Uniquement sur le code source de PSDK |
+| Le code source de Pokémon Studio | Non spécifié | Non |
+| Un plugin PSDK | Non | Non |
+| Un plugin PSDK | Non spécifié | Non |
+| Un plugin PSDK | Explicitement oui | Oui |
+| Une bibliothèque tierce | Non | Non |
+| Une bibliothèque tierce | Non spécifié | Non |
+| Une bibliothèque tierce | Avec des règles | Vous devez suivre les règles |
+| Une bibliothèque tierce | Explicitement oui | Oui |
+{% /column %}
+{% /row %}
+
+**Note :** En cas de doute, quiconque utilise l'IA (générative) dans son flux de travail doit prouver que la source utilisée par l'IA accorde explicitement la permission d'entraîner l'IA sur le matériel source. Si vous souhaitez éviter tout problème, vous devez utiliser des modèles que vous avez personnellement entraînés sur votre propre matériel.
+
+**Note :** Lorsqu'un projet accorde l'autorisation à une IA de s'entraîner ou d'être utilisée dans un but précis, **la licence du projet DOIT être appliquée**. Par exemple, la licence ne peut pas être modifiée, et si la licence exige que le code associé soit open source, le code généré doit être open source.
+
+## Sources
+
+L'image d'en-tête est une capture d'écran partielle de cet e-mail : [Linus Torvalds à Laurent Pinchart le mar. 13 oct. 2026 à 13:16](https://lore.kernel.org/lkml/CAHk-=whTs09_ozN+e09GU68N1wPP56MUzDjrg9rnKxQUa0A_4Q@mail.gmail.com/)
