@@ -1,0 +1,85 @@
+---
+title: Our approach on AI
+seoDescription: Pokémon Workshop is a community about coding and art, AI is affecting both and we should explain what people can do
+cover:
+- "./images/linus_ai_october_2026.png"
+tags: []
+publishDate: '2026-10-18 00:00:00'
+order: 20261018
+---
+
+Don't worry, the image is a click-bait.
+
+Pokémon Workshop is a community centered around Pokémon fan making. That means artists and coders lives in the same community sharing a common passion.  
+AI (or gen-AI) became really efficient at copying human work, for some people it's a nice tool, for other people it's a disaster. The main reason is that we're back to the time the printing press was invented, AI is performing mass plagiarism.
+
+To address this, we're issuing two rules, one about the real world, one about people and consent.
+
+## When is it acceptable to use (gen-)AI? {% id="reality" %}
+
+The Anti would say never and we could agree with them, regardless **we cannot control what people do to achieve their result**. Some people may use brush and macros which are a few steps away from gen-AI. It's really hard to tell when something really good has been made using AI in the workflow so our rule will be the following:
+
+{% row columns="1/1" bottom_margin="margin-m" centered_text=true %}
+{% column %}
+**Content that is _exclusively_ AI generated is forbidden.**
+{% /column %}
+{% /row %}
+
+What exclusively means is nuanced but the general rule of thumb is that: if prompt(s) generated the whole content and no changes were made (swapping colors does not count as a change), then is exclusively AI generated.
+
+## In which context can (gen-)AI be used {% id="consent" %}
+
+For art, it's pretty simple, you do not train on other artwork that do not explicitly grant permission to do so. For code we will, as well, apply the same rule:
+
+{% row columns="1/1" bottom_margin="margin-m" centered_text=true %}
+{% column %}
+**If the source material do not _explicitly_ grant permission to use AI over it, you do not use AI over it**
+{% /column %}
+{% /row %}
+
+It's a simple consent rule that we have to explain, the main reason is the following: Code licenses were created in a time AI was not even considered as realistic, thus it's never the subject of the licenses. 
+You may argue that licenses such as MIT allows copy and modifications at will, we would say that it was designed with human in mind, thus they do not **explicitly** grant (gen-)AI the right to copy or modify code at (if it even has any will at all).
+
+## What if Pokémon Workshop project's allows (gen-)AI in their workflow?
+
+The fact that [our projects](https://github.com/PokemonWorkshop) may allow (gen-)AI in their workflow does not grant you the permission to use it in anything that touches it. The previous rules still apply, here's a matrix to understand it:
+
+{% row columns="1/1" bottom_margin="margin-m" centered_text=true %}
+{% column %}
+| Does it grants AI use? | Can you use AI |
+|------|:------|
+| No    | No |
+| Unspecified    | No |
+| With rules | You must follow their rules |
+| Explicitly say yes    | Yes |
+{% /column %}
+{% /row %}
+
+Here's few examples:
+
+{% row columns="1/1" bottom_margin="margin-m" centered_text=true %}
+{% column %}
+| Subject | Does it grants AI use? | Can you use AI |
+|------|------|:------|
+| Someone's artwork    | No    | No |
+| Someone's artwork    | Unspecified    | No |
+| Someone's artwork    | Explicitly say yes    | Yes |
+| Pokémon SDK source code | Yes | Only on PSDK source code |
+| Pokémon Studio source code | Unspecified | No |
+| A PSDK plugin | No | No |
+| A PSDK plugin | Unspecified | No |
+| A PSDK plugin | Explicitly say yes | Yes |
+| A 3rd party Library | No | No |
+| A 3rd party Library | Unspecified | No |
+| A 3rd party Library | With rules | You must follow their rules |
+| A 3rd party Library | Explicitly say yes | Yes |
+{% /column %}
+{% /row %}
+
+**Note:** In doubt, whoever uses (gen-)AI in their workflow must prove that the source AI used explicitly grants permission for AI to train on the source material. If you want to avoid issues, you must run models you personally trained on hardware you own.
+
+**Note:** When a project grants AI permission to train or get used for some purpose, **the project's license MUST be applied**. For instance, the license cannot be modified and if the license requires related code to be open source, the generated code must be open source.
+
+## Sources
+
+Hero image is a partial screenshot of this email: [Linus Torvalds to Laurent Pinchart on Tue, 13 Oct 2026 at 13:16](https://lore.kernel.org/lkml/CAHk-=whTs09_ozN+e09GU68N1wPP56MUzDjrg9rnKxQUa0A_4Q@mail.gmail.com/)
